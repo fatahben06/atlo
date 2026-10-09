@@ -1,0 +1,2 @@
+/* Atlo · VA : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("VA",{"r":[[["Vatican","Vatican City","Vaticano","الفاتيكان"],41.903,12.453,[12.453,41.903,12.454,41.904],"}ypAiiWAA@??@"]],"v":[[["Cité du Vatican","Vatican City","Ciudad del Vaticano","الفاتيكان"],41.9033,12.4534,832,0,0,"Europe/Vatican"]]});

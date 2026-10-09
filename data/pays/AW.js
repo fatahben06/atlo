@@ -1,0 +1,2 @@
+/* Atlo · AW : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("AW",{"r":[[["Aruba","Aruba","Aruba","أروبا"],12.527,-69.985,[-70.062,12.418,-69.877,12.632],"cqWxugCtBoCj@QtAgAt@EPT?h@Oj@[Z?g@M?_@bAwBhC[z@SFSCu@UqAVMWjBgB"]],"v":[[["Oranjestad","Oranjestad","Oranjestad","أورنجستاد"],12.5215,-70.0255,68775,1,0,"America/Curacao"]]});

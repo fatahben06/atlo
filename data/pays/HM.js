@@ -1,0 +1,2 @@
+/* Atlo · HM : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("HM",{"r":[[["Îles Heard et McDonald","Heard Island and McDonald Islands","Islas Heard y McDonald","جزيرة هيرد وجزر ماكدونالد"],-53.083,73.523,[73.236,-53.193,73.812,-52.962],"xufBe}nCb@}B?cBv@jH`AfBNx@HrCGbA_@`AcAfA_CnASMYb@OAMSWdAErBM`@YVg@JMaAYw@lB_DGO]GMUBYR[JZ^YDi@Km@Yc@Jg@BoB`@cAReAn@m@`AuA"]],"v":[]});

@@ -1,0 +1,1145 @@
+# Sites emblématiques d'Atlo — sélection éditoriale.
+# Une ligne par site : pays|catégorie|latitude|longitude|n° UNESCO|titre Wikipédia FR|titre Wikipédia EN|nom affiché FR|nom affiché EN
+# Pays : codes ISO 3166-1 (séparés par une espace si le site est partagé).
+# Catégories : H patrimoine, R lieu de culte, N nature, M musée, V ville et quartier, A architecture et loisirs, P plage et île.
+# Le nom affiché vaut par défaut le titre Wikipédia sans sa parenthèse.
+
+# ---------- Afrique du Nord ----------
+DZ|V|36.7850|3.0600|565|Casbah d'Alger|Casbah of Algiers||
+DZ|H|36.5920|2.4470|193|Tipaza|Tipasa|Tipaza (site antique)|Tipasa (ancient site)
+DZ|H|36.3208|5.7367|191|Djémila|Djémila||
+DZ|H|35.4844|6.4683|194|Timgad|Timgad||
+DZ|V|32.4910|3.6730|188|Vallée du M'Zab|M'zab|Vallée du M'Zab (Ghardaïa)|M'Zab Valley (Ghardaïa)
+DZ|N|24.5500|9.4800|179|Tassili n'Ajjer|Tassili n'Ajjer||
+DZ|H|35.8131|4.7900|102|Kalâa des Béni Hammad|Beni Hammad Fort|Kalâa des Béni Hammad|Al Qal'a of Beni Hammad
+DZ|R|36.8008|3.0436||Basilique Notre-Dame d'Afrique|Notre-Dame d'Afrique||
+DZ|A|36.7456|3.0697||Mémorial du Martyr|Maqam Echahid||
+DZ|R|36.7333|3.1394||Djamaa El Djazaïr|Djamaa el Djazaïr||
+DZ|A|36.3719|6.6153||Pont de Sidi M'Cid|Sidi M'Cid Bridge|Pont de Sidi M'Cid (Constantine)|Sidi M'Cid Bridge (Constantine)
+DZ|H|35.7090|-0.6670||Fort de Santa Cruz (Oran)|Fort Santa Cruz (Oran)|Fort de Santa Cruz (Oran)|Santa Cruz Fort (Oran)
+DZ|N|23.2697|5.6331||Hoggar|Ahaggar Mountains|Hoggar (Assekrem)|Ahaggar (Assekrem)
+DZ|N|30.9167|-2.0333||Taghit|Taghit||
+DZ|V|29.2639|0.2306||Timimoun|Timimoun||
+DZ|R|34.8817|-1.3125||Grande Mosquée de Tlemcen|Great Mosque of Tlemcen||
+DZ|N|36.7700|5.0900||Parc national de Gouraya|Gouraya National Park|Parc national de Gouraya (Béjaïa)|Gouraya National Park (Béjaïa)
+DZ|R|36.8836|7.7506||Basilique Saint-Augustin d'Annaba|Basilica of St Augustine, Annaba||
+MA|R|31.6237|-7.9937||Koutoubia|Koutoubia Mosque|Koutoubia (Marrakech)|Koutoubia Mosque (Marrakesh)
+MA|V|31.6258|-7.9892|331|Jemaa el-Fna|Jemaa el-Fnaa|Place Jemaa el-Fna (Marrakech)|Jemaa el-Fnaa (Marrakesh)
+MA|N|31.6417|-8.0033||Jardin Majorelle|Majorelle Garden||
+MA|V|34.0644|-4.9733|170|Fès el-Bali|Fes el Bali|Médina de Fès|Medina of Fez
+MA|V|35.1688|-5.2636||Chefchaouen|Chefchaouen||
+MA|H|31.0470|-7.1293|444|Aït-ben-Haddou|Aït Benhaddou||
+MA|R|33.6083|-7.6325||Mosquée Hassan-II|Hassan II Mosque|Mosquée Hassan-II (Casablanca)|Hassan II Mosque (Casablanca)
+MA|N|31.1500|-3.9800||Erg Chebbi|Erg Chebbi|Erg Chebbi (Merzouga)|Erg Chebbi (Merzouga)
+MA|H|34.0739|-5.5547|836|Volubilis|Volubilis||
+MA|V|31.5125|-9.7700|753|Essaouira|Essaouira||
+MA|N|31.5900|-5.5900||Gorges du Todra|Todgha Gorge||
+MA|H|34.0240|-6.8228|1401|Tour Hassan|Hassan Tower|Tour Hassan (Rabat)|Hassan Tower (Rabat)
+MA|N|32.0156|-6.7192||Cascades d'Ouzoud|Ouzoud Falls||
+TN|H|36.8528|10.3233|37|Carthage|Carthage|Carthage (site archéologique)|Carthage (archaeological site)
+TN|V|36.7983|10.1700|36|Médina de Tunis|Medina of Tunis||
+TN|V|36.8706|10.3414||Sidi Bou Saïd|Sidi Bou Said||
+TN|H|35.2964|10.7069|38|Amphithéâtre d'El Jem|Amphitheatre of El Jem||
+TN|R|35.6814|10.1039|499|Grande Mosquée de Kairouan|Great Mosque of Kairouan||
+TN|H|36.4231|9.2189|794|Dougga|Dougga||
+TN|P|33.8075|10.8450||Djerba|Djerba||
+TN|N|33.7000|8.4000||Chott el-Djérid|Chott el Djerid||
+TN|V|35.8256|10.6378|498|Médina de Sousse|Medina of Sousse||
+TN|V|33.5444|9.9681||Matmata|Matmata, Tunisia|Matmata|Matmata
+LY|H|32.6386|14.2903|183|Leptis Magna|Leptis Magna||
+LY|H|32.8053|12.4847|184|Sabratha|Sabratha||
+LY|H|32.8250|21.8583|190|Cyrène|Cyrene, Libya|Cyrène|Cyrene
+LY|V|30.1336|9.4969|362|Ghadamès|Ghadames||
+EG|H|29.9792|31.1342|86|Pyramides de Gizeh|Giza pyramid complex|Pyramides de Gizeh|Pyramids of Giza
+EG|H|29.9753|31.1376|86|Grand Sphinx de Gizeh|Great Sphinx of Giza||
+EG|M|29.9944|31.1197||Grand Musée égyptien|Grand Egyptian Museum||
+EG|M|30.0478|31.2336||Musée égyptien du Caire|Egyptian Museum||
+EG|V|30.0477|31.2623|89|Khan el-Khalili|Khan el-Khalili|Khan el-Khalili (Le Caire historique)|Khan el-Khalili (Historic Cairo)
+EG|H|25.7188|32.6573|87|Karnak|Karnak|Temple de Karnak|Karnak Temple
+EG|H|25.6995|32.6391|87|Temple de Louxor|Luxor Temple||
+EG|H|25.7402|32.6014|87|Vallée des Rois|Valley of the Kings||
+EG|H|22.3372|31.6258|88|Temples d'Abou Simbel|Abu Simbel|Abou Simbel|Abu Simbel
+EG|H|24.0253|32.8844|88|Philæ|Philae|Temple de Philæ|Philae Temple
+EG|H|29.8713|31.2165|86|Pyramide de Djéser|Pyramid of Djoser|Saqqarah (pyramide de Djéser)|Saqqara (Pyramid of Djoser)
+EG|R|28.5559|33.9761|954|Monastère Sainte-Catherine du Sinaï|Saint Catherine's Monastery||
+EG|A|31.2089|29.9092||Bibliotheca Alexandrina|Bibliotheca Alexandrina||
+EG|N|29.2032|25.5195||Oasis de Siwa|Siwa Oasis||
+EG|N|27.7333|34.2500||Parc national de Ras Mohammed|Ras Muhammad National Park||
+
+# ---------- Afrique de l'Ouest et centrale ----------
+SN|H|14.6672|-17.3986|26|Île de Gorée|Gorée||
+SN|N|14.8389|-17.2333||Lac Rose|Lake Retba||
+SN|V|16.0300|-16.5000|956|Saint-Louis (Sénégal)|Saint-Louis, Senegal||
+SN|N|13.0667|-12.7167|153|Parc national du Niokolo-Koba|Niokolo-Koba National Park||
+SN|A|14.7222|-17.4950||Monument de la Renaissance africaine|African Renaissance Monument||
+ML|R|13.9053|-4.5553|116|Grande Mosquée de Djenné|Great Mosque of Djenné||
+ML|V|16.7735|-3.0074|119|Tombouctou|Timbuktu||
+ML|N|14.3500|-3.6000|516|Falaise de Bandiagara|Bandiagara Escarpment||
+NE|V|16.9733|7.9911|1268|Agadez|Agadez||
+MR|V|20.4597|-12.3608|750|Chinguetti|Chinguetti||
+MR|N|20.2333|-16.1000|506|Parc national du Banc d'Arguin|Banc d'Arguin National Park||
+BF|H|10.3000|-3.5667|1225|Ruines de Loropéni|Ruins of Loropéni||
+GH|H|5.1033|-1.2417|34|Fort de Cape Coast|Cape Coast Castle||
+GH|N|5.3500|-1.3800||Parc national de Kakum|Kakum National Park||
+CI|R|6.8114|-5.2975||Basilique Notre-Dame-de-la-Paix de Yamoussoukro|Basilica of Our Lady of Peace of Yamoussoukro|Basilique Notre-Dame-de-la-Paix (Yamoussoukro)|Basilica of Our Lady of Peace (Yamoussoukro)
+CI|V|5.2000|-3.7333|1322|Grand-Bassam|Grand-Bassam||
+NG|N|7.7553|4.5528|1118|Forêt sacrée d'Osun-Osogbo|Osun-Osogbo||
+NG|N|9.1250|7.2306||Zuma Rock|Zuma Rock||
+BJ|H|7.1858|1.9844|323|Palais royaux d'Abomey|Royal Palaces of Abomey||
+BJ|V|6.4667|2.4167||Ganvié|Ganvie||
+TG|H|10.0000|1.1700|1140|Koutammakou|Koutammakou||
+GM|H|13.3167|-16.3611|761|Île Kunta Kinteh|Kunta Kinteh Island||
+GN|N|7.6000|-8.4167|155|Mont Nimba|Mount Nimba||
+GW|P|11.2500|-16.0000||Archipel des Bijagos|Bissagos Islands||
+CV|V|14.9150|-23.6050|1310|Cidade Velha|Cidade Velha||
+CV|N|14.9500|-24.3500||Pico do Fogo|Pico do Fogo||
+TD|N|19.0500|20.5000|1400|Lacs d'Ounianga|Lakes of Ounianga||
+TD|N|17.0400|21.8600|1475|Massif de l'Ennedi|Ennedi Plateau||
+CM|N|4.2033|9.1706||Mont Cameroun|Mount Cameroon||
+CM|N|3.0000|13.0000|407|Réserve de faune du Dja|Dja Faunal Reserve||
+GA|N|-0.5000|11.5000|1147|Parc national de la Lopé|Lopé National Park||
+GA|N|-2.3000|9.6000||Parc national de Loango|Loango National Park||
+CG|N|0.6000|14.9000||Parc national d'Odzala-Kokoua|Odzala-Kokoua National Park||
+CD|N|-0.9167|29.1667|63|Parc national des Virunga|Virunga National Park||
+CF|N|9.0000|21.5000|475|Parc national du Manovo-Gounda-Saint Floris|Manovo-Gounda St. Floris National Park||
+ST|N|0.1200|6.5700||Pico Cão Grande|Pico Cão Grande||
+AO|N|-9.0750|16.0000||Chutes de Kalandula|Kalandula Falls||
+AO|H|-6.2670|14.2400|1511|Mbanza Kongo|M'banza-Kongo||
+
+# ---------- Afrique de l'Est et australe ----------
+ET|R|12.0317|39.0411|18|Églises rupestres de Lalibela|Rock-Hewn Churches, Lalibela||
+ET|H|12.6075|37.4692|19|Fasil Ghebbi|Fasil Ghebbi|Fasil Ghebbi (Gondar)|Fasil Ghebbi (Gondar)
+ET|H|14.1311|38.7167|15|Aksoum|Aksum||
+ET|N|13.2500|38.0000|9|Parc national du Simien|Simien Mountains National Park||
+ET|N|14.2417|40.2969||Dallol (volcan)|Dallol (hydrothermal field)|Dallol (dépression du Danakil)|Dallol (Danakil Depression)
+ET|V|9.3100|42.1200|1189|Harar|Harar||
+ER|V|15.3333|38.9333|1550|Asmara|Asmara||
+DJ|N|11.6583|42.4167||Lac Assal (Djibouti)|Lake Assal (Djibouti)||
+SO|H|9.7833|44.4500||Laas Geel|Laas Geel||
+SD|H|16.9381|33.7489|1336|Méroé|Meroë|Pyramides de Méroé|Pyramids of Meroë
+KE|N|-1.4900|35.1439||Réserve nationale du Masai Mara|Maasai Mara|Masai Mara|Maasai Mara
+KE|N|-2.6527|37.2606||Parc national d'Amboseli|Amboseli National Park||
+KE|V|-2.2717|40.9020|1055|Lamu|Lamu Old Town|Lamu (vieille ville)|Lamu Old Town
+KE|N|-0.3667|36.0833||Lac Nakuru|Lake Nakuru||
+KE|N|-0.1521|37.3084|800|Mont Kenya|Mount Kenya||
+TZ|N|-3.0674|37.3556|403|Kilimandjaro|Mount Kilimanjaro||
+TZ|N|-2.3333|34.8333|156|Parc national du Serengeti|Serengeti National Park||
+TZ|N|-3.2000|35.5000|39|Zone de conservation du Ngorongoro|Ngorongoro Conservation Area||
+TZ|V|-6.1622|39.1921|173|Stone Town|Stone Town|Stone Town (Zanzibar)|Stone Town (Zanzibar)
+UG|N|-1.0000|29.7000|682|Forêt impénétrable de Bwindi|Bwindi Impenetrable National Park||
+UG|N|2.2786|31.6853||Chutes Murchison|Murchison Falls||
+RW|N|-1.4667|29.5333||Parc national des Volcans|Volcanoes National Park||
+RW|M|-1.9306|30.0606||Mémorial du génocide de Kigali|Kigali Genocide Memorial||
+ZA|N|-33.9628|18.4098||Montagne de la Table|Table Mountain||
+ZA|N|-34.3568|18.4740||Cap de Bonne-Espérance|Cape of Good Hope||
+ZA|N|-24.0000|31.5000||Parc national Kruger|Kruger National Park||
+ZA|H|-33.8067|18.3664|916|Robben Island|Robben Island||
+ZA|N|-29.0000|29.2500|985|Drakensberg|Drakensberg||
+ZA|M|-26.2375|28.0083||Musée de l'Apartheid|Apartheid Museum||
+ZA|N|-24.5833|30.8000||Canyon de la Blyde River|Blyde River Canyon||
+NA|N|-24.7333|15.2917||Sossusvlei|Sossusvlei||
+NA|N|-18.8556|16.3292||Parc national d'Etosha|Etosha National Park||
+NA|N|-27.5833|17.6000||Fish River Canyon|Fish River Canyon||
+NA|H|-20.5967|14.3708|1255|Twyfelfontein|Twyfelfontein||
+BW|N|-19.2833|22.9000|1432|Delta de l'Okavango|Okavango Delta||
+BW|N|-18.6000|24.5000||Parc national de Chobe|Chobe National Park||
+ZW|N|-17.9290|25.8420|509|Chutes Victoria|Victoria Falls||
+ZW|H|-20.2675|30.9333|364|Grand Zimbabwe|Great Zimbabwe||
+ZW|N|-15.7500|29.4000|302|Parc national de Mana Pools|Mana Pools National Park||
+ZM|N|-13.0000|31.5000||Parc national de South Luangwa|South Luangwa National Park||
+MW|N|-14.0333|34.8833|289|Parc national du lac Malawi|Lake Malawi National Park||
+MZ|V|-15.0347|40.7358|599|Île de Mozambique|Island of Mozambique||
+MZ|P|-21.6667|35.4667||Archipel de Bazaruto|Bazaruto Archipelago||
+MG|N|-20.2508|44.4183||Allée des baobabs|Avenue of the Baobabs||
+MG|N|-18.7000|44.7000|494|Tsingy de Bemaraha|Tsingy de Bemaraha National Park||
+MG|P|-13.3333|48.2667||Nosy Be|Nosy Be||
+MG|H|-18.7592|47.5625|950|Colline royale d'Ambohimanga|Ambohimanga||
+MU|N|-20.4511|57.3153|1259|Morne Brabant|Le Morne Brabant||
+MU|N|-20.4400|57.3731||Terre des Sept Couleurs|Seven Coloured Earths||
+MU|H|-20.1586|57.5033|1227|Aapravasi Ghat|Aapravasi Ghat||
+SC|N|-4.3289|55.7372|261|Vallée de Mai|Vallée de Mai||
+SC|P|-4.3711|55.8275||Anse Source d'Argent|Anse Source d'Argent||
+RE|N|-21.2442|55.7086|1317|Piton de la Fournaise|Piton de la Fournaise||
+RE|N|-21.0667|55.4000|1317|Cirque de Mafate|Mafate||
+
+# ---------- Moyen-Orient ----------
+SA|H|26.7917|37.9542|1293|Hégra|Hegra (Mada'in Salih)|Hégra (Al-Ula)|Hegra (AlUla)
+SA|R|21.4225|39.8262||Masjid al-Haram|Great Mosque of Mecca|Masjid al-Haram (La Mecque)|Masjid al-Haram (Mecca)
+SA|R|24.4672|39.6111||Mosquée du Prophète|Al-Masjid an-Nabawi|Mosquée du Prophète (Médine)|Prophet's Mosque (Medina)
+SA|H|24.7342|46.5753|1329|At-Turaif|At-Turaif|At-Turaif (Diriyah)|At-Turaif (Diriyah)
+SA|V|21.4858|39.1867|1361|Djeddah historique|Al-Balad, Jeddah|Djeddah historique (Al-Balad)|Historic Jeddah (Al-Balad)
+AE|A|25.1972|55.2744||Burj Khalifa|Burj Khalifa||
+AE|R|24.4128|54.4750||Mosquée Cheikh Zayed|Sheikh Zayed Grand Mosque||
+AE|M|24.5336|54.3983||Louvre Abou Dabi|Louvre Abu Dhabi||
+AE|A|25.1124|55.1390||Palm Jumeirah|Palm Jumeirah||
+AE|A|25.2192|55.2817||Musée du Futur|Museum of the Future||
+AE|V|25.2636|55.2997||Al Fahidi|Al Fahidi Historical Neighbourhood|Quartier historique Al Fahidi (Dubaï)|Al Fahidi Historical Neighbourhood (Dubai)
+AE|N|24.2175|55.7650|1343|Al-Aïn|Al Ain Oasis|Oasis d'Al-Aïn|Al Ain Oasis
+QA|M|25.2950|51.5392||Musée d'Art islamique de Doha|Museum of Islamic Art, Doha||
+QA|V|25.2867|51.5328||Souq Waqif|Souq Waqif||
+QA|M|25.2878|51.5486||Musée national du Qatar|National Museum of Qatar||
+QA|H|25.9781|51.0294|1402|Al Zubarah|Al Zubarah||
+OM|R|23.5839|58.3889||Grande Mosquée du Sultan Qaboos|Sultan Qaboos Grand Mosque||
+OM|H|22.9333|57.5333||Fort de Nizwa|Nizwa Fort||
+OM|N|22.8380|59.2360||Wadi Shab|Wadi Shab||
+OM|H|22.9644|57.2967|433|Fort de Bahla|Bahla Fort||
+OM|N|22.0000|58.7500||Wahiba Sands|Wahiba Sands|Désert des Wahiba|Wahiba Sands
+BH|H|26.2336|50.5206|1192|Qal'at al-Bahreïn|Qal'at al-Bahrain||
+KW|A|29.3897|48.0036||Tours du Koweït|Kuwait Towers||
+YE|V|15.9269|48.6267|192|Shibam|Shibam||
+YE|V|15.3550|44.2150|385|Sanaa|Old City of Sanaa|Vieille ville de Sanaa|Old City of Sanaa
+YE|N|12.5000|53.8000|1263|Socotra|Socotra||
+JO|H|30.3285|35.4444|326|Pétra|Petra||
+JO|N|29.5764|35.4200|1377|Wadi Rum|Wadi Rum||
+JO|N|31.7167|35.5833||Mer Morte|Dead Sea|Mer Morte (rive jordanienne)|Dead Sea (Jordanian shore)
+JO|H|32.2722|35.8914||Jerash|Jerash||
+JO|H|31.9547|35.9344||Citadelle d'Amman|Amman Citadel||
+JO|R|31.8372|35.5503|1446|Béthanie au-delà du Jourdain|Bethany Beyond the Jordan||
+JO|H|31.8019|36.5858|327|Qasr Amra|Qasr Amra||
+IL PS|V|31.7767|35.2345|148|Vieille ville de Jérusalem|Old City of Jerusalem||
+IL|H|31.3156|35.3536|1040|Massada|Masada||
+IL|V|32.0700|34.7750|1096|Ville blanche de Tel Aviv|White City (Tel Aviv)||
+IL|R|32.8144|34.9872||Sanctuaire du Báb|Shrine of the Báb|Sanctuaire du Báb (Haïfa)|Shrine of the Báb (Haifa)
+IL|V|32.9214|35.0692|1042|Saint-Jean-d'Acre|Old City of Acre|Vieille ville d'Acre|Old City of Acre
+PS|R|31.7043|35.2075|1433|Basilique de la Nativité|Church of the Nativity|Basilique de la Nativité (Bethléem)|Church of the Nativity (Bethlehem)
+PS|V|31.5247|35.1106|1565|Hébron|Hebron|Vieille ville d'Hébron|Hebron Old Town
+PS|H|31.8714|35.4439|1687|Tell es-Sultan|Tell es-Sultan|Tell es-Sultan (Jéricho)|Tell es-Sultan (Jericho)
+LB|H|34.0069|36.2039|294|Baalbek|Baalbek||
+LB|H|34.1208|35.6481|295|Byblos|Byblos||
+LB|N|33.9436|35.6408||Grotte de Jeita|Jeita Grotto||
+LB|H|33.2711|35.1964|299|Tyr|Tyre, Lebanon|Tyr|Tyre
+LB|N|34.2417|35.9500|850|Vallée de la Qadisha|Kadisha Valley||
+SY|H|34.5514|38.2689|23|Palmyre|Palmyra||
+SY|H|34.7569|36.2944|1229|Krak des Chevaliers|Krak des Chevaliers||
+SY|R|33.5117|36.3064|20|Mosquée des Omeyyades|Umayyad Mosque|Mosquée des Omeyyades (Damas)|Umayyad Mosque (Damascus)
+SY|H|36.1992|37.1628|21|Citadelle d'Alep|Citadel of Aleppo||
+SY|H|32.5181|36.4817|22|Bosra|Bosra||
+IQ|H|32.5422|44.4211|278|Babylone|Babylon||
+IQ|H|30.9628|46.1031|1481|Ziggourat d'Ur|Ziggurat of Ur||
+IQ|H|36.1911|44.0092|1437|Citadelle d'Erbil|Erbil Citadel||
+IQ|R|34.2059|43.8797|276|Grande Mosquée de Samarra|Great Mosque of Samarra||
+IQ|R|32.6164|44.0322||Mausolée de l'imam Hussein|Imam Husayn Shrine|Mausolée de l'imam Hussein (Kerbala)|Imam Husayn Shrine (Karbala)
+IR|H|32.6575|51.6778|115|Place Naghsh-e Jahan|Naqsh-e Jahan Square|Place Naghsh-e Jahan (Ispahan)|Naqsh-e Jahan Square (Isfahan)
+IR|H|29.9353|52.8914|114|Persépolis|Persepolis||
+IR|R|29.6083|52.5483||Mosquée Nasir-ol-Molk|Nasir al-Mulk Mosque|Mosquée Nasir-ol-Molk (Chiraz)|Nasir al-Mulk Mosque (Shiraz)
+IR|V|31.8972|54.3675|1544|Yazd|Yazd||
+IR|V|38.0806|46.2919|1346|Bazar de Tabriz|Tabriz Bazaar||
+IR|H|30.1939|53.1672|1106|Pasargades|Pasargadae||
+IR|A|35.6997|51.3381||Tour Azadi|Azadi Tower|Tour Azadi (Téhéran)|Azadi Tower (Tehran)
+IR|H|33.9447|51.3836|1372|Jardin de Fin|Fin Garden|Jardin de Fin (Kashan)|Fin Garden (Kashan)
+
+# ---------- Turquie, Caucase, Asie centrale ----------
+TR|R|41.0086|28.9802|356|Sainte-Sophie (Istanbul)|Hagia Sophia|Sainte-Sophie|Hagia Sophia
+TR|R|41.0054|28.9768|356|Mosquée bleue|Blue Mosque, Istanbul|Mosquée bleue|Blue Mosque
+TR|H|41.0115|28.9834|356|Palais de Topkapı|Topkapı Palace||
+TR|V|41.0107|28.9681||Grand Bazar d'Istanbul|Grand Bazaar, Istanbul||
+TR|H|41.0256|28.9742||Tour de Galata|Galata Tower||
+TR|N|38.6431|34.8289|357|Göreme|Göreme|Göreme (Cappadoce)|Göreme (Cappadocia)
+TR|N|37.9203|29.1206|485|Pamukkale|Pamukkale||
+TR|H|37.9394|27.3417|1018|Éphèse|Ephesus||
+TR|H|39.9575|26.2389|849|Troie|Troy||
+TR|H|37.9808|38.7408|448|Nemrut Dağı|Mount Nemrut|Mont Nemrut|Mount Nemrut
+TR|H|37.2231|38.9225|1572|Göbekli Tepe|Göbekli Tepe||
+TR|V|36.8847|30.7056||Kaleiçi|Kaleiçi|Kaleiçi (Antalya)|Kaleiçi (Antalya)
+TR|R|40.6903|39.6583||Monastère de Sumela|Sumela Monastery||
+TR|H|36.9389|31.1722||Aspendos|Aspendos||
+CY|H|34.7569|32.4067|79|Paphos|Paphos Archaeological Park|Parc archéologique de Paphos|Paphos Archaeological Park
+CY|P|34.6642|32.6267||Pétra tou Romioú|Petra tou Romiou|Rocher d'Aphrodite|Aphrodite's Rock
+CY|R|34.9500|32.8500|351|Églises peintes de la région de Troodos|Painted Churches in the Troödos Region||
+GE|V|41.6894|44.8075||Tbilissi|Old Tbilisi|Vieille ville de Tbilissi|Old Tbilisi
+GE|R|42.6625|44.6203||Église de la Trinité de Guerguéti|Gergeti Trinity Church||
+GE|R|41.8383|44.7336|708|Monastère de Djvari|Jvari Monastery||
+GE|H|41.9672|44.2072||Ouplistsikhé|Uplistsikhe||
+GE|V|43.0453|42.7272|709|Haute Svanétie|Upper Svaneti||
+GE|H|41.3811|43.2842||Vardzia|Vardzia||
+AM|R|40.1403|44.8183|960|Monastère de Geghard|Geghard||
+AM|R|39.8783|44.5761||Khor Virap|Khor Virap||
+AM|H|40.1122|44.7300||Temple de Garni|Temple of Garni||
+AM|R|40.1617|44.2911|1011|Cathédrale d'Etchmiadzin|Etchmiadzin Cathedral||
+AM|R|40.5644|45.0122||Sevanavank|Sevanavank|Sevanavank (lac Sevan)|Sevanavank (Lake Sevan)
+AM|R|39.3797|46.2500||Monastère de Tatev|Tatev Monastery||
+AZ|V|40.3664|49.8372|958|Icheri Sheher|Old City (Baku)|Vieille ville de Bakou|Old City of Baku
+AZ|H|40.1111|49.3800|1076|Gobustan|Gobustan National Park||
+AZ|A|40.3961|49.8678||Centre Heydar Aliyev|Heydar Aliyev Center||
+AZ|H|41.2014|47.1981|1549|Palais des khans de Shaki|Palace of Shaki Khans||
+AZ|N|40.5017|49.8911||Yanar Dag|Yanar Dag||
+UZ|H|39.6548|66.9757|603|Régistan|Registan|Régistan (Samarcande)|Registan (Samarkand)
+UZ|R|39.6625|66.9878|603|Shah-i-Zinda|Shah-i-Zinda||
+UZ|V|39.7747|64.4286|602|Boukhara|Bukhara||
+UZ|V|41.3783|60.3639|543|Itchan Kala|Itchan Kala|Itchan Kala (Khiva)|Itchan Kala (Khiva)
+UZ|H|39.0600|66.8300|885|Chakhrisabz|Shahrisabz||
+KZ|A|51.1283|71.4306||Baïterek|Bayterek (tower)|Baïterek (Astana)|Bayterek (Astana)
+KZ|N|43.3517|79.0789||Canyon de Charyn|Charyn Canyon||
+KZ|R|43.2931|68.2717|1103|Mausolée de Khoja Ahmed Yasavi|Mausoleum of Khoja Ahmed Yasawi||
+KZ|N|42.9850|78.4650||Lac Kaindy|Lake Kaindy||
+KG|N|42.4167|77.2500||Issyk-Koul|Issyk-Kul||
+KG|H|42.7461|75.2500||Tour de Burana|Burana Tower||
+KG|R|40.5306|72.7908|1230|Mont Soulaïman|Sulayman Mountain|Mont Soulaïman (Och)|Sulayman Mountain (Osh)
+KG|N|41.8300|75.1200||Son-Koul|Song-Kul||
+TJ|N|39.0717|68.3717||Iskanderkoul|Iskanderkul||
+TJ|H|39.5097|67.4547|1141|Sarazm|Sarazm||
+TM|N|40.2525|58.4397||Darvaza|Darvaza gas crater|Cratère de Darvaza|Darvaza gas crater
+TM|H|37.6619|62.1922|886|Merv|Merv||
+TM|H|37.9989|58.2006|1242|Nisa (Turkménistan)|Nisa, Turkmenistan|Nisa|Nisa
+MN|N|43.7833|102.2500||Khongoryn Els|Khongoryn Els|Khongoryn Els (Gobi)|Khongoryn Els (Gobi)
+MN|R|47.9214|106.8956||Monastère de Gandan|Gandantegchinlen Monastery||
+MN|A|47.8083|107.5297||Statue équestre de Gengis Khan|Genghis Khan Equestrian Statue||
+MN|N|47.9833|107.4500||Parc national de Gorkhi-Terelj|Gorkhi-Terelj National Park||
+MN|R|47.2000|102.8417|1081|Erdene Zuu|Erdene Zuu Monastery||
+MN|N|51.0000|100.5000||Lac Khövsgöl|Khövsgöl Nuur||
+AF|H|34.8328|67.8267|208|Bouddhas de Bâmiyân|Buddhas of Bamiyan||
+AF|H|34.3967|64.5164|211|Minaret de Djam|Minaret of Jam||
+AF|R|36.7092|67.1108||Mosquée bleue de Mazâr-e Charîf|Blue Mosque, Mazar-i-Sharif||
+AF|N|34.8392|67.2328||Band-e Amir|Band-e Amir National Park||
+
+# ---------- Asie du Sud ----------
+IN|H|27.1751|78.0421|252|Taj Mahal|Taj Mahal||
+IN|H|28.6562|77.2410|231|Fort Rouge de Delhi|Red Fort||
+IN|H|28.5245|77.1855|233|Qutb Minar|Qutb Minar||
+IN|H|26.9239|75.8267||Hawa Mahal|Hawa Mahal|Hawa Mahal (Jaipur)|Hawa Mahal (Jaipur)
+IN|H|26.9855|75.8513|247|Fort d'Amber|Amer Fort||
+IN|R|25.3070|83.0104||Ghats de Varanasi|Ghats in Varanasi||
+IN|R|31.6200|74.8765||Temple d'or|Golden Temple|Temple d'or (Amritsar)|Golden Temple (Amritsar)
+IN|R|24.8318|79.9199|240|Khajuraho|Khajuraho Group of Monuments||
+IN|H|15.3350|76.4600|241|Hampi|Hampi||
+IN|H|20.5519|75.7033|242|Grottes d'Ajanta|Ajanta Caves||
+IN|H|20.0258|75.1780|243|Grottes d'Ellora|Ellora Caves||
+IN|N|9.4981|76.3388||Backwaters du Kerala|Kerala backwaters||
+IN|R|15.5009|73.9116|234|Églises et couvents de Goa|Churches and convents of Goa||
+IN|H|18.9220|72.8347||Gateway of India|Gateway of India||
+IN|H|24.5764|73.6835||City Palace d'Udaipur|City Palace, Udaipur||
+IN|R|19.8876|86.0945|246|Temple du Soleil de Konârak|Konark Sun Temple||
+IN|H|12.6167|80.1992|249|Mahabalipuram|Mahabalipuram||
+IN|H|26.9124|70.9126|247|Fort de Jaisalmer|Jaisalmer Fort||
+IN|V|34.1526|77.5771||Leh|Leh|Leh (Ladakh)|Leh (Ladakh)
+IN|H|12.3052|76.6551||Palais de Mysore|Mysore Palace||
+IN|N|26.6667|93.3667|337|Parc national de Kaziranga|Kaziranga National Park||
+PK|R|31.5881|74.3094||Mosquée Badshahi|Badshahi Mosque||
+PK|H|31.5879|74.3155|171|Fort de Lahore|Lahore Fort||
+PK|H|27.3292|68.1389|138|Mohenjo-daro|Mohenjo-daro||
+PK|N|36.3167|74.6500||Vallée de la Hunza|Hunza Valley||
+PK|R|33.7297|73.0372||Mosquée Faisal|Faisal Mosque||
+PK|H|33.7461|72.7872|139|Taxila|Taxila||
+PK|H|32.9625|73.5764|586|Fort de Rohtas|Rohtas Fort||
+BD|N|21.9497|89.1833|798|Sundarbans|Sundarbans||
+BD|R|22.6747|89.7417|321|Mosquée aux soixante dômes|Sixty Dome Mosque||
+BD|H|25.0311|88.9769|322|Somapura Mahavihara|Somapura Mahavihara||
+BD|P|21.4272|92.0058||Cox's Bazar|Cox's Bazar||
+LK|H|7.9570|80.7603|202|Sigiriya|Sigiriya||
+LK|R|7.2936|80.6413|450|Temple de la Dent|Temple of the Tooth|Temple de la Dent (Kandy)|Temple of the Tooth (Kandy)
+LK|V|6.0267|80.2170|451|Fort de Galle|Galle Fort||
+LK|R|7.8567|80.6492|561|Temple d'or de Dambulla|Dambulla cave temple||
+LK|H|7.9403|81.0188|201|Polonnaruwa|Polonnaruwa||
+LK|H|8.3450|80.3880|200|Anuradhapura|Anuradhapura||
+LK|H|6.8768|81.0608||Pont des Neuf Arches|Nine Arches Bridge|Pont des Neuf Arches (Ella)|Nine Arches Bridge (Ella)
+LK|N|6.3728|81.5214||Parc national de Yala|Yala National Park||
+NP|N|28.0026|86.8528||Camp de base de l'Everest|Everest base camps|Camp de base de l'Everest|Everest Base Camp
+NP|R|27.7149|85.2903|121|Swayambhunath|Swayambhunath||
+NP|R|27.7215|85.3620|121|Boudhanath|Boudhanath||
+NP|H|27.6722|85.4280|121|Durbar Square de Bhaktapur|Bhaktapur Durbar Square||
+NP|N|28.2150|83.9450||Lac Phewa|Phewa Lake|Lac Phewa (Pokhara)|Phewa Lake (Pokhara)
+NP|R|27.4697|83.2756|666|Lumbini|Lumbini||
+NP|N|27.5000|84.3333|284|Parc national de Chitwan|Chitwan National Park||
+BT|R|27.4917|89.3633||Taktshang|Paro Taktsang|Monastère de Taktshang (Nid du Tigre)|Paro Taktsang (Tiger's Nest)
+BT|R|27.5814|89.8636||Punakha Dzong|Punakha Dzong||
+BT|R|27.4433|89.6447||Bouddha Dordenma|Buddha Dordenma statue||
+MV|V|4.1755|73.5093||Malé|Malé||
+MV|P|3.8667|72.8333||Atoll Ari|Ari Atoll||
+
+# ---------- Asie de l'Est ----------
+CN|H|40.4319|116.5704|438|Mutianyu|Mutianyu|Grande Muraille (Mutianyu)|Great Wall (Mutianyu)
+CN|H|40.3597|116.0200|438|Badaling|Badaling|Grande Muraille (Badaling)|Great Wall (Badaling)
+CN|H|39.9163|116.3972|439|Cité interdite|Forbidden City||
+CN|R|39.8822|116.4066|881|Temple du Ciel|Temple of Heaven||
+CN|H|39.9999|116.2755|880|Palais d'Été|Summer Palace||
+CN|H|34.3853|109.2785|441|Armée de terre cuite|Terracotta Army||
+CN|V|31.2400|121.4900||Bund de Shanghai|The Bund|Le Bund (Shanghai)|The Bund (Shanghai)
+CN|N|24.7781|110.4964||Li (rivière)|Li River|Rivière Li (Guilin – Yangshuo)|Li River (Guilin – Yangshuo)
+CN|N|29.3250|110.4344|640|Parc forestier national de Zhangjiajie|Zhangjiajie National Forest Park||
+CN|H|29.6578|91.1169|707|Palais du Potala|Potala Palace|Palais du Potala (Lhassa)|Potala Palace (Lhasa)
+CN|N|30.1333|118.1667|547|Huangshan|Huangshan||
+CN|N|33.2600|103.9200|637|Jiuzhaigou|Jiuzhaigou||
+CN|N|30.2500|120.1500|1334|Lac de l'Ouest|West Lake|Lac de l'Ouest (Hangzhou)|West Lake (Hangzhou)
+CN|H|40.0372|94.8044|440|Grottes de Mogao|Mogao Caves||
+CN|V|37.2000|112.1800|812|Pingyao|Pingyao||
+CN|V|26.8721|100.2299|811|Vieille ville de Lijiang|Old Town of Lijiang||
+CN|R|29.5444|103.7731|779|Bouddha géant de Leshan|Leshan Giant Buddha||
+CN|N|30.7333|104.1456||Base de recherche sur l'élevage des pandas géants de Chengdu|Chengdu Research Base of Giant Panda Breeding|Base des pandas géants (Chengdu)|Giant Panda Base (Chengdu)
+CN|H|31.3236|120.6283|813|Jardins classiques de Suzhou|Classical Gardens of Suzhou||
+CN|N|25.7550|110.1170||Rizières en terrasses de Longji|Longji Rice Terraces||
+HK|N|22.2759|114.1455||Victoria Peak|Victoria Peak||
+HK|R|22.2540|113.9050||Tian Tan Buddha|Tian Tan Buddha||
+MO|H|22.1974|113.5409|1110|Ruines de Saint-Paul|Ruins of Saint Paul's||
+MO|V|22.1933|113.5397|1110|Place du Senado|Senado Square||
+TW|A|25.0340|121.5645||Taipei 101|Taipei 101||
+TW|N|24.1600|121.6200||Parc national de Taroko|Taroko National Park||
+TW|N|23.8650|120.9150||Lac du Soleil et de la Lune|Sun Moon Lake||
+TW|V|25.1092|121.8447||Jiufen|Jiufen||
+TW|M|25.1024|121.5485||Musée national du palais|National Palace Museum||
+TW|H|25.0346|121.5218||Mémorial de Tchang Kaï-chek|Chiang Kai-shek Memorial Hall||
+JP|N|35.3606|138.7274|1418|Mont Fuji|Mount Fuji||
+JP|R|34.9671|135.7727||Fushimi Inari-taisha|Fushimi Inari-taisha||
+JP|R|35.0394|135.7292|688|Kinkaku-ji|Kinkaku-ji||
+JP|R|34.9949|135.7850|688|Kiyomizu-dera|Kiyomizu-dera||
+JP|N|35.0170|135.6713||Arashiyama|Arashiyama|Arashiyama (bambouseraie)|Arashiyama (bamboo grove)
+JP|R|35.7148|139.7967||Sensō-ji|Sensō-ji||
+JP|V|35.6595|139.7005||Carrefour de Shibuya|Shibuya Crossing||
+JP|A|35.7101|139.8107||Tokyo Skytree|Tokyo Skytree||
+JP|H|34.8394|134.6939|661|Château de Himeji|Himeji Castle||
+JP|H|34.3955|132.4536|775|Mémorial de la paix d'Hiroshima|Hiroshima Peace Memorial||
+JP|R|34.2960|132.3198|776|Itsukushima-jinja|Itsukushima Shrine||
+JP|R|34.6890|135.8398|870|Tōdai-ji|Tōdai-ji|Tōdai-ji (Nara)|Tōdai-ji (Nara)
+JP|R|36.7581|139.5989|913|Nikkō Tōshō-gū|Nikkō Tōshō-gū||
+JP|V|36.2578|136.9061|734|Shirakawa-gō|Shirakawa-go||
+JP|H|34.6873|135.5262||Château d'Osaka|Osaka Castle||
+JP|H|26.2170|127.7195|972|Château de Shuri|Shuri Castle||
+JP|N|44.0833|145.1167|1193|Parc national de Shiretoko|Shiretoko National Park||
+JP|N|30.3333|130.5167|662|Yakushima|Yakushima||
+JP|N|36.5622|136.6625||Kenroku-en|Kenroku-en||
+JP|R|35.3167|139.5358||Kōtoku-in|Kōtoku-in|Grand Bouddha de Kamakura|Great Buddha of Kamakura
+KR|H|37.5796|126.9770||Gyeongbokgung|Gyeongbokgung||
+KR|V|37.5826|126.9836||Bukchon Hanok|Bukchon Hanok Village|Village de Bukchon Hanok|Bukchon Hanok Village
+KR|H|37.5794|126.9910|816|Changdeokgung|Changdeokgung||
+KR|N|33.4581|126.9425|1264|Seongsan Ilchulbong|Seongsan Ilchulbong|Seongsan Ilchulbong (Jeju)|Seongsan Ilchulbong (Jeju)
+KR|R|35.7900|129.3320|736|Bulguksa|Bulguksa|Bulguksa (Gyeongju)|Bulguksa (Gyeongju)
+KR|V|35.0975|129.0106||Village culturel de Gamcheon|Gamcheon Culture Village||
+KR|A|37.5512|126.9882||N Seoul Tower|N Seoul Tower||
+KR|H|37.9558|126.6772||Zone commune de sécurité|Joint Security Area|Panmunjom (DMZ)|Panmunjom (DMZ)
+KR|H|37.2872|127.0119|817|Forteresse de Hwaseong|Hwaseong Fortress||
+KP|N|38.5833|128.1667||Monts Kumgang|Mount Kumgang||
+KP|H|37.9700|126.5500|1278|Kaesong|Kaesong||
+
+# ---------- Asie du Sud-Est ----------
+TH|H|13.7500|100.4913||Grand Palais (Bangkok)|Grand Palace|Grand Palais (Bangkok)|Grand Palace (Bangkok)
+TH|R|13.7437|100.4888||Wat Arun|Wat Arun||
+TH|R|13.7465|100.4930||Wat Pho|Wat Pho||
+TH|H|14.3556|100.5600|576|Ayutthaya (parc historique)|Ayutthaya Historical Park|Ayutthaya|Ayutthaya
+TH|H|17.0200|99.7036|574|Parc historique de Sukhothaï|Sukhothai Historical Park||
+TH|R|18.8048|98.9216||Wat Phra That Doi Suthep|Wat Phra That Doi Suthep|Doi Suthep (Chiang Mai)|Doi Suthep (Chiang Mai)
+TH|R|19.8243|99.7631||Wat Rong Khun|Wat Rong Khun|Temple blanc (Chiang Rai)|White Temple (Chiang Rai)
+TH|P|7.7407|98.7784||Îles Phi Phi|Phi Phi Islands||
+TH|N|8.2750|98.5000||Baie de Phang Nga|Phang Nga Bay||
+TH|P|8.0110|98.8380||Railay|Railay Beach||
+TH|V|13.5197|99.9592||Marché flottant de Damnoen Saduak|Damnoen Saduak floating market||
+TH|N|8.9167|98.5167||Parc national de Khao Sok|Khao Sok National Park||
+TH|P|9.5120|100.0136||Ko Samui|Ko Samui||
+VN|N|20.9101|107.1839|672|Baie d'Hạ Long|Hạ Long Bay||
+VN|V|15.8801|108.3380|948|Hội An|Hội An||
+VN|H|16.4698|107.5786|678|Cité impériale de Huế|Imperial City of Huế||
+VN|N|21.0288|105.8525||Lac Hoàn Kiếm|Hoàn Kiếm Lake|Lac Hoàn Kiếm (Hanoï)|Hoàn Kiếm Lake (Hanoi)
+VN|R|10.7798|106.6990||Cathédrale Notre-Dame de Saïgon|Notre-Dame Cathedral Basilica of Saigon||
+VN|H|11.1414|106.4625||Tunnels de Củ Chi|Củ Chi tunnels||
+VN|N|10.0341|105.7880||Delta du Mékong|Mekong Delta|Delta du Mékong (Cần Thơ)|Mekong Delta (Cần Thơ)
+VN|N|22.3364|103.8438||Sa Pa|Sa Pa||
+VN|N|17.5833|106.2833|951|Parc national de Phong Nha-Kẻ Bàng|Phong Nha-Kẻ Bàng National Park||
+VN|N|20.2541|105.8970|1438|Tràng An|Tràng An Scenic Landscape Complex|Tràng An (Ninh Bình)|Tràng An (Ninh Bình)
+VN|R|15.7640|108.1240|949|Mỹ Sơn|Mỹ Sơn||
+VN|A|15.9950|107.9964||Pont d'or (Viêt Nam)|Golden Bridge (Vietnam)|Pont d'or (Bà Nà)|Golden Bridge (Bà Nà)
+KH|R|13.4125|103.8670|668|Angkor Vat|Angkor Wat||
+KH|R|13.4413|103.8590|668|Bayon|Bayon||
+KH|R|13.4350|103.8890|668|Ta Prohm|Ta Prohm||
+KH|H|11.5639|104.9310||Palais royal de Phnom Penh|Royal Palace, Phnom Penh||
+KH|R|14.3889|104.6800|1224|Prasat Preah Vihear|Preah Vihear Temple||
+KH|M|11.5494|104.9178||Musée du génocide de Tuol Sleng|Tuol Sleng Genocide Museum||
+LA|V|19.8856|102.1347|479|Luang Prabang|Luang Prabang||
+LA|N|19.7494|101.9939||Chutes de Kuang Si|Kuang Si Falls||
+LA|H|19.4300|103.1530|1587|Plaine des Jarres|Plain of Jars||
+LA|R|17.9764|102.6336||Pha That Luang|Pha That Luang|Pha That Luang (Vientiane)|Pha That Luang (Vientiane)
+LA|N|18.9235|102.4478||Vang Vieng|Vang Vieng||
+LA|R|14.8508|105.8222|481|Vat Phou|Wat Phou||
+MM|R|21.1717|94.8585|1588|Bagan|Bagan||
+MM|R|16.7983|96.1497||Pagode Shwedagon|Shwedagon Pagoda||
+MM|N|20.5500|96.9167||Lac Inle|Inle Lake||
+MM|R|17.4817|97.0983||Pagode Kyaiktiyo|Kyaiktiyo Pagoda|Rocher d'or (Kyaiktiyo)|Golden Rock (Kyaiktiyo)
+MM|H|21.8925|96.0597||Pont U Bein|U Bein Bridge||
+MY|A|3.1579|101.7116||Tours Petronas|Petronas Towers||
+MY|R|3.2379|101.6840||Grottes de Batu|Batu Caves||
+MY|V|5.4141|100.3288|1223|George Town (Penang)|George Town, Penang||
+MY|V|2.1944|102.2486|1223|Malacca (ville)|Malacca City|Malacca|Malacca
+MY|N|6.0750|116.5583|1012|Mont Kinabalu|Mount Kinabalu||
+MY|A|6.3861|99.6625||Pont suspendu de Langkawi|Langkawi Sky Bridge||
+MY|N|4.4700|101.3800||Cameron Highlands|Cameron Highlands||
+MY|N|4.0500|114.8667|1013|Parc national du Gunung Mulu|Gunung Mulu National Park||
+SG|A|1.2834|103.8607||Marina Bay Sands|Marina Bay Sands||
+SG|N|1.2816|103.8636||Gardens by the Bay|Gardens by the Bay||
+SG|N|1.3138|103.8159|1483|Jardin botanique de Singapour|Singapore Botanic Gardens||
+SG|P|1.2494|103.8303||Sentosa|Sentosa||
+SG|R|1.2815|103.8443||Temple de la relique de la dent du Bouddha|Buddha Tooth Relic Temple and Museum||
+SG|A|1.2868|103.8545||Merlion|Merlion||
+ID|R|-7.6079|110.2038|592|Borobudur|Borobudur||
+ID|R|-7.7520|110.4915|642|Prambanan|Prambanan||
+ID|R|-8.6212|115.0868||Tanah Lot|Tanah Lot|Tanah Lot (Bali)|Tanah Lot (Bali)
+ID|R|-8.8291|115.0849||Pura Luhur Uluwatu|Uluwatu Temple|Temple d'Uluwatu (Bali)|Uluwatu Temple (Bali)
+ID|N|-8.3700|115.1300|1194|Subak (irrigation)|Subak (irrigation)|Rizières en terrasses de Bali (subak)|Bali rice terraces (subak)
+ID|N|-8.5188|115.2588||Forêt des singes d'Ubud|Ubud Monkey Forest||
+ID|N|-8.5500|119.4833|609|Parc national de Komodo|Komodo National Park||
+ID|N|-7.9425|112.9530||Bromo|Mount Bromo|Mont Bromo|Mount Bromo
+ID|P|-0.5000|130.5000||Raja Ampat|Raja Ampat Islands||
+ID|N|2.6845|98.8756||Lac Toba|Lake Toba||
+ID|N|-8.0583|114.2417||Ijen|Ijen|Kawah Ijen|Kawah Ijen
+ID|P|-8.3500|116.0500||Îles Gili|Gili Islands||
+ID|A|-6.1754|106.8272||Monas|National Monument (Indonesia)|Monas (Jakarta)|Monas (Jakarta)
+PH|N|16.9333|121.1333|722|Rizières en terrasses de Banaue|Banaue Rice Terraces||
+PH|N|9.8297|124.1397||Chocolate Hills|Chocolate Hills||
+PH|P|11.1956|119.4072||El Nido|El Nido, Palawan|El Nido (Palawan)|El Nido (Palawan)
+PH|N|10.1681|118.9261|652|Parc national de la rivière souterraine de Puerto Princesa|Puerto Princesa Subterranean River National Park||
+PH|V|17.5747|120.3869|502|Vigan|Vigan||
+PH|H|14.5896|120.9747||Intramuros|Intramuros|Intramuros (Manille)|Intramuros (Manila)
+PH|P|11.9674|121.9248||Boracay|Boracay||
+PH|N|13.2572|123.6856||Mayon|Mayon|Volcan Mayon|Mayon Volcano
+BN|R|4.8894|114.9389||Mosquée Omar Ali Saifuddin|Omar Ali Saifuddien Mosque||
+BN|V|4.8850|114.9450||Kampong Ayer|Kampong Ayer||
+TL|R|-8.5197|125.6086||Cristo Rei de Dili|Cristo Rei of Dili||
+
+# ---------- Océanie ----------
+AU|A|-33.8568|151.2153|166|Opéra de Sydney|Sydney Opera House||
+AU|A|-33.8523|151.2108||Sydney Harbour Bridge|Sydney Harbour Bridge||
+AU|N|-25.3444|131.0369|447|Uluru|Uluru||
+AU|N|-16.7000|146.0000|154|Grande barrière de corail|Great Barrier Reef||
+AU|N|-38.6621|143.1051||Douze Apôtres|The Twelve Apostles (Victoria)||
+AU|P|-33.8915|151.2767||Bondi Beach|Bondi Beach||
+AU|N|-12.8333|132.5833|147|Parc national de Kakadu|Kakadu National Park||
+AU|N|-16.1700|145.4185||Forêt de Daintree|Daintree Rainforest||
+AU|N|-33.7167|150.3117|917|Montagnes Bleues|Blue Mountains (New South Wales)||
+AU|A|-37.8180|144.9691||Federation Square|Federation Square|Federation Square (Melbourne)|Federation Square (Melbourne)
+AU|N|-41.6847|145.9511||Cradle Mountain|Cradle Mountain||
+AU|P|-20.2817|149.0386||Whitehaven Beach|Whitehaven Beach||
+AU|N|-25.2667|153.1333|630|K'gari|K'gari||
+AU|H|-43.1467|147.8511|1306|Port Arthur (Tasmanie)|Port Arthur, Tasmania|Port Arthur|Port Arthur
+NZ|N|-44.6414|167.8974|551|Milford Sound|Milford Sound||
+NZ|A|-37.8722|175.6830||Hobbitebourg (décor de film)|Hobbiton Movie Set|Hobbitebourg (Matamata)|Hobbiton (Matamata)
+NZ|N|-38.1631|176.2517||Te Puia|Te Puia|Te Puia (Rotorua)|Te Puia (Rotorua)
+NZ|N|-39.2000|175.5833|421|Parc national de Tongariro|Tongariro National Park||
+NZ|V|-45.0312|168.6626||Queenstown (Nouvelle-Zélande)|Queenstown, New Zealand||
+NZ|N|-43.5950|170.1418|551|Aoraki / Mont Cook|Aoraki / Mount Cook||
+NZ|N|-38.2609|175.1036||Grottes de Waitomo|Waitomo Glowworm Caves||
+NZ|A|-36.8485|174.7622||Sky Tower (Auckland)|Sky Tower (Auckland)||
+NZ|N|-40.9000|173.0000||Parc national Abel Tasman|Abel Tasman National Park||
+FJ|P|-17.6667|177.1000||Îles Mamanuca|Mamanuca Islands||
+FJ|V|-17.6833|178.8333|1399|Levuka|Levuka||
+PG|N|-9.0000|147.7000||Piste Kokoda|Kokoda Track||
+VU|N|-19.5322|169.4425||Mont Yasur|Mount Yasur||
+NC|P|-22.6167|167.4833||Île des Pins|Île des Pins||
+PF|P|-16.5004|-151.7415||Bora-Bora|Bora Bora||
+PF|P|-17.5388|-149.8295||Moorea|Moorea||
+PF|R|-16.8333|-151.3500|1529|Taputapuātea|Taputapuatea marae||
+PW|N|7.2500|134.4000|1386|Îles Chelbacheb|Rock Islands|Rock Islands|Rock Islands
+FM|H|6.8442|158.3358|1503|Nan Madol|Nan Madol||
+
+# ---------- Amérique du Nord ----------
+US|H|40.6892|-74.0445|307|Statue de la Liberté|Statue of Liberty||
+US|V|40.7580|-73.9855||Times Square|Times Square||
+US|N|40.7829|-73.9654||Central Park|Central Park||
+US|A|40.7484|-73.9857||Empire State Building|Empire State Building||
+US|M|40.7794|-73.9632||Metropolitan Museum of Art|Metropolitan Museum of Art||
+US|A|37.8199|-122.4783||Golden Gate Bridge|Golden Gate Bridge||
+US|H|37.8267|-122.4230||Alcatraz|Alcatraz Island||
+US|N|36.0544|-112.1401|75|Parc national du Grand Canyon|Grand Canyon National Park||
+US|N|44.4280|-110.5885|28|Parc national de Yellowstone|Yellowstone National Park||
+US|N|37.8651|-119.5383|308|Parc national de Yosemite|Yosemite National Park||
+US|V|36.1147|-115.1728||Las Vegas Strip|Las Vegas Strip||
+US|H|38.8977|-77.0365||Maison-Blanche|White House||
+US|H|38.8893|-77.0502||Lincoln Memorial|Lincoln Memorial||
+US|M|38.8881|-77.0199||National Air and Space Museum|National Air and Space Museum||
+US|V|34.1016|-118.3267||Hollywood Walk of Fame|Hollywood Walk of Fame||
+US|N|36.9980|-110.0985||Monument Valley|Monument Valley||
+US|N|25.2866|-80.8987|76|Parc national des Everglades|Everglades National Park||
+US|V|29.9584|-90.0644||Quartier français|French Quarter|Quartier français (La Nouvelle-Orléans)|French Quarter (New Orleans)
+US|H|43.8791|-103.4591||Mont Rushmore|Mount Rushmore||
+US|N|36.8619|-111.3743||Antelope Canyon|Antelope Canyon||
+US|N|19.4194|-155.2885|409|Parc national des volcans d'Hawaï|Hawaiʻi Volcanoes National Park||
+US|A|41.8827|-87.6233||Cloud Gate|Cloud Gate|Cloud Gate (Chicago)|Cloud Gate (Chicago)
+US|N|38.7331|-109.5925||Parc national des Arches|Arches National Park||
+US|H|37.2309|-108.4618|27|Parc national de Mesa Verde|Mesa Verde National Park||
+US|N|63.0692|-151.0070||Denali|Denali||
+US|A|28.3852|-81.5639||Walt Disney World Resort|Walt Disney World||
+US|N|37.2982|-113.0263||Parc national de Zion|Zion National Park||
+US|H|39.9489|-75.1500|78|Independence Hall|Independence Hall||
+CA|N|43.0790|-79.0760||Chutes du Niagara|Niagara Falls||
+CA|N|51.4254|-116.1773||Lac Louise|Lake Louise (Alberta)||
+CA|N|51.3217|-116.1860||Lac Moraine|Moraine Lake||
+CA|N|51.4968|-115.9281|304|Parc national de Banff|Banff National Park||
+CA|N|52.8734|-117.9543|304|Parc national de Jasper|Jasper National Park||
+CA|V|46.8123|-71.2050|300|Vieux-Québec|Old Quebec||
+CA|V|45.5075|-73.5544||Vieux-Montréal|Old Montreal||
+CA|A|43.6426|-79.3871||Tour CN|CN Tower||
+CA|N|49.3043|-123.1443||Parc Stanley|Stanley Park|Parc Stanley (Vancouver)|Stanley Park (Vancouver)
+CA|N|45.8233|-64.5772||Rochers Hopewell|Hopewell Rocks||
+CA|N|50.1163|-122.9574||Whistler (Colombie-Britannique)|Whistler, British Columbia|Whistler|Whistler
+CA|N|49.5833|-57.7500|419|Parc national du Gros-Morne|Gros Morne National Park||
+CA|H|51.5953|-55.5333|4|L'Anse aux Meadows|L'Anse aux Meadows||
+CA|H|45.4236|-75.7009||Colline du Parlement|Parliament Hill|Colline du Parlement (Ottawa)|Parliament Hill (Ottawa)
+CA|N|58.7684|-94.1650||Churchill (Manitoba)|Churchill, Manitoba|Churchill (ours polaires)|Churchill (polar bears)
+GL|N|69.1667|-50.0000|1149|Fjord glacé d'Ilulissat|Ilulissat Icefjord||
+MX|H|20.6843|-88.5678|483|Chichén Itzá|Chichen Itza||
+MX|H|19.6925|-98.8438|414|Teotihuacan|Teotihuacan||
+MX|H|20.2148|-87.4290||Tulum (site maya)|Tulum|Tulum|Tulum
+MX|H|17.4838|-92.0463|411|Palenque|Palenque||
+MX|V|19.4326|-99.1332|412|Zócalo|Zócalo|Zócalo (Mexico)|Zócalo (Mexico City)
+MX|M|19.4260|-99.1863||Musée national d'anthropologie (Mexique)|National Museum of Anthropology (Mexico)|Musée national d'anthropologie|National Museum of Anthropology
+MX|M|19.3551|-99.1625||Musée Frida Kahlo|Frida Kahlo Museum|Casa Azul (Frida Kahlo)|Casa Azul (Frida Kahlo)
+MX|H|17.0436|-96.7678|415|Monte Albán|Monte Albán||
+MX|V|21.0190|-101.2574|482|Guanajuato (ville)|Guanajuato City|Guanajuato|Guanajuato
+MX|V|20.9144|-100.7452|1274|San Miguel de Allende|San Miguel de Allende||
+MX|P|21.1619|-86.8515||Cancún|Cancún||
+MX|N|20.6607|-88.5508||Ik Kil|Ik Kil|Cenote Ik Kil|Ik Kil cenote
+MX|N|27.5167|-107.7500||Barranca del Cobre|Copper Canyon||
+MX|H|20.3594|-89.7714|791|Uxmal|Uxmal||
+MX|V|19.2572|-99.1033|412|Xochimilco|Xochimilco||
+MX|R|19.4847|-99.1172||Basilique Notre-Dame-de-Guadalupe (Mexico)|Basilica of Our Lady of Guadalupe|Basilique de Guadalupe|Basilica of Guadalupe
+MX|V|16.7370|-92.6376||San Cristóbal de las Casas|San Cristóbal de las Casas||
+
+# ---------- Amérique centrale et Caraïbes ----------
+GT|H|17.2220|-89.6237|64|Tikal|Tikal||
+GT|V|14.5586|-90.7295|65|Antigua Guatemala|Antigua Guatemala||
+GT|N|14.6907|-91.2025||Lac Atitlán|Lake Atitlán||
+GT|N|15.5333|-89.9583||Semuc Champey|Semuc Champey||
+GT|V|14.9442|-91.1111||Chichicastenango|Chichicastenango||
+BZ|N|17.3158|-87.5347|764|Grand trou bleu|Great Blue Hole||
+BZ|P|17.7500|-88.0250||Caye Caulker|Caye Caulker||
+BZ|H|17.0892|-89.1411||Xunantunich|Xunantunich||
+HN|H|14.8400|-89.1422|129|Copán|Copán||
+HN|P|16.3200|-86.5300||Roatán|Roatán||
+SV|H|13.8278|-89.3561|675|Joya de Cerén|Joya de Cerén||
+NI|V|11.9344|-85.9560||Granada (Nicaragua)|Granada, Nicaragua||
+NI|N|11.9844|-86.1619||Volcan Masaya|Masaya Volcano||
+NI|N|11.5000|-85.5833||Ometepe|Ometepe||
+NI|H|12.3967|-86.6167|613|León Viejo|León Viejo||
+CR|N|10.4626|-84.7032||Volcan Arenal|Arenal Volcano||
+CR|N|10.3000|-84.8000||Réserve biologique de Monteverde|Monteverde Cloud Forest Reserve||
+CR|N|9.3900|-84.1400||Parc national Manuel Antonio|Manuel Antonio National Park||
+CR|N|10.5400|-83.5000||Parc national de Tortuguero|Tortuguero National Park||
+CR|N|10.1978|-84.2306||Volcan Poás|Poás Volcano||
+PA|A|8.9969|-79.5917||Écluses de Miraflores|Miraflores Locks|Canal de Panama (écluses de Miraflores)|Panama Canal (Miraflores Locks)
+PA|V|8.9519|-79.5353|790|Casco Viejo (Panama)|Casco Viejo, Panama||
+PA|P|9.5667|-78.8333||Archipel des San Blas|San Blas Islands||
+PA|P|9.3400|-82.2400||Bocas del Toro|Bocas del Toro||
+CU|V|23.1367|-82.3500|204|Vieille Havane|Old Havana||
+CU|V|23.1460|-82.3700||Malecón (La Havane)|Malecón, Havana||
+CU|V|21.8022|-79.9844|460|Trinidad (Cuba)|Trinidad, Cuba||
+CU|N|22.6167|-83.7167|840|Vallée de Viñales|Viñales Valley||
+CU|P|23.1394|-81.2861||Varadero|Varadero||
+CU|V|22.1461|-80.4356|1202|Cienfuegos|Cienfuegos||
+DO|V|18.4730|-69.8836|526|Ville coloniale de Saint-Domingue|Ciudad Colonial (Santo Domingo)||
+DO|P|18.5820|-68.4055||Punta Cana|Punta Cana||
+DO|P|18.1561|-68.7000||Île Saona|Saona Island||
+DO|N|19.0333|-69.5833||Parc national Los Haitises|Los Haitises National Park||
+HT|H|19.5728|-72.2444|180|Citadelle Laferrière|Citadelle Laferrière||
+JM|N|18.4136|-77.1353||Dunn's River Falls|Dunn's River Falls||
+JM|M|18.0175|-76.7808||Musée Bob Marley|Bob Marley Museum||
+JM|P|18.2683|-78.3481||Negril|Negril||
+JM|N|18.0667|-76.5833|1356|Montagnes Bleues et John Crow|Blue and John Crow Mountains||
+BS|P|23.6000|-75.9000||Exuma|Exuma||
+BB|V|13.0833|-59.6000|1376|Bridgetown|Historic Bridgetown and its Garrison|Bridgetown historique|Historic Bridgetown
+LC|N|13.8100|-61.0667|1161|Pitons (Sainte-Lucie)|Pitons (Saint Lucia)||
+KN|H|17.3475|-62.8378|910|Forteresse de Brimstone Hill|Brimstone Hill Fortress National Park||
+AG|H|17.0069|-61.7625|1499|Nelson's Dockyard|Nelson's Dockyard||
+DM|N|15.3667|-61.3000|814|Parc national de Morne Trois Pitons|Morne Trois Pitons National Park||
+PR|H|18.4706|-66.1236|266|Castillo San Felipe del Morro|Castillo San Felipe del Morro||
+PR|N|18.3000|-65.7833||Forêt nationale d'El Yunque|El Yunque National Forest||
+CW|V|12.1067|-68.9350|819|Willemstad|Willemstad||
+GP|N|16.0444|-61.6639||Soufrière (Guadeloupe)|La Grande Soufrière||
+GP|N|16.0431|-61.6400||Chutes du Carbet|Carbet Falls||
+MQ|N|14.8094|-61.1653|1657|Montagne Pelée|Mount Pelée||
+GF|A|5.2322|-52.7693||Centre spatial guyanais|Guiana Space Centre||
+GF|H|5.2875|-52.5833||Îles du Salut|Îles du Salut||
+
+# ---------- Amérique du Sud ----------
+BR|R|-22.9519|-43.2105|1100|Christ Rédempteur|Christ the Redeemer (statue)||
+BR|N|-22.9486|-43.1566|1100|Pain de Sucre|Sugarloaf Mountain||
+BR|P|-22.9711|-43.1822||Copacabana (Rio de Janeiro)|Copacabana, Rio de Janeiro|Plage de Copacabana|Copacabana Beach
+BR|A|-22.9154|-43.1793||Escalier Selarón|Selarón Steps||
+BR|N|-25.6900|-54.4380|355|Parc national d'Iguaçu|Iguaçu National Park|Chutes d'Iguaçu (côté brésilien)|Iguazu Falls (Brazilian side)
+BR|N|-3.1361|-59.9036||Rencontre des eaux|Meeting of Waters|Rencontre des eaux (Manaus)|Meeting of Waters (Manaus)
+BR|V|-12.9718|-38.5107|309|Pelourinho|Pelourinho|Pelourinho (Salvador)|Pelourinho (Salvador)
+BR|A|-15.7998|-47.8645|445|Congrès national (Brésil)|National Congress of Brazil|Congrès national (Brasília)|National Congress (Brasília)
+BR|N|-2.4859|-43.1281||Parc national des Lençóis Maranhenses|Lençóis Maranhenses National Park||
+BR|N|-17.7500|-57.4200|999|Pantanal|Pantanal||
+BR|P|-3.8547|-32.4247|1000|Fernando de Noronha|Fernando de Noronha||
+BR|V|-20.3856|-43.5036|124|Ouro Preto|Ouro Preto||
+BR|V|-23.2178|-44.7131|1308|Paraty|Paraty||
+BR|N|-12.5000|-41.4000||Parc national de la Chapada Diamantina|Chapada Diamantina National Park||
+AR|N|-25.6820|-54.4500|303|Parc national Iguazú|Iguazú National Park|Chutes d'Iguazú (côté argentin)|Iguazú Falls (Argentine side)
+AR|N|-50.4967|-73.1378|145|Glacier Perito Moreno|Perito Moreno Glacier||
+AR|V|-34.6394|-58.3627||Caminito|Caminito|Caminito (La Boca)|Caminito (La Boca)
+AR|H|-34.6011|-58.3833||Teatro Colón|Teatro Colón||
+AR|H|-34.5875|-58.3933||Cimetière de Recoleta|La Recoleta Cemetery||
+AR|N|-49.3314|-72.8863|145|El Chaltén|El Chaltén|El Chaltén (Fitz Roy)|El Chaltén (Fitz Roy)
+AR|V|-54.8019|-68.3030||Ushuaïa|Ushuaia||
+AR|N|-42.5000|-64.0000|937|Péninsule Valdés|Valdés Peninsula||
+AR|N|-23.2000|-65.3500|1116|Quebrada de Humahuaca|Quebrada de Humahuaca||
+AR|N|-41.1335|-71.3103||San Carlos de Bariloche|San Carlos de Bariloche||
+AR|N|-30.0000|-67.8000|966|Parc provincial d'Ischigualasto|Ischigualasto Provincial Park||
+CL|H|-27.1127|-109.3497|715|Île de Pâques|Easter Island||
+CL|N|-50.9423|-73.4068||Parc national Torres del Paine|Torres del Paine National Park||
+CL|N|-22.9087|-68.1997||San Pedro de Atacama|San Pedro de Atacama||
+CL|N|-22.9167|-68.2833||Vallée de la Lune (Chili)|Valle de la Luna (Chile)||
+CL|N|-22.3333|-68.0167||Geysers du Tatio|El Tatio||
+CL|V|-33.0472|-71.6127|959|Valparaíso|Valparaíso||
+CL|N|-33.4250|-70.6333||Cerro San Cristóbal (Santiago)|San Cristóbal Hill||
+CL|R|-42.5000|-73.7700|971|Églises de Chiloé|Churches of Chiloé||
+PE|H|-13.1631|-72.5450|274|Machu Picchu|Machu Picchu||
+PE|V|-13.5320|-71.9675|273|Cuzco|Cusco||
+PE|N|-15.8183|-69.9700||Uros|Uru people|Îles Uros (lac Titicaca)|Uros Islands (Lake Titicaca)
+PE|H|-14.7390|-75.1300|700|Lignes de Nazca|Nazca Lines||
+PE|N|-13.8694|-71.3033||Vinicunca|Vinicunca|Montagne arc-en-ciel (Vinicunca)|Rainbow Mountain (Vinicunca)
+PE|H|-13.2583|-72.2633||Ollantaytambo|Ollantaytambo||
+PE|V|-16.3989|-71.5350|1016|Arequipa|Arequipa||
+PE|N|-15.6083|-71.9000||Canyon de Colca|Colca Canyon||
+PE|N|-14.0875|-75.7633||Huacachina|Huacachina||
+PE|V|-12.0464|-77.0300|500|Centre historique de Lima|Historic Centre of Lima||
+PE|H|-8.1060|-79.0747|366|Chan Chan|Chan Chan||
+PE|H|-6.4183|-77.9233||Kuélap|Kuélap||
+BO|N|-20.1338|-67.4891||Salar d'Uyuni|Salar de Uyuni||
+BO|V|-16.4955|-68.1336||La Paz|La Paz||
+BO|H|-16.5547|-68.6733|567|Tiwanaku|Tiwanaku||
+BO|N|-16.0167|-69.1667||Île du Soleil|Isla del Sol||
+BO|V|-19.5836|-65.7531|420|Potosí|Potosí||
+BO|V|-19.0478|-65.2595|566|Sucre|Sucre||
+BO|N|-22.1700|-67.7800||Laguna Colorada|Laguna Colorada||
+EC|N|-0.7400|-90.3150|1|Îles Galápagos|Galápagos Islands||
+EC|V|-0.2201|-78.5123|2|Centre historique de Quito|Historic Center of Quito||
+EC|N|-0.6838|-78.4378||Cotopaxi|Cotopaxi||
+EC|H|-0.0022|-78.4558||Ciudad Mitad del Mundo|Ciudad Mitad del Mundo||
+EC|V|-2.8974|-79.0045|863|Cuenca (Équateur)|Cuenca, Ecuador||
+EC|N|-0.8547|-78.9019||Quilotoa|Quilotoa||
+CO|V|10.4236|-75.5478|285|Carthagène des Indes|Cartagena, Colombia||
+CO|H|11.0383|-73.9253||Ciudad Perdida|Ciudad Perdida||
+CO|N|4.6389|-75.4881||Vallée de Cocora|Cocora Valley||
+CO|M|4.6017|-74.0719||Musée de l'or de Bogota|Gold Museum, Bogotá||
+CO|V|6.2558|-75.6189||Comuna 13|Comuna 13|Comuna 13 (Medellín)|Comuna 13 (Medellín)
+CO|N|6.2208|-75.1792||Rocher de Guatapé|La Piedra del Peñol|Rocher de Guatapé (El Peñol)|Guatapé Rock (El Peñol)
+CO|N|11.3000|-74.0500||Parc national naturel Tayrona|Tayrona National Natural Park||
+CO|N|2.2667|-73.7833||Caño Cristales|Caño Cristales||
+CO|R|5.0197|-74.0089||Cathédrale de sel de Zipaquirá|Salt Cathedral of Zipaquirá||
+CO|V|5.6333|-73.5250||Villa de Leyva|Villa de Leyva||
+CO|H|1.8881|-76.2933|744|Parc archéologique de San Agustín|San Agustín Archaeological Park||
+VE|N|5.9675|-62.5356|701|Salto Ángel|Angel Falls||
+VE|P|11.8500|-66.7500||Archipel de Los Roques|Los Roques archipelago||
+VE|N|5.1500|-60.7800||Mont Roraima|Mount Roraima||
+GY|N|5.1753|-59.4800||Chutes de Kaieteur|Kaieteur Falls||
+SR|V|5.8264|-55.1517|940|Paramaribo|Paramaribo|Centre historique de Paramaribo|Historic Paramaribo
+UY|V|-34.4714|-57.8442|747|Colonia del Sacramento|Colonia del Sacramento||
+UY|A|-34.9586|-54.9378||La Mano (Punta del Este)|La Mano de Punta del Este|La Mano (Punta del Este)|La Mano (Punta del Este)
+UY|H|-34.9064|-56.1997||Palacio Salvo|Palacio Salvo||
+UY|P|-34.4050|-53.7900||Cabo Polonio|Cabo Polonio||
+PY|R|-27.1306|-55.7006|648|Missions jésuites de Trinidad et Jesús|Jesuit Missions of La Santísima Trinidad de Paraná and Jesús de Tavarangue||
+PY|H|-25.2821|-57.6351||Panthéon national des Héros|National Pantheon of the Heroes||
+
+# ---------- Europe de l'Ouest ----------
+FR|H|48.8584|2.2945|600|Tour Eiffel|Eiffel Tower||
+FR|M|48.8606|2.3376|600|Musée du Louvre|Louvre||
+FR|R|48.8530|2.3499|600|Cathédrale Notre-Dame de Paris|Notre-Dame de Paris||
+FR|H|48.8738|2.2950||Arc de triomphe de l'Étoile|Arc de Triomphe||
+FR|R|48.8867|2.3431||Basilique du Sacré-Cœur de Montmartre|Sacré-Cœur, Paris||
+FR|M|48.8600|2.3266||Musée d'Orsay|Musée d'Orsay||
+FR|H|48.8049|2.1204|83|Château de Versailles|Palace of Versailles||
+FR|A|48.8722|2.7758||Disneyland Paris|Disneyland Paris||
+FR|R|48.6361|-1.5115|80|Mont-Saint-Michel|Mont-Saint-Michel||
+FR|H|49.3694|-0.8828||Omaha Beach|Omaha Beach|Omaha Beach (plages du Débarquement)|Omaha Beach (D-Day beaches)
+FR|N|49.7069|0.2042||Étretat|Étretat|Falaises d'Étretat|Étretat cliffs
+FR|V|48.6493|-2.0257||Saint-Malo|Saint-Malo||
+FR|H|47.6162|1.5170|933|Château de Chambord|Château de Chambord||
+FR|H|47.3249|1.0703|933|Château de Chenonceau|Château de Chenonceau||
+FR|R|48.4477|1.4878|81|Cathédrale Notre-Dame de Chartres|Chartres Cathedral||
+FR|V|48.5819|7.7509|495|Grande Île (Strasbourg)|Grande Île (Strasbourg)|Grande Île de Strasbourg|Grande Île (Strasbourg)
+FR|V|48.0742|7.3592||Colmar|Colmar||
+FR|H|48.2494|7.3444||Château du Haut-Kœnigsbourg|Haut-Kœnigsbourg||
+FR|R|45.7623|4.8225|872|Basilique Notre-Dame de Fourvière|Basilica of Notre-Dame de Fourvière|Fourvière (Lyon)|Fourvière (Lyon)
+FR|V|45.8992|6.1294||Annecy|Annecy||
+FR|N|45.8786|6.8872||Aiguille du Midi|Aiguille du Midi|Aiguille du Midi (Chamonix – Mont-Blanc)|Aiguille du Midi (Chamonix – Mont Blanc)
+FR|V|44.8414|-0.5697|1256|Place de la Bourse (Bordeaux)|Place de la Bourse||
+FR|N|44.5893|-1.2125||Dune du Pilat|Dune of Pilat||
+FR|H|45.0537|1.1686|85|Grotte de Lascaux|Lascaux||
+FR|V|44.7994|1.6178||Rocamadour|Rocamadour||
+FR|H|43.2065|2.3640|345|Cité de Carcassonne|Cité de Carcassonne||
+FR|H|43.9475|4.5353|344|Pont du Gard|Pont du Gard||
+FR|H|43.8347|4.3597|1569|Arènes de Nîmes|Arena of Nîmes||
+FR|H|43.9508|4.8075|228|Palais des papes d'Avignon|Palais des Papes|Palais des papes (Avignon)|Palais des Papes (Avignon)
+FR|N|44.3822|4.4167||Pont d'Arc|Pont d'Arc|Pont d'Arc (gorges de l'Ardèche)|Pont d'Arc (Ardèche gorges)
+FR|R|43.2840|5.3713||Basilique Notre-Dame-de-la-Garde|Notre-Dame de la Garde|Notre-Dame-de-la-Garde (Marseille)|Notre-Dame de la Garde (Marseille)
+FR|N|43.2100|5.4500||Parc national des Calanques|Calanques National Park||
+FR|N|43.7500|6.3333||Gorges du Verdon|Verdon Gorge||
+FR|V|43.6950|7.2650|1635|Promenade des Anglais|Promenade des Anglais|Promenade des Anglais (Nice)|Promenade des Anglais (Nice)
+FR|P|43.2727|6.6406||Saint-Tropez|Saint-Tropez||
+FR|V|41.3874|9.1594||Bonifacio|Bonifacio, Corse-du-Sud|Bonifacio|Bonifacio
+FR|N|42.2500|8.6333|258|Calanques de Piana|Calanques de Piana||
+FR|N|42.6950|-0.0078|773|Cirque de Gavarnie|Cirque de Gavarnie||
+FR|R|43.0975|-0.0581||Sanctuaire de Lourdes|Sanctuary of Our Lady of Lourdes||
+FR|R|47.4661|3.7483|84|Basilique Sainte-Marie-Madeleine de Vézelay|Vézelay Abbey||
+BE|V|50.8467|4.3525|857|Grand-Place de Bruxelles|Grand-Place||
+BE|A|50.8949|4.3415||Atomium|Atomium||
+BE|A|50.8450|4.3500||Manneken-Pis|Manneken Pis||
+BE|V|51.2093|3.2247|996|Bruges|Bruges||
+BE|H|51.0573|3.7207||Château des Comtes de Gand|Gravensteen||
+BE|R|51.2203|4.4015||Cathédrale Notre-Dame d'Anvers|Cathedral of Our Lady (Antwerp)||
+BE|V|50.2604|4.9118||Dinant|Dinant||
+BE|H|50.6786|4.4044||Butte du Lion|Lion's Mound|Butte du Lion (Waterloo)|Lion's Mound (Waterloo)
+NL|V|52.3667|4.8833|1349|Canaux d'Amsterdam|Canals of Amsterdam||
+NL|M|52.3600|4.8852||Rijksmuseum|Rijksmuseum||
+NL|M|52.3584|4.8811||Musée Van Gogh|Van Gogh Museum||
+NL|M|52.3752|4.8840||Maison d'Anne Frank|Anne Frank House||
+NL|N|52.2697|4.5464||Keukenhof|Keukenhof||
+NL|H|51.8840|4.6390|818|Kinderdijk|Kinderdijk||
+NL|V|52.4740|4.8170||Zaanse Schans|Zaanse Schans||
+NL|V|52.7400|6.0767||Giethoorn|Giethoorn||
+NL|A|51.9200|4.4903||Maisons cubiques de Rotterdam|Cube houses||
+NL|V|52.0116|4.3571||Delft|Delft||
+LU|V|49.6117|6.1367|699|Bock (Luxembourg)|Bock (Luxembourg)|Vieille ville de Luxembourg (Bock)|Luxembourg Old Town (Bock)
+LU|H|49.9364|6.2011||Château de Vianden|Vianden Castle||
+MC|A|43.7393|7.4285||Casino de Monte-Carlo|Monte Carlo Casino||
+MC|M|43.7307|7.4253||Musée océanographique de Monaco|Oceanographic Museum||
+GB|H|51.4995|-0.1248|426|Palais de Westminster|Palace of Westminster|Palais de Westminster (Big Ben)|Palace of Westminster (Big Ben)
+GB|H|51.5081|-0.0759|488|Tour de Londres|Tower of London||
+GB|H|51.5055|-0.0754||Tower Bridge|Tower Bridge||
+GB|M|51.5194|-0.1270||British Museum|British Museum||
+GB|M|51.4967|-0.1764||Musée d'histoire naturelle de Londres|Natural History Museum, London||
+GB|H|51.5014|-0.1419||Palais de Buckingham|Buckingham Palace||
+GB|A|51.5033|-0.1196||London Eye|London Eye||
+GB|N|51.4787|-0.2956|1084|Jardins botaniques royaux de Kew|Kew Gardens||
+GB|H|51.4839|-0.6044||Château de Windsor|Windsor Castle||
+GB|H|51.1789|-1.8262|373|Stonehenge|Stonehenge||
+GB|H|51.3811|-2.3597|428|Thermes romains de Bath|Roman Baths (Bath)||
+GB|H|51.7534|-1.2540||Radcliffe Camera|Radcliffe Camera|Radcliffe Camera (Oxford)|Radcliffe Camera (Oxford)
+GB|R|52.2049|0.1166||Chapelle du King's College|King's College Chapel, Cambridge||
+GB|R|51.2798|1.0828|496|Cathédrale de Canterbury|Canterbury Cathedral||
+GB|N|51.1350|1.3570||Falaises blanches de Douvres|White Cliffs of Dover||
+GB|N|50.6214|-2.2767|1029|Durdle Door|Durdle Door||
+GB|R|53.9623|-1.0819||York Minster|York Minster||
+GB|N|54.4609|-3.0886|422|Lake District|Lake District||
+GB|H|55.0133|-2.3306|430|Fort romain de Housesteads|Housesteads Roman Fort|Mur d'Hadrien (Housesteads)|Hadrian's Wall (Housesteads)
+GB|H|55.9486|-3.1999|728|Château d'Édimbourg|Edinburgh Castle||
+GB|N|57.3229|-4.4244||Loch Ness|Loch Ness||
+GB|N|57.5070|-6.1830||Old Man of Storr|Old Man of Storr|Old Man of Storr (île de Skye)|Old Man of Storr (Isle of Skye)
+GB|N|56.6667|-5.0667||Glen Coe|Glen Coe||
+GB|N|53.0685|-4.0763||Snowdon|Snowdon||
+GB|H|51.4822|-3.1812||Château de Cardiff|Cardiff Castle||
+GB|N|55.2408|-6.5116|369|Chaussée des Géants|Giant's Causeway||
+IE|N|52.9715|-9.4309||Falaises de Moher|Cliffs of Moher||
+IE|H|53.3438|-6.2546||Trinity College (Dublin)|Trinity College Dublin||
+IE|M|53.3419|-6.2867||Guinness Storehouse|Guinness Storehouse||
+IE|H|52.5200|-7.8906||Rocher de Cashel|Rock of Cashel||
+IE|N|51.9500|-9.9000||Anneau du Kerry|Ring of Kerry||
+IE|H|53.6947|-6.4755|659|Newgrange|Newgrange||
+IE|N|53.5469|-9.9161||Parc national du Connemara|Connemara National Park||
+IE|H|51.7711|-10.5397|757|Skellig Michael|Skellig Michael||
+IE|R|53.0108|-6.3297||Glendalough|Glendalough||
+IE|V|53.2707|-9.0568||Galway|Galway||
+IE|H|52.6503|-7.2492||Château de Kilkenny|Kilkenny Castle||
+IS|N|63.8804|-22.4495||Lagon bleu (Islande)|Blue Lagoon (geothermal spa)|Lagon bleu|Blue Lagoon
+IS|N|64.3271|-20.1199||Gullfoss|Gullfoss||
+IS|N|64.3104|-20.3024||Geysir|Geysir||
+IS|N|64.2559|-21.1299|1152|Þingvellir|Þingvellir||
+IS|N|64.0784|-16.2306|1604|Jökulsárlón|Jökulsárlón||
+IS|N|63.5321|-19.5114||Skógafoss|Skógafoss||
+IS|N|63.6156|-19.9886||Seljalandsfoss|Seljalandsfoss||
+IS|R|64.1417|-21.9266||Hallgrímskirkja|Hallgrímskirkja||
+IS|P|63.4044|-19.0450||Reynisfjara|Reynisfjara||
+IS|N|65.8147|-16.3846||Dettifoss|Dettifoss||
+
+# ---------- Europe du Sud ----------
+ES|R|41.4036|2.1744|320|Sagrada Família|Sagrada Família||
+ES|A|41.4145|2.1527|320|Parc Güell|Park Güell||
+ES|A|41.3917|2.1650|320|Casa Batlló|Casa Batlló||
+ES|V|41.3833|2.1767||Quartier gothique de Barcelone|Gothic Quarter, Barcelona||
+ES|R|41.5933|1.8375||Abbaye de Montserrat|Santa Maria de Montserrat Abbey||
+ES|H|37.1761|-3.5881|314|Alhambra|Alhambra||
+ES|R|37.8789|-4.7794|313|Mosquée-cathédrale de Cordoue|Mosque–Cathedral of Córdoba||
+ES|H|37.3831|-5.9903|383|Alcazar de Séville|Alcázar of Seville||
+ES|A|37.3772|-5.9869||Place d'Espagne (Séville)|Plaza de España (Seville)||
+ES|H|36.7408|-5.1656||Puente Nuevo|Puente Nuevo|Puente Nuevo (Ronda)|Puente Nuevo (Ronda)
+ES|N|36.9356|-4.7969||Caminito del Rey|Caminito del Rey||
+ES|M|40.4138|-3.6921||Musée du Prado|Museo del Prado||
+ES|H|40.4180|-3.7143||Palais royal de Madrid|Royal Palace of Madrid||
+ES|V|39.8628|-4.0273|379|Tolède|Toledo, Spain||
+ES|H|40.9481|-4.1184|311|Aqueduc de Ségovie|Aqueduct of Segovia||
+ES|V|40.9650|-5.6640|381|Salamanque|Salamanca||
+ES|V|40.0783|-2.1278|781|Maisons suspendues de Cuenca|Casas Colgadas|Maisons suspendues (Cuenca)|Hanging Houses (Cuenca)
+ES|R|42.8806|-8.5446|347|Cathédrale Saint-Jacques-de-Compostelle|Santiago de Compostela Cathedral||
+ES|M|43.2687|-2.9340||Musée Guggenheim de Bilbao|Guggenheim Museum Bilbao||
+ES|P|43.3178|-1.9875||Plage de la Concha|La Concha Beach|Plage de la Concha (Saint-Sébastien)|La Concha Beach (San Sebastián)
+ES|A|39.4542|-0.3502||Cité des arts et des sciences|City of Arts and Sciences|Cité des arts et des sciences (Valence)|City of Arts and Sciences (Valencia)
+ES|R|39.5675|2.6483||Cathédrale de Palma|Palma Cathedral||
+ES|V|38.9067|1.4361|417|Dalt Vila|Dalt Vila|Dalt Vila (Ibiza)|Dalt Vila (Ibiza)
+ES|N|28.2724|-16.6425|1258|Parc national du Teide|Teide National Park||
+ES|N|29.0167|-13.7500||Parc national de Timanfaya|Timanfaya National Park||
+ES|H|38.9156|-6.3383|664|Théâtre romain de Mérida|Roman Theatre (Mérida)||
+PT|H|38.6916|-9.2160|263|Tour de Belém|Belém Tower||
+PT|R|38.6979|-9.2068|263|Monastère des Hiéronymites|Jerónimos Monastery||
+PT|V|38.7114|-9.1300||Alfama|Alfama||
+PT|H|38.7876|-9.3906|723|Palais national de Pena|Pena Palace||
+PT|V|41.1406|-8.6131|755|Ribeira (Porto)|Ribeira (Porto)||
+PT|A|41.1469|-8.6148||Livraria Lello|Livraria Lello||
+PT|N|41.1600|-7.7900|1046|Haut-Douro viticole|Alto Douro Wine Region||
+PT|N|37.0806|-8.6694||Ponta da Piedade|Ponta da Piedade||
+PT|N|37.0874|-8.4260||Grotte de Benagil|Benagil Cave||
+PT|V|38.5714|-7.9087|361|Évora|Évora||
+PT|H|40.2075|-8.4261|1387|Université de Coimbra|University of Coimbra||
+PT|V|32.6669|-16.9241||Funchal|Funchal||
+PT|N|37.8406|-25.7953||Sete Cidades|Sete Cidades Massif|Sete Cidades (Açores)|Sete Cidades (Azores)
+PT|V|39.3606|-9.1572||Óbidos (Portugal)|Óbidos, Portugal||
+PT|R|39.6317|-8.6731||Sanctuaire de Fátima|Sanctuary of Fátima||
+PT|R|39.6036|-8.4192|265|Couvent du Christ|Convent of Christ (Tomar)||
+AD|H|42.5063|1.5211||Casa de la Vall|Casa de la Vall||
+AD|N|42.4800|1.5800|1160|Vallée du Madriu-Perafita-Claror|Madriu-Perafita-Claror Valley||
+IT|H|41.8902|12.4922|91|Colisée|Colosseum||
+IT|H|41.8925|12.4853|91|Forum Romain|Roman Forum||
+IT|H|41.9009|12.4833|91|Fontaine de Trevi|Trevi Fountain||
+IT|H|41.8986|12.4769|91|Panthéon (Rome)|Pantheon, Rome||
+IT|V|45.4341|12.3388|394|Place Saint-Marc|Piazza San Marco|Place Saint-Marc (Venise)|St Mark's Square (Venice)
+IT|V|45.4380|12.3355|394|Grand Canal (Venise)|Grand Canal (Venice)||
+IT|R|43.7731|11.2560|174|Cathédrale Santa Maria del Fiore|Florence Cathedral|Duomo de Florence|Florence Cathedral
+IT|M|43.7678|11.2553|174|Galerie des Offices|Uffizi||
+IT|H|43.7680|11.2531|174|Ponte Vecchio|Ponte Vecchio||
+IT|H|43.7230|10.3966|395|Tour de Pise|Leaning Tower of Pisa||
+IT|H|40.7489|14.4850|829|Pompéi|Pompeii||
+IT|H|40.8060|14.3478|829|Herculanum|Herculaneum||
+IT|V|40.8500|14.2583|726|Centre historique de Naples|Historic Centre of Naples||
+IT|N|40.5606|14.2056||Grotte bleue|Blue Grotto (Capri)|Grotte bleue (Capri)|Blue Grotto (Capri)
+IT|P|40.6281|14.4850|830|Positano|Positano|Positano (côte amalfitaine)|Positano (Amalfi Coast)
+IT|V|44.1350|9.6847|826|Cinque Terre|Cinque Terre||
+IT|V|44.3036|9.2097||Portofino|Portofino||
+IT|N|46.6186|12.3025|1237|Tre Cime di Lavaredo|Tre Cime di Lavaredo|Tre Cime di Lavaredo (Dolomites)|Tre Cime di Lavaredo (Dolomites)
+IT|N|45.9855|9.2574||Lac de Côme|Lake Como||
+IT|N|45.4969|10.6081||Sirmione|Sirmione|Sirmione (lac de Garde)|Sirmione (Lake Garda)
+IT|R|45.4642|9.1916||Cathédrale de Milan|Milan Cathedral|Duomo de Milan|Milan Cathedral
+IT|M|45.4660|9.1709|93|Santa Maria delle Grazie (Milan)|Santa Maria delle Grazie, Milan|La Cène (Santa Maria delle Grazie)|The Last Supper (Santa Maria delle Grazie)
+IT|H|45.4390|10.9947|797|Arènes de Vérone|Verona Arena||
+IT|V|43.3184|11.3316|717|Piazza del Campo|Piazza del Campo|Piazza del Campo (Sienne)|Piazza del Campo (Siena)
+IT|V|43.4677|11.0432|550|San Gimignano|San Gimignano||
+IT|N|43.0667|11.6167|1026|Val d'Orcia|Val d'Orcia||
+IT|R|43.0750|12.6056|990|Basilique Saint-François d'Assise|Basilica of San Francesco d'Assisi||
+IT|V|44.4943|11.3467||Tours de Bologne|Two Towers, Bologna||
+IT|R|44.4206|12.1964|788|Basilique San Vitale de Ravenne|Basilica of San Vitale|San Vitale (Ravenne)|San Vitale (Ravenna)
+IT|V|40.6664|16.6100|670|Sassi de Matera|Sassi di Matera||
+IT|V|40.7833|17.2375|787|Alberobello|Alberobello|Trulli d'Alberobello|Trulli of Alberobello
+IT|N|37.7510|14.9934|1427|Etna|Mount Etna||
+IT|H|37.8522|15.2925||Théâtre antique de Taormine|Ancient theatre of Taormina||
+IT|H|37.2900|13.5850|831|Vallée des Temples|Valley of the Temples|Vallée des Temples (Agrigente)|Valley of the Temples (Agrigento)
+IT|P|41.0900|9.5400||Costa Smeralda|Costa Smeralda||
+IT|H|39.7056|8.9911|833|Su Nuraxi|Su Nuraxi||
+VA|R|41.9022|12.4539|286|Basilique Saint-Pierre|St. Peter's Basilica||
+VA|M|41.9029|12.4545|286|Chapelle Sixtine|Sistine Chapel||
+SM|H|43.9330|12.4480|1245|Trois tours de Saint-Marin|Three Towers of San Marino||
+MT|V|35.8989|14.5146|131|La Valette|Valletta||
+MT|V|35.8856|14.4028||Mdina|Mdina||
+MT|H|35.8278|14.4419|132|Ħaġar Qim|Ħaġar Qim||
+MT|H|35.8692|14.5069|130|Hypogée de Ħal Saflieni|Ħal Saflieni Hypogeum||
+MT|P|36.0128|14.3247||Comino|Comino|Comino (Lagon bleu)|Comino (Blue Lagoon)
+GR|H|37.9715|23.7257|404|Acropole d'Athènes|Acropolis of Athens||
+GR|M|37.9685|23.7286||Musée de l'Acropole|Acropolis Museum||
+GR|H|37.6503|24.0247||Temple de Poséidon (cap Sounion)|Temple of Poseidon, Sounion|Cap Sounion (temple de Poséidon)|Cape Sounion (Temple of Poseidon)
+GR|V|36.4618|25.3753||Oia (Santorin)|Oia, Greece|Oia (Santorin)|Oia (Santorini)
+GR|R|39.7217|21.6306|455|Météores|Meteora||
+GR|H|38.4824|22.5010|393|Delphes|Delphi||
+GR|H|37.6383|21.6300|517|Olympie|Olympia, Greece||
+GR|H|37.5961|23.0792|491|Théâtre d'Épidaure|Ancient Theatre of Epidaurus||
+GR|H|37.0739|22.3683|511|Mistra|Mystras||
+GR|P|37.4467|25.3289||Mykonos|Mykonos||
+GR|H|35.2981|25.1631||Cnossos|Knossos||
+GR|N|35.2667|23.9667||Gorges de Samaria|Samaria Gorge||
+GR|P|35.5828|23.5872||Balos|Balos||
+GR|P|37.8592|20.6247||Navagio|Navagio||
+GR|V|36.4441|28.2276|493|Ville médiévale de Rhodes|Medieval City of Rhodes||
+GR|V|39.6243|19.9217|978|Corfou (ville)|Corfu (city)||
+GR|R|40.1572|24.3264|454|Mont Athos|Mount Athos||
+GR|H|40.6264|22.9484||Tour Blanche de Thessalonique|White Tower of Thessaloniki||
+HR|V|42.6407|18.1077|95|Dubrovnik|Dubrovnik||
+HR|N|44.8654|15.5820|98|Parc national des lacs de Plitvice|Plitvice Lakes National Park||
+HR|H|43.5081|16.4402|97|Palais de Dioclétien|Diocletian's Palace|Palais de Dioclétien (Split)|Diocletian's Palace (Split)
+HR|N|43.8028|15.9725||Parc national de Krka|Krka National Park||
+HR|P|43.1729|16.4411||Hvar (ville)|Hvar (town)|Hvar|Hvar
+HR|A|44.1170|15.2195||Orgue marin de Zadar|Sea organ|Orgue marin (Zadar)|Sea Organ (Zadar)
+HR|V|45.0811|13.6387||Rovinj|Rovinj||
+HR|R|45.2286|13.5928|809|Basilique euphrasienne|Euphrasian Basilica||
+HR|P|43.2556|16.6369||Zlatni Rat|Zlatni Rat||
+SI|N|46.3625|14.0936||Lac de Bled|Lake Bled||
+SI|N|45.7828|14.2036||Grotte de Postojna|Postojna Cave||
+SI|N|45.6633|13.9900|390|Grottes de Škocjan|Škocjan Caves||
+SI|H|46.0511|14.5061||Triple Pont|Triple Bridge|Triple Pont (Ljubljana)|Triple Bridge (Ljubljana)
+SI|V|45.5283|13.5683||Piran|Piran||
+SI|N|46.2833|13.8667||Lac de Bohinj|Lake Bohinj||
+BA|H|43.3373|17.8150|946|Stari most|Stari Most|Vieux pont de Mostar|Stari Most (Mostar)
+BA|V|43.8597|18.4314||Baščaršija|Baščaršija|Baščaršija (Sarajevo)|Baščaršija (Sarajevo)
+BA|N|43.1564|17.6083||Chutes de Kravica|Kravica Waterfall||
+BA|H|43.7822|19.2878|1260|Pont Mehmed Paša Sokolović|Mehmed Paša Sokolović Bridge||
+ME|N|42.4247|18.7712|125|Bouches de Kotor|Bay of Kotor||
+ME|V|42.4867|18.6989|125|Perast|Perast||
+ME|V|42.2864|18.8400||Budva|Budva||
+ME|P|42.2558|18.8914||Sveti Stefan|Sveti Stefan||
+ME|N|43.1500|19.0833|100|Parc national du Durmitor|Durmitor National Park||
+ME|R|42.6750|19.0300||Monastère d'Ostrog|Ostrog Monastery||
+AL|V|40.7058|19.9522|569|Berat|Berat||
+AL|V|40.0758|20.1389|569|Gjirokastër|Gjirokastër||
+AL|H|39.7456|20.0203|570|Butrint|Butrint||
+AL|P|39.7731|20.0003||Ksamil|Ksamil||
+AL|V|41.3275|19.8187||Place Skanderbeg|Skanderbeg Square|Place Skanderbeg (Tirana)|Skanderbeg Square (Tirana)
+AL|N|42.3956|19.7742||Theth|Theth||
+AL|N|39.9239|20.1928||Œil bleu (Albanie)|Blue Eye (spring)|Œil bleu|Blue Eye
+MK|R|41.1111|20.7881|99|Église Saint-Jean de Kaneo|Church of St. John at Kaneo|Saint-Jean de Kaneo (Ohrid)|St. John at Kaneo (Ohrid)
+MK|V|42.0011|21.4361||Vieux bazar de Skopje|Old Bazaar, Skopje||
+MK|N|41.9542|21.2967||Canyon de Matka|Matka Canyon||
+RS|H|44.8231|20.4508||Forteresse de Belgrade|Belgrade Fortress||
+RS|R|44.7981|20.4686||Temple de Saint-Sava|Church of Saint Sava||
+RS|R|43.4864|20.5317|389|Monastère de Studenica|Studenica Monastery||
+RS|H|45.2525|19.8622||Forteresse de Petrovaradin|Petrovaradin Fortress||
+XK|R|42.5467|20.2661|724|Monastère de Visoki Dečani|Visoki Dečani||
+XK|V|42.2139|20.7397||Prizren|Prizren||
+
+# ---------- Europe centrale et du Nord ----------
+DE|H|52.5163|13.3777||Porte de Brandebourg|Brandenburg Gate||
+DE|H|52.5186|13.3762||Palais du Reichstag|Reichstag building||
+DE|H|52.5050|13.4397||East Side Gallery|East Side Gallery|East Side Gallery (mur de Berlin)|East Side Gallery (Berlin Wall)
+DE|M|52.5169|13.4019|896|Île aux Musées|Museum Island||
+DE|H|52.4043|13.0384|532|Palais de Sanssouci|Sanssouci||
+DE|H|47.5576|10.7498||Château de Neuschwanstein|Neuschwanstein Castle||
+DE|R|50.9413|6.9583|292|Cathédrale de Cologne|Cologne Cathedral||
+DE|R|50.7747|6.0839|3|Cathédrale d'Aix-la-Chapelle|Aachen Cathedral||
+DE|V|48.1374|11.5755||Marienplatz|Marienplatz|Marienplatz (Munich)|Marienplatz (Munich)
+DE|N|47.4211|10.9853||Zugspitze|Zugspitze||
+DE|H|49.4106|8.7153||Château de Heidelberg|Heidelberg Castle||
+DE|V|49.3772|10.1789||Rothenburg ob der Tauber|Rothenburg ob der Tauber||
+DE|H|49.4578|11.0758||Château de Nuremberg|Nuremberg Castle||
+DE|N|48.1311|8.2306||Chutes de Triberg|Triberg Waterfalls|Chutes de Triberg (Forêt-Noire)|Triberg Waterfalls (Black Forest)
+DE|N|50.1394|7.7300|1066|Lorelei|Lorelei|Lorelei (vallée du Rhin)|Lorelei (Rhine Valley)
+DE|A|53.5413|9.9841||Elbphilharmonie|Elbphilharmonie||
+DE|V|53.5440|9.9900|1467|Speicherstadt|Speicherstadt||
+DE|R|51.0519|13.7417||Frauenkirche de Dresde|Frauenkirche, Dresden||
+AT|H|48.1845|16.3122|786|Château de Schönbrunn|Schönbrunn Palace||
+AT|R|48.2085|16.3731|1033|Cathédrale Saint-Étienne de Vienne|St. Stephen's Cathedral, Vienna||
+AT|M|48.1915|16.3809|1033|Palais du Belvédère|Belvedere, Vienna||
+AT|V|47.5622|13.6493|806|Hallstatt|Hallstatt||
+AT|V|47.7981|13.0465|784|Salzbourg|Salzburg||
+AT|V|47.2692|11.4041||Innsbruck|Innsbruck||
+AT|N|47.0833|12.8333||Route alpine du Grossglockner|Grossglockner High Alpine Road||
+AT|R|48.2281|15.3328|970|Abbaye de Melk|Melk Abbey||
+AT|N|47.5031|13.1897||Eisriesenwelt|Eisriesenwelt||
+CH|N|45.9800|7.6700||Cervin|Matterhorn|Cervin (Zermatt)|Matterhorn (Zermatt)
+CH|N|46.5475|7.9853|1037|Jungfraujoch|Jungfraujoch||
+CH|N|46.4500|8.0500|1037|Glacier d'Aletsch|Aletsch Glacier||
+CH|N|46.5935|7.9091||Lauterbrunnen|Lauterbrunnen||
+CH|V|46.6863|7.8632||Interlaken|Interlaken||
+CH|H|47.0517|8.3075||Kapellbrücke|Kapellbrücke|Pont de la Chapelle (Lucerne)|Chapel Bridge (Lucerne)
+CH|N|46.9789|8.2550||Pilatus (montagne)|Pilatus (mountain)|Mont Pilatus|Mount Pilatus
+CH|H|46.4142|6.9275||Château de Chillon|Chillon Castle||
+CH|N|46.4920|6.7450|1243|Lavaux|Lavaux||
+CH|A|46.2075|6.1556||Jet d'eau de Genève|Jet d'Eau||
+CH|V|46.9480|7.4474|267|Vieille ville de Berne|Old City of Bern||
+CH|N|47.6779|8.6155||Chutes du Rhin|Rhine Falls||
+CH|R|47.4233|9.3772|268|Abbaye de Saint-Gall|Abbey of Saint Gall||
+LI|H|47.1394|9.5236||Château de Vaduz|Vaduz Castle||
+CZ|H|50.0865|14.4114|616|Pont Charles|Charles Bridge||
+CZ|H|50.0911|14.4016|616|Château de Prague|Prague Castle||
+CZ|H|50.0870|14.4207|616|Horloge astronomique de Prague|Prague astronomical clock||
+CZ|V|48.8127|14.3175|617|Český Krumlov|Český Krumlov||
+CZ|R|49.9619|15.2883||Ossuaire de Sedlec|Sedlec Ossuary||
+CZ|V|50.2319|12.8720|1613|Karlovy Vary|Karlovy Vary||
+CZ|N|50.8822|14.2814||Pravčická brána|Pravčická brána||
+CZ|H|49.9394|14.1881||Château de Karlštejn|Karlštejn||
+SK|H|48.1422|17.1000||Château de Bratislava|Bratislava Castle||
+SK|H|48.9997|20.7681|620|Château de Spiš|Spiš Castle||
+SK|N|49.1194|20.0628||Štrbské Pleso|Štrbské Pleso|Štrbské Pleso (Hautes Tatras)|Štrbské Pleso (High Tatras)
+SK|V|48.4589|18.8931|618|Banská Štiavnica|Banská Štiavnica||
+HU|H|47.5071|19.0456|400|Parlement hongrois|Hungarian Parliament Building||
+HU|H|47.5022|19.0347|400|Bastion des Pêcheurs|Fisherman's Bastion||
+HU|A|47.5186|19.0819||Bains Széchenyi|Széchenyi thermal bath||
+HU|N|46.8500|17.7333||Lac Balaton|Lake Balaton||
+HU|V|47.9025|20.3772||Eger|Eger||
+HU|R|47.5531|17.7553|758|Archiabbaye de Pannonhalma|Pannonhalma Archabbey||
+PL|H|50.0540|19.9354|29|Château du Wawel|Wawel Castle||
+PL|M|50.0266|19.2036|31|Auschwitz-Birkenau|Auschwitz concentration camp||
+PL|H|49.9833|20.0556|32|Mine de sel de Wieliczka|Wieliczka Salt Mine||
+PL|V|52.2497|21.0122|30|Vieille ville de Varsovie|Warsaw Old Town||
+PL|V|54.3486|18.6533||Długi Targ|Long Market|Długi Targ (Gdańsk)|Long Market (Gdańsk)
+PL|H|54.0397|19.0278|847|Château de Malbork|Malbork Castle||
+PL|N|49.2992|19.9496||Zakopane|Zakopane||
+PL|V|51.1100|17.0320||Place du Marché de Wrocław|Wrocław Market Square||
+PL|N|52.7333|23.8333|33|Forêt de Białowieża|Białowieża Forest||
+DK|V|55.6798|12.5911||Nyhavn|Nyhavn||
+DK|A|55.6929|12.5993||La Petite Sirène|The Little Mermaid (statue)||
+DK|A|55.6737|12.5681||Jardins de Tivoli|Tivoli Gardens||
+DK|H|56.0390|12.6213|696|Château de Kronborg|Kronborg||
+DK|H|55.9342|12.3011||Château de Frederiksborg|Frederiksborg Castle||
+DK|R|55.6425|12.0803|695|Cathédrale de Roskilde|Roskilde Cathedral||
+DK|A|55.7353|9.1264||Legoland Billund|Legoland Billund Resort||
+DK|N|57.7436|10.6378||Grenen|Grenen||
+DK|N|54.9667|12.5333||Møns Klint|Møns Klint||
+NO|N|62.1014|7.0940|1195|Geirangerfjord|Geirangerfjord||
+NO|N|60.8800|6.8500|1195|Nærøyfjord|Nærøyfjord||
+NO|N|58.9864|6.1903||Preikestolen|Preikestolen||
+NO|N|60.1242|6.7400||Trolltunga|Trolltunga||
+NO|V|60.3975|5.3244|59|Bryggen|Bryggen|Bryggen (Bergen)|Bryggen (Bergen)
+NO|V|67.9325|13.0889||Reine|Reine|Reine (îles Lofoten)|Reine (Lofoten)
+NO|A|59.9075|10.7531||Opéra d'Oslo|Oslo Opera House||
+NO|N|71.1700|25.7833||Cap Nord|North Cape (Norway)||
+NO|V|69.6492|18.9553||Tromsø|Tromsø||
+NO|A|63.0167|7.3500||Route de l'Atlantique|Atlantic Ocean Road||
+NO|R|61.2981|7.3228|58|Église en bois debout d'Urnes|Urnes Stave Church||
+SE|V|59.3256|18.0719||Gamla stan|Gamla stan|Gamla stan (Stockholm)|Gamla stan (Stockholm)
+SE|M|59.3280|18.0914||Vasamuseet|Vasa Museum|Musée Vasa|Vasa Museum
+SE|H|59.3217|17.8867|559|Palais de Drottningholm|Drottningholm Palace||
+SE|V|57.6409|18.2960|731|Visby|Visby||
+SE|N|68.3500|18.8333||Parc national d'Abisko|Abisko National Park||
+SE|A|67.8517|20.5947||Icehotel|Icehotel (Jukkasjärvi)||
+FI|R|60.1704|24.9522||Cathédrale d'Helsinki|Helsinki Cathedral||
+FI|R|60.1729|24.9253||Église Temppeliaukio|Temppeliaukio Church||
+FI|H|60.1454|24.9881|583|Suomenlinna|Suomenlinna||
+FI|A|66.5436|25.8473||Village du Père Noël|Santa Claus Village|Village du Père Noël (Rovaniemi)|Santa Claus Village (Rovaniemi)
+FI|H|61.8644|28.9003||Olavinlinna|Olavinlinna||
+FI|V|61.1286|21.5111|582|Vieux Rauma|Old Rauma||
+EE|V|59.4370|24.7450|822|Vieille ville de Tallinn|Tallinn Old Town||
+EE|N|59.5667|25.8333||Parc national de Lahemaa|Lahemaa National Park||
+LV|V|56.9496|24.1052|852|Vieille ville de Riga|Old Riga||
+LV|P|56.9680|23.7704||Jūrmala|Jūrmala||
+LV|H|56.4136|24.0247||Palais de Rundāle|Rundāle Palace||
+LT|V|54.6811|25.2875|541|Vieille ville de Vilnius|Vilnius Old Town||
+LT|H|54.6522|24.9336||Château de Trakai|Trakai Island Castle||
+LT|R|56.0153|23.4167||Colline des Croix|Hill of Crosses||
+LT|N|55.3000|21.0000|994|Isthme de Courlande|Curonian Spit||
+
+# ---------- Europe de l'Est ----------
+RO|H|45.5150|25.3672||Château de Bran|Bran Castle||
+RO|H|45.3597|25.5428||Château de Peleș|Peleș Castle||
+RO|V|46.2197|24.7922|902|Sighișoara|Sighișoara||
+RO|V|45.6427|25.5887||Brașov|Brașov||
+RO|V|45.7983|24.1256||Sibiu|Sibiu||
+RO|A|44.4275|26.0875||Palais du Parlement|Palace of the Parliament||
+RO|R|47.5172|25.8642|598|Monastère de Voroneț|Voroneț Monastery||
+RO|N|45.1667|29.2500|588|Delta du Danube|Danube Delta||
+RO|N|45.6000|24.6167||Transfăgărășan|Transfăgărășan||
+RO|H|47.9708|23.6947||Cimetière joyeux de Săpânța|Merry Cemetery||
+BG|R|42.1336|23.3403|216|Monastère de Rila|Rila Monastery||
+BG|R|42.6958|23.3328||Cathédrale Saint-Alexandre-Nevski de Sofia|Alexander Nevsky Cathedral, Sofia||
+BG|H|42.1469|24.7511||Théâtre antique de Philippopolis|Ancient Theatre of Philippopolis|Théâtre antique de Plovdiv|Ancient Theatre of Plovdiv
+BG|V|42.6589|27.7361|217|Nessebar|Nesebar||
+BG|H|43.0842|25.6522||Tsarevets|Tsarevets (fortress)|Tsarevets (Veliko Tarnovo)|Tsarevets (Veliko Tarnovo)
+BG|N|42.2000|23.3167||Sept lacs de Rila|Seven Rila Lakes||
+BG|N|43.6236|22.6814||Rochers de Belogradtchik|Belogradchik Rocks||
+MD|H|47.3044|28.9578||Orheiul Vechi|Old Orhei||
+MD|M|46.9167|28.8167||Mileștii Mici (cave)|Mileștii Mici (wine cellar)|Caves de Mileștii Mici|Mileștii Mici wine cellars
+UA|R|50.4344|30.5575|527|Laure des Grottes de Kiev|Kyiv Pechersk Lavra||
+UA|R|50.4529|30.5143|527|Cathédrale Sainte-Sophie de Kiev|Saint Sophia Cathedral, Kyiv||
+UA|V|49.8419|24.0315|865|Lviv|Lviv||
+UA|H|46.4888|30.7432|1703|Escalier du Potemkine|Potemkin Stairs|Escalier du Potemkine (Odessa)|Potemkin Stairs (Odesa)
+UA|H|48.6733|26.5636||Forteresse de Kamianets-Podilskyï|Kamianets-Podilskyi Castle||
+BY|H|53.4511|26.4728|625|Château de Mir|Mir Castle Complex||
+BY|H|53.2228|26.6914|1196|Château de Niasvij|Nesvizh Castle||
+BY|N|52.5667|23.8000|33|Parc national de Białowieża (Biélorussie)|Belovezhskaya Pushcha National Park||
+RU|H|55.7539|37.6208|545|Place Rouge|Red Square||
+RU|H|55.7520|37.6175|545|Kremlin de Moscou|Moscow Kremlin||
+RU|R|55.7525|37.6231|545|Cathédrale Saint-Basile-le-Bienheureux|Saint Basil's Cathedral|Cathédrale Saint-Basile|Saint Basil's Cathedral
+RU|M|59.9398|30.3146|540|Musée de l'Ermitage|Hermitage Museum||
+RU|R|59.9341|30.3061|540|Cathédrale Saint-Isaac|Saint Isaac's Cathedral||
+RU|R|59.9400|30.3289|540|Église du Saint-Sauveur-sur-le-Sang-Versé|Church of the Savior on Blood||
+RU|H|59.8854|29.9086|540|Peterhof|Peterhof Palace||
+RU|H|59.7161|30.3956|540|Palais Catherine|Catherine Palace||
+RU|R|56.3108|38.1306|657|Laure de la Trinité-Saint-Serge|Trinity Lavra of St. Sergius||
+RU|V|56.4194|40.4492|633|Souzdal|Suzdal||
+RU|H|55.7986|49.1061|980|Kremlin de Kazan|Kazan Kremlin||
+RU|R|62.0667|35.2233|544|Pogost de Kiji|Kizhi Pogost||
+RU|N|51.8536|104.8697|754|Lac Baïkal|Lake Baikal|Lac Baïkal (Listvianka)|Lake Baikal (Listvyanka)
+RU|N|53.2550|158.8300|765|Volcans du Kamtchatka|Volcanoes of Kamchatka||
+RU|N|43.3499|42.4453||Elbrouz|Mount Elbrus||
+
+# ---------- Régions polaires ----------
+AQ|H|-64.8250|-63.4950||Port Lockroy|Port Lockroy||

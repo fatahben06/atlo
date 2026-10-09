@@ -1,0 +1,2 @@
+/* Atlo · MC : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("MC",{"r":[[["Monaco-Ville","Monaco","Monaco-Ville","مدينة موناكو"],43.742,7.403,[7.366,43.718,7.437,43.764],"gntA}mMPe@VUp@`AIjAm@MW]Ke@"]],"v":[[["Monaco","Monaco","Mónaco","موناكو"],43.7396,7.4069,36371,0,0,"Europe/Monaco"]]});

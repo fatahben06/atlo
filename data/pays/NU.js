@@ -1,0 +1,2 @@
+/* Atlo · NU : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("NU",{"r":[[["Niue","Niue","Niue","نيوي"],-19.058,-169.864,[-169.95,-19.143,-169.783,-18.964],"h`d@nyjIDmChEsAHZv@t@v@pAGN`@r@SDGN@n@[]a@HGBOn@c@C}@k@o@NUc@kAg@"]],"v":[]});

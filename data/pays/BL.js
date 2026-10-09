@@ -1,0 +1,2 @@
+/* Atlo · BL : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("BL",{"r":[[["Saint-Barthélemy","Saint Barthélemy","San Bartolomé","سان بارتيلمي"],17.91,-62.829,[-62.867,17.882,-62.792,17.929],"s|a@lvyBm@j@o@HZsCl@b@PZ@\\"]],"v":[]});

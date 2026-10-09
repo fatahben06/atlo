@@ -1,0 +1,2 @@
+/* Atlo · SX : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("SX",{"r":[[["Saint-Martin","Sint Maarten","San Martín","سينت مارتن"],18.039,-63.07,[-63.119,18.019,-63.018,18.062],"{gb@dgzBDi@r@gCZXa@dC_@h@SW"]],"v":[]});

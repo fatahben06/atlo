@@ -1,0 +1,2 @@
+/* Atlo · GG : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("GG",{"r":[[["Sercq","Sark","Sark","سارك"],49.473,-2.568,[-2.673,49.412,-2.17,49.731],"kt_Bf`Dk@{BP_@t@f@pATNPFRGh@CfEUSAU[HIMCq@w@yA mq_BvrCLOVC^f@AFUIUBWU ec`BzfCNGVb@Nx@IPUOWwA"]],"v":[]});

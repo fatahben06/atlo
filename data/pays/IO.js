@@ -1,0 +1,2 @@
+/* Atlo · IO : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("IO",{"r":[[["Territoire britannique de l'océan Indien","British Indian Ocean Territory","Territorio Británico del Océano Índico","إقليم المحيط الهندي البريطاني"],-6.192,71.348,[71.261,-7.432,72.495,-5.227],"`oManlCwB}Ar@ApA~AyELmBfC~AuCxE? tbMonlChCmBvAh@j@Ii@TmAe@uC|A"]],"v":[]});

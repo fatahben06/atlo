@@ -1,0 +1,2 @@
+/* Atlo · GI : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("GI",{"r":[[["Gibraltar","Gibraltar","Gibraltar","جبل طارق"],36.127,-5.346,[-5.358,36.111,-5.339,36.141],"yqeAzmI?e@|@DQNk@N"]],"v":[[["Gibraltar","Gibraltar","Gibraltar","جبل طارق"],36.1283,-5.346,187083,1,0,"Europe/Gibraltar"]]});

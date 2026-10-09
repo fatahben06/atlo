@@ -1,0 +1,2 @@
+/* Atlo · BV : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("BV",{"r":[[["Île Bouvet","Bouvet Island","Isla Bouvet","جزيرة بوفيت"],-54.427,3.411,[3.346,-54.462,3.487,-54.38],"veiB{tEj@aClAd@Lr@@tBXb@KZiAHw@}@UyA"]],"v":[]});

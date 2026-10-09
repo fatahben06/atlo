@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr" dir="ltr" class="demarrage">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https://api.open-meteo.com https://archive-api.open-meteo.com https://geocoding-api.open-meteo.com https://*.wikipedia.org https://open.er-api.com https://tiles.openfreemap.org; worker-src 'self' blob:; child-src 'self' blob:; manifest-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Atlo · Explorez le monde</title>
+<meta name="description" content="Atlo, le guide de voyage pour le monde entier : choisissez un pays puis une région, découvrez les sites emblématiques, la météo, le climat, et préparez votre itinéraire, même hors connexion.">
+<meta name="theme-color" content="#f9f9f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Atlo">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icone-180.png">
+<link rel="stylesheet" href="css/atlo.css">
+<script defer src="data/pays.js"></script>
+<script defer src="data/sites.js"></script>
+<script defer src="data/monde.js"></script>
+<script defer src="js/i18n.js"></script>
+<script defer src="js/outils.js"></script>
+<script defer src="js/services.js"></script>
+<script defer src="js/carte.js"></script>
+<script defer src="js/noyau.js"></script>
+<script defer src="js/vues.js"></script>
+<script defer src="js/itineraire.js"></script>
+<script defer src="js/outils-vue.js"></script>
+<script defer src="js/app.js"></script>
+</head>
+<body>
+<a class="evitement" href="#vue" data-t="evitement">Aller au contenu</a>
+
+<header class="barre">
+  <a href="#/" class="logo" aria-label="Atlo">
+    <svg viewBox="0 0 512 512" aria-hidden="true"><defs><linearGradient id="logo-f" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3987e5"/><stop offset="1" stop-color="#184f95"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#logo-f)"/><g fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" opacity=".9"><circle cx="240" cy="276" r="148"/><ellipse cx="240" cy="276" rx="62" ry="148"/><path d="M100 226h280M100 326h280"/></g><path d="M352 64c-50 0-90 39-90 88 0 66 90 150 90 150s90-84 90-150c0-49-40-88-90-88z" fill="#eb6834" stroke="#fff" stroke-width="16" stroke-linejoin="round"/><circle cx="352" cy="150" r="30" fill="#fff"/></svg>
+    <span>Atlo</span>
+  </a>
+  <nav class="nav-principale" aria-label="Navigation">
+    <a href="#/" data-onglet="explorer"><span aria-hidden="true">🌍</span> <span data-t="navExplorer">Explorer</span></a>
+    <a href="#/autour" data-onglet="autour"><span aria-hidden="true">📍</span> <span data-t="navAutour">Autour de moi</span></a>
+    <a href="#/itineraire" data-onglet="itineraire"><span aria-hidden="true">🧭</span> <span data-t="navItineraire">Itinéraire</span> <span class="badge" data-badge-itineraire hidden></span></a>
+    <a href="#/outils" data-onglet="outils"><span aria-hidden="true">🧰</span> <span data-t="navOutils">Outils</span></a>
+  </nav>
+  <div class="barre-outils">
+    <button type="button" class="bouton" data-installer hidden><span aria-hidden="true">⬇</span> <span data-t="installer">Installer</span></button>
+    <button type="button" class="bouton-icone" id="bouton-theme" data-t-aria="changerTheme" data-t-title="changerTheme" aria-label="Changer de thème"><span aria-hidden="true">🌓</span></button>
+    <a href="#/aide" class="bouton-icone" data-onglet="aide" data-t-aria="navAide" data-t-title="navAide" aria-label="Aide">?</a>
+  </div>
+</header>
+
+<div id="bandeau-hors-ligne" class="bandeau" role="status" hidden data-t="horsLigneBandeau">Hors connexion : les données enregistrées restent disponibles.</div>
+
+<div class="corps">
+  <main id="vue" class="vue" tabindex="-1">
+    <div class="chargement"><span class="spinner" aria-hidden="true"></span> Atlo…</div>
+  </main>
+  <aside id="panneau-carte" class="panneau-carte" data-t-aria="carte" aria-label="Carte">
+    <div id="monde" class="monde-conteneur" hidden></div>
+    <div id="carte" class="carte" hidden></div>
+    <button type="button" id="bouton-carte-pleine" class="bouton-carte" aria-pressed="false" data-t="agrandirCarte">Agrandir la carte</button>
+  </aside>
+</div>
+
+<nav class="onglets" aria-label="Navigation">
+  <a href="#/" data-onglet="explorer"><span class="ic" aria-hidden="true">🌍</span><span data-t="navExplorer">Explorer</span></a>
+  <a href="#/autour" data-onglet="autour"><span class="ic" aria-hidden="true">📍</span><span data-t="navAutour">Autour de moi</span></a>
+  <a href="#/itineraire" data-onglet="itineraire"><span class="ic" aria-hidden="true">🧭</span><span data-t="navItineraire">Itinéraire</span><span class="badge" data-badge-itineraire hidden></span></a>
+  <a href="#/outils" data-onglet="outils"><span class="ic" aria-hidden="true">🧰</span><span data-t="navOutils">Outils</span></a>
+</nav>
+
+<dialog id="fiche" class="fiche">
+  <div class="fiche-barre"><button type="button" class="bouton-icone" data-fermer data-t-aria="fermer" aria-label="Fermer">✕</button></div>
+  <div class="fiche-corps"></div>
+</dialog>
+
+<dialog id="grand-texte" class="grand-texte">
+  <div class="grand-texte-corps"></div>
+  <p class="petit" data-t="fermer">Fermer</p>
+</dialog>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+<noscript><p style="padding:24px">Atlo a besoin de JavaScript pour fonctionner.</p></noscript>
+</body>
+</html>

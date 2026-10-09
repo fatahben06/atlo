@@ -1,0 +1,27 @@
+{
+  "name": "Atlo · Explorez le monde",
+  "short_name": "Atlo",
+  "description": "Guide de voyage pour le monde entier : pays, régions, sites emblématiques, météo, itinéraire et outils, même hors connexion.",
+  "lang": "fr",
+  "dir": "auto",
+  "start_url": "./#/",
+  "scope": "./",
+  "id": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "background_color": "#f9f9f7",
+  "theme_color": "#256abf",
+  "categories": ["travel", "navigation", "education"],
+  "icons": [
+    { "src": "icons/icone.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icons/icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icone-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Autour de moi", "short_name": "Autour", "url": "./#/autour", "icons": [{ "src": "icons/icone-192.png", "sizes": "192x192" }] },
+    { "name": "Mon itinéraire", "short_name": "Itinéraire", "url": "./#/itineraire", "icons": [{ "src": "icons/icone-192.png", "sizes": "192x192" }] },
+    { "name": "Outils de voyage", "short_name": "Outils", "url": "./#/outils", "icons": [{ "src": "icons/icone-192.png", "sizes": "192x192" }] }
+  ]
+}

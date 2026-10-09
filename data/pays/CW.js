@@ -1,0 +1,2 @@
+/* Atlo · CW : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("CW",{"r":[[["Curaçao","Curaçao","Curazao","كوراساو"],12.212,-69.035,[-69.172,12.041,-68.74,12.392],"itVfkeC~B_CRz@?xAWr@gAfB]fBe@`Am@x@sAf@[fBaCvAo@hA[FmB?a@NQKESl@_Bt@gAb@W|ASf@QbAiAh@uAz@{FP[`AQVO"]],"v":[[["Willemstad","Willemstad","Willemstad","ويلمستاد"],12.1123,-68.8724,146813,1,0,"America/Curacao"]]});

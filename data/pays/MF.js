@@ -1,0 +1,2 @@
+/* Atlo · MF : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("MF",{"r":[[["Saint-Martin","Saint Martin","San Martín","تجمع سان مارتين"],18.077,-63.059,[-63.147,18.033,-63.011,18.122],"afb@razBs@fCEh@I?Nt@UXGEI_BQW_@IKOWiB`DMNL"]],"v":[]});

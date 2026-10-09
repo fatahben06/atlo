@@ -1,0 +1,2 @@
+/* Atlo · JE : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("JE",{"r":[[["Jersey","Jersey","Jersey","جيرزي"],49.218,-2.122,[-2.242,49.171,-2.008,49.267],"we_BdaCP]^}AR@X[TXz@FYnCk@pAJ\\j@^[|@LbAi@OsA^WAEWRaAEo@Ug@ZqAIMCi@"]],"v":[]});

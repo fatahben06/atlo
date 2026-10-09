@@ -1,0 +1,2 @@
+/* Atlo · TV : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("TV",{"r":[[["Tuvalu","Tuvalu","Tuvalu","توفالو"],-7.48,178.684,[176.125,-9.421,179.907,-5.678],"ztOm~|Im@YsBHvBe@h@t@"]],"v":[[["Funafuti","Funafuti","Funafuti","فونافوتي"],-8.5167,179.2166,4749,0,0,"Pacific/Funafuti"]]});

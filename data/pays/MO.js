@@ -1,0 +1,2 @@
+/* Atlo · MO : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("MO",{"r":[[["Macao","Macau","Macao","ماكاو"],22.136,113.559,[113.52,22.105,113.587,22.221],"khj@ax|EHi@d@ZBc@HDDULACRNDGL\\@EPJROJAGu@DWROCIe@ ikj@gv|EO]R]LE?HFDCOJJJA^t@UHm@]E@DLID"]],"v":[[["Macao","Macau","Macao","ماكاو"],22.1891,113.5444,568700,1,0,"America/Fortaleza"]]});

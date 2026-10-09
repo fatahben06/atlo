@@ -1,0 +1,2 @@
+/* Atlo · GU : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("GU",{"r":[[["Guam","Guam","Guam","غوام"],13.46,144.761,[144.624,13.241,144.952,13.654],"ktYa~yGfA_@Xa@JkAV?jCxA~@dAlA~Br@p@pAZxDPhAn@Lb@@f@K`@oAt@yARYb@i@a@{@Gw@VMTWWHIAY{CaGiAw@}Cw@g@w@A["]],"v":[[["Hagåtña","Hagåtña","Agaña","هاغاتنيا"],13.47,144.75,122411,1,0,"Pacific/Guam"]]});

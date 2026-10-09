@@ -1,0 +1,2 @@
+/* Atlo · NF : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("NF",{"r":[[["Île Norfolk","Norfolk Island","Isla Norfolk","جزيرة نورفولك"],-29.039,167.957,[167.912,-29.08,167.996,-28.997],"hsw@m~fIx@iC`@@^RR\\TD[JQTARRL?L{@No@YEJDX]]"]],"v":[]});

@@ -1,0 +1,2 @@
+/* Atlo · PN : régions [noms, lat, lon, boîte, contours] et villes [noms, lat, lon, population, classe, région, fuseau]. Natural Earth (domaine public) — généré par outils/construire_donnees.py, ne pas modifier à la main. */
+self.atloDonnees&&atloDonnees("PN",{"r":[[["Îles Pitcairn","Pitcairn Islands","Islas Pitcairn","جزر بيتكيرن"],-24.369,-128.317,[-130.753,-25.077,-124.778,-23.924],"fon@rsyFrAmA~APsArA_BW"]],"v":[]});
