@@ -68,7 +68,10 @@
       const selVers = h("select", { class: "champ", "aria-label": t("versDevise") }, codes.map((c) => option(c, vers)));
       const resultat = h("output", { class: "resultat-conversion", "aria-live": "polite" });
       const table = h("table", { class: "table-conversion" });
-      const lire = () => Number(String(montant.value).replace(/\s/g, "").replace(",", ".")) || 0;
+      // Chiffres arabes (٠-٩, ۰-۹) acceptés ; virgule ou point comme séparateur décimal.
+      const lire = () => Number(String(montant.value)
+        .replace(/[٠-٩]/g, (c) => c.charCodeAt(0) - 0x660).replace(/[۰-۹]/g, (c) => c.charCodeAt(0) - 0x6f0)
+        .replace(/[\s\u00a0\u202f]/g, "").replace(/[٫,]/g, ".")) || 0;
       const calculer = () => {
         de = selDe.value; vers = selVers.value;
         const v = S.convertir(lire(), de, vers, tx);
@@ -340,14 +343,16 @@
       return;
     }
     const fichiers = window.ATLO_PAYS.map((p) => `data/pays/${p.c}.js`).concat(["data/phrases.js", "vendor/maplibre-gl.js", "vendor/maplibre-gl.css", "vendor/mapbox-gl-rtl-text.js"]);
-    let faits = 0;
+    let faits = 0, echecs = 0;
     sortie.textContent = t("telechargement", { a: 0, b: fichiers.length });
     const lot = 8;
     for (let i = 0; i < fichiers.length; i += lot) {
-      await Promise.all(fichiers.slice(i, i + lot).map((f) => fetch(f).catch(() => null)));
+      // 404 : petit territoire sans fichier de régions, ce n'est pas un échec.
+      const ok = await Promise.all(fichiers.slice(i, i + lot).map((f) => fetch(f).then((r) => r.ok || r.status === 404, () => false)));
+      echecs += ok.filter((x) => !x).length;
       faits = Math.min(fichiers.length, i + lot);
       sortie.textContent = t("telechargement", { a: faits, b: fichiers.length });
     }
-    sortie.textContent = "✓ " + t("horsLignePret");
+    sortie.textContent = echecs ? "⚠ " + t("horsLignePartiel", { n: echecs }) : "✓ " + t("horsLignePret");
   }
 })();

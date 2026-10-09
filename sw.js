@@ -1,11 +1,14 @@
 /* Atlo · service worker : application disponible hors connexion.
-   - coquille de l'application pré-enregistrée à l'installation ;
-   - données des pays et bibliothèques : cache d'abord ;
+   - coquille de l'application pré-enregistrée à l'installation et servie depuis le cache
+     (HTML, scripts et données d'une même version : jamais de mélange entre versions) ;
+     À CHAQUE MISE EN LIGNE, CHANGER « VERSION » : c'est ce qui déclenche la mise à jour ;
+   - régions des pays et bibliothèques : cache d'abord, rafraîchi en arrière-plan, conservé
+     d'une version à l'autre ;
    - tuiles, polices et icônes de carte : cache d'abord (limité) ;
    - météo, Wikipédia, taux : réseau d'abord, copie de secours en cache. */
-const VERSION = "atlo-2026-10-09-1";
+const VERSION = "atlo-2026-10-09-2";
 const COQUILLE = VERSION + "-coquille";
-const DONNEES = VERSION + "-donnees";
+const DONNEES = "atlo-donnees";
 const TUILES = "atlo-tuiles";
 const API = "atlo-api";
 const IMAGES = "atlo-images";
@@ -64,8 +67,12 @@ async function reseauDabord(requete, nomCache, delai = 8000) {
     return reponse;
   } catch (e) {
     const deja = await caches.match(requete);
-    if (deja) return deja;
-    throw e;
+    if (!deja) throw e;
+    // Copie de secours : on signale sa date pour que l'application l'affiche (météo d'hier…).
+    if (deja.type === "opaque") return deja;
+    const entetes = new Headers(deja.headers);
+    entetes.set("x-atlo-copie", String(Date.parse(deja.headers.get("date") || "") || Date.now()));
+    return new Response(await deja.blob(), { status: deja.status, statusText: deja.statusText, headers: entetes });
   }
 }
 
@@ -85,11 +92,11 @@ self.addEventListener("fetch", (e) => {
 
   if (url.origin === self.location.origin) {
     if (req.mode === "navigate") {
-      e.respondWith(reseauDabord(req, COQUILLE, 3500).catch(() => caches.match("index.html")));
+      e.respondWith(caches.match("index.html", { cacheName: COQUILLE }).then((r) => r || fetch(req)));
     } else if (/\/(data\/pays|vendor)\//.test(url.pathname)) {
-      e.respondWith(cacheDabord(req, DONNEES));
+      e.respondWith(perimeEnRevalidant(req, DONNEES));
     } else {
-      e.respondWith(perimeEnRevalidant(req, COQUILLE));
+      e.respondWith(caches.match(req, { cacheName: COQUILLE, ignoreSearch: true }).then((r) => r || cacheDabord(req, COQUILLE)));
     }
     return;
   }

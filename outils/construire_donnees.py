@@ -303,7 +303,7 @@ def indicatif(idd):
     return racine + suffixes[0] if len(suffixes) == 1 else racine
 
 
-def construire_pays(cache, regions, capitales, fuseaux_villes):
+def construire_pays(cache, regions, capitales, fuseaux_villes, villes):
     pays_src = lire_json(cache, "pays.json")
     fuseaux = lire_json(cache, "fuseaux.json")
     boites = boites_pays(regions)
@@ -325,7 +325,12 @@ def construire_pays(cache, regions, capitales, fuseaux_villes):
         if cap:
             entree["cap"] = cap
         elif c.get("capital") and R.CAPITALES_CORRIGEES.get(code, 0) is not None:
-            entree["cap"] = {"n": c["capital"][0], "ll": [round(lat, 3), round(lon, 3)]}
+            # Territoires : la capitale figure souvent parmi les villes Natural Earth sans être
+            # marquée « capitale ». Sinon, nom seul : jamais de météo prise au centre du pays.
+            voulu = slug(c["capital"][0])
+            ville = next((v for v in villes.get(code, [])
+                          if voulu in {slug(n) for n in ([v[0]] if isinstance(v[0], str) else v[0])}), None)
+            entree["cap"] = {"n": ville[0], "ll": [ville[1], ville[2]], "tz": ville[6]} if ville else {"n": c["capital"][0]}
         if code in boites:
             vue, complete, _ = boites[code]
             entree["bb"] = vue
@@ -338,6 +343,9 @@ def construire_pays(cache, regions, capitales, fuseaux_villes):
         if langues:
             entree["l"] = langues
         monnaies = list((c.get("currencies") or {}).keys())
+        principale = R.DEVISE_PRINCIPALE.get(code)
+        if principale:
+            monnaies = [principale] + [m for m in monnaies if m != principale]
         if monnaies:
             entree["m"] = monnaies
         tel = indicatif(c.get("idd") or {})
@@ -519,7 +527,7 @@ def main():
     villes, capitales, fuseaux_villes = construire_villes(villes_src, regions, index_regions, pays_iso3, capitales_src)
 
     print("Pays…")
-    pays = construire_pays(args.cache, regions, capitales, fuseaux_villes)
+    pays = construire_pays(args.cache, regions, capitales, fuseaux_villes, villes)
     codes_pays = {p["c"] for p in pays}
 
     print("Sites…")

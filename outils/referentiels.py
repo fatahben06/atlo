@@ -275,3 +275,7 @@ CAPITALES_CORRIGEES = {
     "HK": {"n": ["Hong Kong", "Hong Kong", "Hong Kong", "هونغ كونغ"], "ll": [22.2783, 114.1747], "tz": "Asia/Hong_Kong"},
     "EH": None,
 }
+
+# Monnaie utilisée en premier par un voyageur quand mledoze/countries en liste plusieurs
+# (l'ordre de la source est alphabétique : le Zimbabwe y apparaîtrait en pula botswanais).
+DEVISE_PRINCIPALE = {"CU": "CUP", "CK": "NZD", "PA": "USD", "PS": "ILS", "ZW": "USD", "EH": "MAD"}

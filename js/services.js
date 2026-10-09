@@ -27,6 +27,8 @@
         throw err;
       }
       const v = await rep.json();
+      const copie = rep.headers.get("x-atlo-copie");
+      if (copie && v && typeof v === "object") Object.defineProperty(v, "copieDu", { value: Number(copie) });
       memoire.set(url, { t: Date.now(), v });
       if (memoire.size > 200) memoire.delete(memoire.keys().next().value);
       return v;
@@ -47,6 +49,7 @@
     const d = await json("https://api.open-meteo.com/v1/forecast?" + p);
     const j = d.daily || {};
     return {
+      copieDu: d.copieDu || null,
       fuseau: d.timezone,
       decalage: d.utc_offset_seconds,
       actuel: d.current && {
@@ -68,7 +71,8 @@
     const cle = "climat:" + arrondi(lat, 1) + "," + arrondi(lon, 1);
     const local = lireLocal(cle);
     if (local && Date.now() - local.t < 120 * 864e5) return local.v;
-    const an = new Date().getFullYear();
+    const auj = new Date();
+    const an = auj.getFullYear() - (auj.getMonth() === 0 && auj.getDate() < 20 ? 1 : 0);
     const p = new URLSearchParams({
       latitude: arrondi(lat, 2), longitude: arrondi(lon, 2), timezone: "auto",
       start_date: `${an - 3}-01-01`, end_date: `${an - 1}-12-31`,
@@ -128,8 +132,9 @@
   }
 
   /** Résumé d'un article dans la langue de l'interface, avec repli sur l'anglais. */
-  async function resume({ fr, en, recherche }, langue) {
+  async function resume({ fr, en, recherche, titre, langueTitre }, langue) {
     const essais = [];
+    if (titre && langueTitre) essais.push([titre, langueTitre]);
     if (langue === "fr" && fr) essais.push([fr, "fr"]);
     if (langue === "en" && en) essais.push([en, "en"]);
     if (langue !== "fr" && langue !== "en" && en) essais.push([() => lienLangue(en, langue), langue]);
@@ -145,8 +150,12 @@
     }
     if (recherche) {
       const l = langue === "fr" ? "fr" : "en";
-      const t = await chercherTitre(recherche, l);
-      if (t) return resumeBrut(t, l);
+      try {
+        const t = await chercherTitre(recherche, l);
+        if (t) return await resumeBrut(t, l);
+      } catch (e) {
+        if (e.name === "AbortError" || (e.status && e.status >= 500) || e instanceof TypeError) throw e;
+      }
     }
     return null;
   }
@@ -157,7 +166,7 @@
       action: "query", format: "json", formatversion: "2", origin: "*",
       generator: "geosearch", ggscoord: `${arrondi(lat, 3)}|${arrondi(lon, 3)}`,
       ggsradius: String(Math.min(10000, rayon)), ggslimit: String(limite),
-      prop: "coordinates|pageimages|description", piprop: "thumbnail", pithumbsize: "240", pilimit: String(limite),
+      prop: "coordinates|pageimages|description", colimit: "max", piprop: "thumbnail", pithumbsize: "240", pilimit: String(limite),
     });
     const d = await json(`https://${langue}.wikipedia.org/w/api.php?` + p, { duree: 3600e3 });
     const pages = (d.query && d.query.pages) || [];

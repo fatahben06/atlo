@@ -64,17 +64,20 @@
     });
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("sw.js").then((reg) => {
+        const proposer = (en_attente) => {
+          const b = A.h("button", { type: "button", class: "lien", onclick: () => {
+            navigator.serviceWorker.addEventListener("controllerchange", () => location.reload(), { once: true });
+            en_attente.postMessage("activer");
+          } }, t("recharger"));
+          A.toast(A.h("span", null, t("miseAJour"), " ", b), { duree: 15000 });
+        };
+        // Mise à jour déjà téléchargée lors d'une visite précédente.
+        if (reg.waiting && navigator.serviceWorker.controller) proposer(reg.waiting);
         reg.addEventListener("updatefound", () => {
           const nouveau = reg.installing;
           if (!nouveau) return;
           nouveau.addEventListener("statechange", () => {
-            if (nouveau.state === "installed" && navigator.serviceWorker.controller) {
-              const b = A.h("button", { type: "button", class: "lien", onclick: () => {
-                navigator.serviceWorker.addEventListener("controllerchange", () => location.reload(), { once: true });
-                (reg.waiting || nouveau).postMessage("activer");
-              } }, t("recharger"));
-              A.toast(A.h("span", null, t("miseAJour"), " ", b), { duree: 12000 });
-            }
+            if (nouveau.state === "installed" && navigator.serviceWorker.controller) proposer(reg.waiting || nouveau);
           });
         });
       }).catch(() => { /* hors ligne ou navigation privée : l'application fonctionne sans */ });

@@ -111,7 +111,9 @@
               h("div", null, h("dt", null, t("vent")), h("dd", null, fmt.vitesse(a.vent))),
               h("div", null, h("dt", null, t("humidite")), h("dd", null, Math.round(a.humidite) + " %")),
               niveauUv ? h("div", null, h("dt", null, t("indiceUv")), h("dd", null, h("span", { class: "statut " + niveauUv[0] }, Math.round(uv) + " · " + niveauUv[1]))) : null,
-              m.jours[0] && m.jours[0].lever ? h("div", null, h("dt", null, t("soleil")), h("dd", null, "↑ " + m.jours[0].lever.slice(11) + "  ↓ " + m.jours[0].coucher.slice(11))) : null)),
+              // En jour ou nuit polaire, lever et coucher n'existent pas (valeurs vides ou identiques).
+              m.jours[0] && m.jours[0].lever && m.jours[0].coucher && m.jours[0].lever !== m.jours[0].coucher
+                ? h("div", null, h("dt", null, t("soleil")), h("dd", null, "↑ " + m.jours[0].lever.slice(11) + "  ↓ " + m.jours[0].coucher.slice(11))) : null)),
           h("ol", { class: "meteo-jours", "aria-label": t("previsions7") },
             m.jours.map((j) => {
               const [c, ic] = O.meteoWmo(j.code);
@@ -122,6 +124,7 @@
                 h("span", { class: "min" }, fmt.temperature(j.min)),
                 j.pluie != null ? h("span", { class: "pluie", title: t("probaPluie") }, "💧" + j.pluie + "%") : null);
             })),
+          m.copieDu ? h("p", { class: "note" }, "⚠ ", t("donneesEnregistrees", { d: new Intl.DateTimeFormat(I.locale(), { dateStyle: "medium", timeStyle: "short" }).format(new Date(m.copieDu)) })) : null,
           h("p", { class: "source" }, t("sourceMeteo"), " ", A.lienExterne("https://open-meteo.com/", "Open-Meteo")));
       } catch (e) {
         A.vider(corps, A.erreurReseau(e, charger));
@@ -521,9 +524,10 @@
         h("h2", { id: "titre-sites" }, t("sitesEmblematiques"), " ", h("span", { class: "compte" }, fmt.nombre(sites.length))),
         sites.length ? listeSites(sites, { regionNom: nomRegion }) : h("div", { class: "vide-doux" },
           h("p", null, t("pasDeSites")),
-          cap ? h("a", { class: "bouton", href: `#/lieu/${cap.lat},${cap.lon}?n=${encodeURIComponent(cap.nom)}&p=${code}` }, t("decouvrirCapitale", { v: cap.nom })) : null)),
-      cap ? A.blocMeteo(cap.lat, cap.lon, { titre: t("meteoA", { v: cap.nom }), fuseau: false }) : null,
-      cap ? A.blocClimat(cap.lat, cap.lon, cap.nom) : null,
+          cap && cap.lat != null ? h("a", { class: "bouton", href: `#/lieu/${cap.lat},${cap.lon}?n=${encodeURIComponent(cap.nom)}&p=${code}` }, t("decouvrirCapitale", { v: cap.nom })) : null)),
+      // Météo et climat seulement avec la position réelle de la capitale (jamais le centre du pays).
+      cap && cap.lat != null ? A.blocMeteo(cap.lat, cap.lon, { titre: t("meteoA", { v: cap.nom }), fuseau: false }) : null,
+      cap && cap.lat != null ? A.blocClimat(cap.lat, cap.lon, cap.nom) : null,
       h("p", { class: "mention" }, t("sourcesPays")));
 
     return {
@@ -546,7 +550,10 @@
       if (devise !== A.prefs.devise) {
         S.taux().then((tx) => {
           const v = S.convertir(1, A.prefs.devise, devise, tx);
-          if (v) taux.textContent = "1 " + A.prefs.devise + " = " + fmt.argent(v, devise) + (tx.horsLigne ? " · " + t("tauxHorsLigne") : "");
+          if (!v) return;
+          // Toujours un chiffre lisible : « 1 € = 151 DZD » plutôt que « 1 DZD = 0,01 € ».
+          const texte = v >= 1 ? "1 " + A.prefs.devise + " = " + fmt.argent(v, devise) : "1 " + devise + " = " + fmt.argent(1 / v, A.prefs.devise);
+          taux.textContent = texte + (tx.horsLigne ? " · " + t("tauxHorsLigne") : "");
         }).catch(() => {});
       }
     }
@@ -886,7 +893,7 @@
           h("li", null, A.lienExterne(A.liens.photos(p.titre), h("span", { "aria-hidden": "true" }, "📷 "), t("photos")))),
         h("p", { class: "mention" }, t("mentionExterne"))),
     ], p.titre);
-    S.resume({ fr: p.langue === "fr" ? p.titre : null, en: p.langue === "en" ? p.titre : null }, p.langue)
+    S.resume({ titre: p.titre, langueTitre: p.langue }, p.langue)
       .then((r) => A.vider(resume, r ? [h("p", null, r.extrait), h("p", { class: "source" }, t("sourceWikipedia"), " (CC BY-SA)")] : h("p", { class: "note" }, t("pasDeResume"))))
       .catch(() => A.vider(resume, A.erreurReseau(null)));
   };

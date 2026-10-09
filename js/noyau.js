@@ -99,7 +99,9 @@
   A.drapeau = (code) =>
     code && /^[A-Z]{2}$/.test(code) ? String.fromCodePoint(...[...code].map((c) => 0x1f1a5 + c.charCodeAt(0))) : "🏳️";
   A.nomSite = (s) => (I.langue === "fr" ? s.fr : s.en);
-  A.capitale = (p) => p && p.cap && { nom: A.nomListe(p.cap.n), lat: p.cap.ll[0], lon: p.cap.ll[1], tz: p.cap.tz };
+  A.capitale = (p) => p && p.cap && {
+    nom: A.nomListe(p.cap.n), lat: p.cap.ll ? p.cap.ll[0] : null, lon: p.cap.ll ? p.cap.ll[1] : null, tz: p.cap.tz,
+  };
 
   const chargements = new Map();
   const donnees = new Map();
@@ -314,7 +316,10 @@
 
   A.rendre = async () => {
     // « #/outils?p=DZ#phrases » : la seconde ancre sert au défilement, pas au routage.
-    const hash = decodeURI(location.hash.replace(/^#\/?/, "")).split("#")[0];
+    const brut = location.hash.replace(/^#\/?/, "");
+    let hash;
+    try { hash = decodeURI(brut); } catch (e) { hash = brut; } // lien partagé mal encodé
+    hash = hash.split("#")[0];
     const [chemin, requete] = hash.split("?");
     const params = new URLSearchParams(requete || "");
     let trouve = null, m = null;

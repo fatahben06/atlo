@@ -64,6 +64,10 @@ atlo/
 └── vendor/            MapLibre, extension RTL, police des drapeaux (+ licences)
 ```
 
+## Publier une nouvelle version
+
+À chaque mise en ligne d'une version modifiée, changez `VERSION` en tête de `sw.js` (par exemple `atlo-2026-10-09-3`). C'est ce changement qui déclenche la mise à jour chez les utilisateurs : l'application leur propose alors « Recharger ».
+
 ## Mettre à jour les données
 
 Les fichiers de `data/` sont générés ; ne les modifiez pas à la main.
