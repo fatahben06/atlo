@@ -213,6 +213,7 @@
       });
       glisser(poignee, index);
       const site = e.ref && e.ref.startsWith("s:") ? A.SITE.get(e.ref.slice(2)) : null;
+      const deGuide = e.ref && e.ref.startsWith("g:") ? e.ref.split(":") : null;
       return h("li", { class: "etape", dataset: { etape: e.id } },
         p.trajet || index > 0 ? h("p", { class: "trajet" + (p.long ? " long" : "") },
           h("span", { "aria-hidden": "true" }, ICONES_MODE[etat.mode] + " "),
@@ -223,7 +224,9 @@
           poignee,
           h("span", { class: "numero", "aria-hidden": "true" }, index + 1),
           h("div", { class: "etape-texte" },
-            site ? h("button", { type: "button", class: "lien etape-nom", onclick: () => A.ouvrirFiche(site.id) }, e.nom) : h("span", { class: "etape-nom" }, e.nom),
+            site ? h("button", { type: "button", class: "lien etape-nom", onclick: () => A.ouvrirFiche(site.id) }, e.nom)
+              : deGuide ? h("button", { type: "button", class: "lien etape-nom", onclick: () => A.ouvrirSiteGuide(deGuide[1], deGuide[2]) }, e.nom)
+              : h("span", { class: "etape-nom" }, e.nom),
             h("span", { class: "site-meta" },
               e.pays ? h("span", { class: "drapeau", "aria-hidden": "true" }, A.drapeau(e.pays)) : null, e.pays ? " " + A.nomPays(e.pays) + " · " : "",
               O.heureMinutes(p.arrivee) + (e.duree ? " – " + O.heureMinutes(p.depart) : ""))),

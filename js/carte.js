@@ -165,6 +165,8 @@
       c.addSource("atlo-sites", { type: "geojson", data: vide, cluster: true, clusterRadius: 44, clusterMaxZoom: 11 });
       c.addSource("atlo-decouvertes", { type: "geojson", data: vide });
       c.addSource("atlo-etapes", { type: "geojson", data: vide });
+      c.addSource("atlo-guide", { type: "geojson", data: vide, cluster: true, clusterRadius: 28, clusterMaxZoom: 13 });
+      c.addSource("atlo-hebergements", { type: "geojson", data: vide });
       c.addLayer({ id: "atlo-zone-fond", type: "fill", source: "atlo-zone", paint: { "fill-color": bleu, "fill-opacity": 0.07 } });
       c.addLayer({ id: "atlo-zone-bord", type: "line", source: "atlo-zone", paint: { "line-color": bleu, "line-width": 2, "line-opacity": 0.8 } });
       c.addLayer({
@@ -198,6 +200,36 @@
         },
       });
       c.addLayer({
+        id: "atlo-hebergements", type: "circle", source: "atlo-hebergements",
+        paint: {
+          "circle-color": couleur("--encre-2"),
+          "circle-radius": ["case", ["boolean", ["get", "choisi"], false], 10, 6.5],
+          "circle-stroke-color": surface, "circle-stroke-width": 2,
+        },
+      });
+      c.addLayer({
+        id: "atlo-guide-groupes", type: "circle", source: "atlo-guide", filter: ["has", "point_count"],
+        paint: { "circle-color": bleu, "circle-opacity": 0.92, "circle-radius": ["step", ["get", "point_count"], 15, 6, 19], "circle-stroke-color": surface, "circle-stroke-width": 3 },
+      });
+      c.addLayer({
+        id: "atlo-guide-groupes-nb", type: "symbol", source: "atlo-guide", filter: ["has", "point_count"],
+        layout: { "text-field": ["concat", "×", ["to-string", ["get", "point_count"]]], "text-font": police, "text-size": 12, "text-allow-overlap": true },
+        paint: { "text-color": "#ffffff" },
+      });
+      c.addLayer({
+        id: "atlo-guide", type: "circle", source: "atlo-guide", filter: ["!", ["has", "point_count"]],
+        paint: {
+          "circle-color": bleu,
+          "circle-radius": ["case", ["boolean", ["get", "choisi"], false], 14, 11],
+          "circle-stroke-color": surface, "circle-stroke-width": 2,
+        },
+      });
+      c.addLayer({
+        id: "atlo-guide-nb", type: "symbol", source: "atlo-guide", filter: ["!", ["has", "point_count"]],
+        layout: { "text-field": ["to-string", ["get", "n"]], "text-font": police, "text-size": 12, "text-allow-overlap": true, "text-ignore-placement": true },
+        paint: { "text-color": "#ffffff" },
+      });
+      c.addLayer({
         id: "atlo-etapes", type: "circle", source: "atlo-etapes",
         paint: { "circle-color": aqua, "circle-radius": 11, "circle-stroke-color": surface, "circle-stroke-width": 2 },
       });
@@ -210,7 +242,7 @@
 
     brancherEvenements() {
       const c = this.carte;
-      const cliquable = ["atlo-sites", "atlo-decouvertes", "atlo-etapes", "atlo-groupes"];
+      const cliquable = ["atlo-sites", "atlo-decouvertes", "atlo-etapes", "atlo-groupes", "atlo-guide", "atlo-guide-groupes", "atlo-hebergements"];
       for (const id of cliquable) {
         c.on("mouseenter", id, () => (c.getCanvas().style.cursor = "pointer"));
         c.on("mouseleave", id, () => {
@@ -218,7 +250,7 @@
           if (this.survol) { this.survol.remove(); this.survol = null; }
         });
       }
-      for (const id of ["atlo-sites", "atlo-decouvertes", "atlo-etapes"]) {
+      for (const id of ["atlo-sites", "atlo-decouvertes", "atlo-etapes", "atlo-guide", "atlo-hebergements"]) {
         c.on("mousemove", id, (e) => {
           const f = e.features && e.features[0];
           if (!f || matchMedia("(pointer: coarse)").matches) return;
@@ -230,15 +262,16 @@
           if (f && this.options.onPoint) this.options.onPoint(f.properties.type, f.properties.id, f.properties);
         });
       }
-      c.on("click", "atlo-groupes", async (e) => {
-        const f = e.features && e.features[0];
-        if (!f) return;
-        const source = c.getSource("atlo-sites");
-        try {
-          const zoom = await source.getClusterExpansionZoom(f.properties.cluster_id);
-          c.easeTo({ center: f.geometry.coordinates, zoom: zoom + 0.3 });
-        } catch (err) { /* rien */ }
-      });
+      for (const [couche, source] of [["atlo-groupes", "atlo-sites"], ["atlo-guide-groupes", "atlo-guide"]]) {
+        c.on("click", couche, async (e) => {
+          const f = e.features && e.features[0];
+          if (!f) return;
+          try {
+            const zoom = await c.getSource(source).getClusterExpansionZoom(f.properties.cluster_id);
+            c.easeTo({ center: f.geometry.coordinates, zoom: zoom + 0.3 });
+          } catch (err) { /* rien */ }
+        });
+      }
     }
 
     afficher(scene) {
@@ -259,6 +292,8 @@
       c.getSource("atlo-sites").setData(fc((scene.points || []).map((p) => pt(p, { type: "site", choisi: p.id === scene.choisi }))));
       c.getSource("atlo-decouvertes").setData(fc((scene.decouvertes || []).map((p) => pt(p, { type: "wiki" }))));
       c.getSource("atlo-etapes").setData(fc((scene.etapes || []).map((p, i) => pt(p, { type: "etape", n: i + 1 }))));
+      c.getSource("atlo-guide").setData(fc((scene.guide || []).map((p) => pt(p, { type: "guide", n: p.n, choisi: p.id === scene.choisi }))));
+      c.getSource("atlo-hebergements").setData(fc((scene.hebergements || []).map((p) => pt(p, { type: "hebergement", choisi: p.id === scene.choisi }))));
       c.getSource("atlo-trace").setData(
         fc(scene.etapes && scene.etapes.length > 1
           ? [{ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: scene.etapes.map((p) => [p.lon, p.lat]) } }]
@@ -280,7 +315,7 @@
       const options = { padding: marge, duration: anime && !reduit ? 900 : 0, maxZoom: scene.zoomMax || 13 };
       let bb = scene.boite;
       if (!bb) {
-        const tous = [...(scene.points || []), ...(scene.etapes || [])];
+        const tous = [...(scene.points || []), ...(scene.etapes || []), ...(scene.guide || []), ...(scene.hebergements || [])];
         if (tous.length) {
           const lats = tous.map((p) => p.lat), lons = tous.map((p) => p.lon);
           bb = [Math.min(...lons), Math.min(...lats), Math.max(...lons), Math.max(...lats)];
@@ -340,7 +375,7 @@
       conteneur.textContent = "";
       const largeur = Math.max(280, conteneur.clientWidth || 600);
       const hauteur = Math.max(200, conteneur.clientHeight || 360);
-      const tous = [...(scene.points || []), ...(scene.etapes || []), ...(scene.decouvertes || [])];
+      const tous = [...(scene.points || []), ...(scene.etapes || []), ...(scene.decouvertes || []), ...(scene.guide || []), ...(scene.hebergements || [])];
       let [w, s, e, n] = scene.boite || [-180, -60, 180, 80];
       if (!scene.boite && tous.length) {
         w = Math.min(...tous.map((p) => p.lon)); e = Math.max(...tous.map((p) => p.lon));
@@ -361,7 +396,7 @@
       if (scene.etapes && scene.etapes.length > 1) {
         racine.appendChild(svg("polyline", { points: scene.etapes.map((p) => proj(p.lon, p.lat).join(",")).join(" "), class: "schema-trace" }));
       }
-      const groupe = (liste, classe, type, numeroter) =>
+      const groupe = (liste, classe, type, numeroter, numero) =>
         liste.forEach((p, i) => {
           const [x, y] = proj(p.lon, p.lat);
           const a = svg("a", { href: "#", class: "schema-point " + classe, tabindex: "0" });
@@ -371,7 +406,7 @@
           a.appendChild(svg("circle", { cx: x.toFixed(1), cy: y.toFixed(1), r: numeroter ? 10 : 6 }));
           if (numeroter) {
             const t = svg("text", { x: x.toFixed(1), y: (y + 4).toFixed(1), "text-anchor": "middle" });
-            t.textContent = String(i + 1);
+            t.textContent = String(numero ? numero(p, i) : i + 1);
             a.appendChild(t);
           }
           a.addEventListener("click", (ev) => {
@@ -381,7 +416,9 @@
           racine.appendChild(a);
         });
       groupe(scene.decouvertes || [], "decouverte", "wiki");
+      groupe(scene.hebergements || [], "hebergement", "hebergement");
       groupe(scene.points || [], "site", "site");
+      groupe(scene.guide || [], "guide", "guide", true, (p) => p.n);
       groupe(scene.etapes || [], "etape", "etape", true);
       if (scene.utilisateur) {
         const [x, y] = proj(scene.utilisateur.lon, scene.utilisateur.lat);

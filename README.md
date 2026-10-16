@@ -11,6 +11,8 @@ Guide de voyage pour le monde entier : **choisissez un pays, puis une région**,
 | **Région** | Contour sur la carte, sites, villes, lieux à découvrir autour (articles Wikipédia géolocalisés), météo et climat. |
 | **Fiche d'un site** | Photo et résumé Wikipédia dans votre langue, météo et heure sur place, « Y aller », photos (Wikimedia Commons), vidéos (YouTube), fiche UNESCO, partage. |
 | **Autour de moi** | Pays et région détectés **sur l'appareil** (sans service tiers), sites proches avec distances, découvertes, météo. |
+| **Guide de ville** (Béjaïa) | Top 20 classé (photos, durée conseillée, meilleur moment, conseils, accès), carte numérotée, favoris ♡, tri « les plus proches » ; **Où dormir** : hôtels, motels, auberges et maisons d'hôtes (sélection + OpenStreetMap), filtres par type et par commune, tri par distance d'un site, dates et voyageurs saisis une fois et repris dans tous les liens (Booking.com, Google Hôtels, Expedia, Agoda, Airbnb, Tripadvisor) ; itinéraires prêts (1, 2, 3 jours) chargés en un geste ; infos pratiques (venir, météo, climat, conseils, urgences, histoire). |
+| **Où dormir** (partout) | Sur chaque région et chaque lieu du monde : établissements OpenStreetMap autour et recherche pré-remplie sur les plateformes. |
 | **Itinéraire** | Étapes réparties en journées (heures d'arrivée et de départ), durée de visite par étape, mode de déplacement, optimisation de l'ordre (plus proche voisin + 2-opt), distances et temps estimés, alertes de long trajet ; navigation Google Maps par jour, export GPX et agenda (.ics), partage par lien, impression. |
 | **Outils** | Convertisseur de devises (≈ 160 monnaies, derniers taux gardés hors ligne), 14 phrases utiles en 20 langues avec lecture à voix haute et affichage en grand, urgences et ambassade, heures et décalages, conversions d'unités, check-list de départ. |
 | **Aide** | Préférences (langue, thème, unités, pays de résidence, devise), installation, mode hors connexion, dépannage, sources et licences, effacement des données. |
@@ -57,9 +59,10 @@ atlo/
 │   ├── vues.js        accueil, pays, région, lieu, autour de moi, fiches
 │   ├── itineraire.js  état et écran de l'itinéraire
 │   ├── outils-vue.js  outils et aide
+│   ├── guide.js       guides de ville, hébergement et réservation
 │   └── app.js         démarrage (thème, installation, service worker)
-├── data/              pays.js, sites.js, monde.js, phrases.js, pays/XX.js
-├── outils/            construire_donnees.py, referentiels.py, sites.txt
+├── data/              pays.js, sites.js, monde.js, phrases.js, pays/XX.js, guides.js, guides/<id>.js, partenaires.js
+├── outils/            construire_donnees.py, referentiels.py, sites.txt, construire_guides.mjs
 ├── tests/             test_outils.mjs, test_navigateur.mjs
 └── vendor/            MapLibre, extension RTL, police des drapeaux (+ licences)
 ```
@@ -67,6 +70,18 @@ atlo/
 ## Publier une nouvelle version
 
 À chaque mise en ligne d'une version modifiée, changez `VERSION` en tête de `sw.js` (par exemple `atlo-2026-10-09-3`). C'est ce changement qui déclenche la mise à jour chez les utilisateurs : l'application leur propose alors « Recharger ».
+
+## Guides de ville
+
+Un guide = un fichier `data/guides/<id>.js` écrit à la main (sites classés, hébergements, itinéraires, infos pratiques, en français, anglais, espagnol et arabe). Après chaque modification :
+
+```bash
+node outils/construire_guides.mjs --detail   # vérifie le guide et régénère l'index data/guides.js
+```
+
+Le script refuse un guide incohérent (texte manquant dans une langue, site hors de sa région, étape d'itinéraire inconnue, lien invalide…). Tant que le guide contient le champ `brouillon`, l'application affiche un bandeau « en cours de vérification ».
+
+**Gagner de l'argent avec les réservations** : inscrivez-vous aux programmes partenaires (Booking.com via Awin ou CJ, Agoda Partners, Travelpayouts…) et renseignez vos identifiants dans `data/partenaires.js`. Les fiches affichent alors automatiquement la mention « liens partenaires ». GitHub Pages n'autorise pas un site commercial : passez à un autre hébergeur (Cloudflare Pages, Netlify…) avant d'activer l'affiliation.
 
 ## Mettre à jour les données
 
@@ -85,11 +100,11 @@ Le script télécharge les sources (Natural Earth, mledoze/countries, countries-
 ## Tests
 
 ```bash
-node --test tests/test_outils.mjs      # 14 tests : distances, polygones, optimisation, planning, exports, climat, données
+node --test tests/test_outils.mjs      # 19 tests : distances, polygones, optimisation, planning, exports, climat, données, réservation, OpenStreetMap, guides
 node tests/test_navigateur.mjs [dossier-captures]   # parcours complet dans Chromium (Playwright), services simulés
 ```
 
-Le parcours navigateur vérifie l'accueil, la recherche, les fiches, l'Algérie (48 wilayas, 18 sites, météo, climat), Ghardaïa, la France (13 régions), « Autour de moi », l'itinéraire (optimisation, GPX, agenda, partage), les outils, les quatre langues dont l'arabe, l'affichage mobile en thème sombre et le mode hors connexion.
+Le parcours navigateur vérifie le guide de Béjaïa (top 20, filtres, fiches, favoris, hébergements fusionnés, dates de séjour dans les liens, itinéraires prêts, pratique, mobile et arabe), l'accueil, la recherche, les fiches, l'Algérie (48 wilayas, 18 sites, météo, climat), Ghardaïa, la France (13 régions), « Autour de moi », l'itinéraire (optimisation, GPX, agenda, partage), les outils, les quatre langues dont l'arabe, l'affichage mobile en thème sombre et le mode hors connexion.
 
 ## Limites connues
 
@@ -99,6 +114,6 @@ Le parcours navigateur vérifie l'accueil, la recherche, les fiches, l'Algérie 
 
 ## Vie privée
 
-Pas de compte, pas de serveur, pas de traceur. Préférences, itinéraire et check-list restent dans le navigateur. La position n'est utilisée que sur l'appareil ; seules des coordonnées arrondies sont envoyées aux services météo et Wikipédia pour chercher autour de vous.
+Pas de compte, pas de serveur, pas de traceur. Préférences, itinéraire, check-list, favoris et dates de séjour restent dans le navigateur. La position n'est utilisée que sur l'appareil ; seules des coordonnées arrondies sont envoyées aux services météo, Wikipédia et OpenStreetMap (hébergements) pour chercher autour de vous. Les liens de réservation n'emportent que le nom de l'établissement ou de la ville, les dates et le nombre de voyageurs.
 
 Sources et licences détaillées : [`LICENCES.md`](LICENCES.md).

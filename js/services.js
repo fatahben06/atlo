@@ -186,6 +186,78 @@
       .sort((a, b) => a.distance - b.distance);
   }
 
+  // ---------------------------------------------------------------- Wikimedia Commons
+  const nettoyerHtml = (t) => String(t || "").replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+
+  /** Vignettes et crédits (auteur, licence) de fichiers Commons, en une seule requête (50 au plus). */
+  async function imagesCommons(fichiers, largeur = 640) {
+    const liste = [...new Set(fichiers.filter(Boolean))].slice(0, 50);
+    if (!liste.length) return new Map();
+    const p = new URLSearchParams({
+      action: "query", format: "json", formatversion: "2", origin: "*", prop: "imageinfo",
+      iiprop: "url|extmetadata", iiurlwidth: String(largeur), iiextmetadatafilter: "Artist|LicenseShortName|LicenseUrl",
+      titles: liste.map((f) => "File:" + f).join("|"),
+    });
+    const d = await json("https://commons.wikimedia.org/w/api.php?" + p, { duree: 864e5 });
+    const parNom = new Map();
+    const norm = (t) => String(t).replace(/^(File|Fichier):/i, "").replace(/_/g, " ").trim();
+    const renvois = new Map((d.query && d.query.normalized || []).map((n) => [norm(n.to), norm(n.from)]));
+    for (const pg of (d.query && d.query.pages) || []) {
+      const ii = pg.imageinfo && pg.imageinfo[0];
+      if (!ii) continue;
+      const m = ii.extmetadata || {};
+      const v = {
+        url: ii.thumburl || ii.url, page: ii.descriptionurl,
+        auteur: nettoyerHtml(m.Artist && m.Artist.value).slice(0, 80), licence: nettoyerHtml(m.LicenseShortName && m.LicenseShortName.value),
+      };
+      parNom.set(norm(pg.title), v);
+      if (renvois.has(norm(pg.title))) parNom.set(renvois.get(norm(pg.title)), v);
+    }
+    return parNom;
+  }
+
+  /** Vignettes des articles Wikipédia d'une langue, en une requête (50 titres au plus). */
+  async function vignettesWiki(titres, langue, taille = 480) {
+    const liste = [...new Set(titres.filter(Boolean))].slice(0, 50);
+    if (!liste.length) return new Map();
+    const p = new URLSearchParams({
+      action: "query", format: "json", formatversion: "2", origin: "*", redirects: "1",
+      prop: "pageimages", piprop: "thumbnail", pithumbsize: String(taille), pilimit: "50", titles: liste.join("|"),
+    });
+    const d = await json(`https://${langue}.wikipedia.org/w/api.php?` + p, { duree: 864e5 });
+    const q = d.query || {};
+    const vers = new Map();
+    for (const n of q.normalized || []) vers.set(n.to, n.from);
+    for (const r of q.redirects || []) vers.set(r.to, vers.get(r.from) || r.from);
+    const res = new Map();
+    for (const pg of q.pages || []) {
+      if (!pg.thumbnail) continue;
+      res.set(pg.title, pg.thumbnail.source);
+      if (vers.has(pg.title)) res.set(vers.get(pg.title), pg.thumbnail.source);
+    }
+    return res;
+  }
+
+  // ---------------------------------------------------------------- OpenStreetMap (Overpass)
+  const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"];
+
+  /** Hébergements cartographiés par les contributeurs OpenStreetMap dans une boîte [ouest, sud, est, nord]. */
+  async function hebergementsOsm([w, s, e, n]) {
+    const b = [s, w, n, e].map((x) => Number(x).toFixed(3)).join(",");
+    const requete = `[out:json][timeout:25];nwr["tourism"~"^(hotel|motel|hostel|guest_house|apartment|chalet|camp_site|caravan_site)$"](${b});out center tags 400;`;
+    let derniere;
+    for (const base of OVERPASS) {
+      try {
+        const d = await json(base + "?data=" + encodeURIComponent(requete), { delai: 25000, duree: 6 * 3600e3 });
+        return window.AtloOutils.depuisOverpass(d);
+      } catch (err) {
+        derniere = err;
+        if (err.status && err.status < 500 && err.status !== 429) break;
+      }
+    }
+    throw derniere;
+  }
+
   // ---------------------------------------------------------------- devises
   /** Taux par rapport au dollar US, mis à jour au plus une fois par jour et gardés hors ligne. */
   async function taux({ forcer = false } = {}) {
@@ -208,5 +280,5 @@
     return (montant / t.taux[de]) * t.taux[vers];
   }
 
-  window.AtloServices = { json, meteo, climat, geocoder, resume, autour, taux, convertir, lireLocal, ecrireLocal };
+  window.AtloServices = { json, meteo, climat, geocoder, resume, autour, taux, convertir, lireLocal, ecrireLocal, imagesCommons, vignettesWiki, hebergementsOsm };
 })();

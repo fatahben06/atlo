@@ -2,11 +2,11 @@
    - coquille de l'application pré-enregistrée à l'installation et servie depuis le cache
      (HTML, scripts et données d'une même version : jamais de mélange entre versions) ;
      À CHAQUE MISE EN LIGNE, CHANGER « VERSION » : c'est ce qui déclenche la mise à jour ;
-   - régions des pays et bibliothèques : cache d'abord, rafraîchi en arrière-plan, conservé
-     d'une version à l'autre ;
+   - régions des pays, guides de ville et bibliothèques : cache d'abord, rafraîchi en arrière-plan,
+     conservé d'une version à l'autre ;
    - tuiles, polices et icônes de carte : cache d'abord (limité) ;
-   - météo, Wikipédia, taux : réseau d'abord, copie de secours en cache. */
-const VERSION = "atlo-2026-10-09-2";
+   - météo, Wikipédia et Commons, taux, hébergements OpenStreetMap : réseau d'abord, copie de secours en cache. */
+const VERSION = "atlo-2026-10-16-1";
 const COQUILLE = VERSION + "-coquille";
 const DONNEES = "atlo-donnees";
 const TUILES = "atlo-tuiles";
@@ -17,8 +17,8 @@ const LIMITES = { [TUILES]: 3000, [API]: 400, [IMAGES]: 250 };
 const FICHIERS = [
   "./", "index.html", "manifest.webmanifest", "css/atlo.css",
   "js/i18n.js", "js/outils.js", "js/services.js", "js/carte.js", "js/noyau.js", "js/vues.js",
-  "js/itineraire.js", "js/outils-vue.js", "js/app.js",
-  "data/pays.js", "data/sites.js", "data/monde.js", "data/phrases.js",
+  "js/itineraire.js", "js/outils-vue.js", "js/guide.js", "js/app.js",
+  "data/pays.js", "data/sites.js", "data/monde.js", "data/phrases.js", "data/guides.js", "data/partenaires.js",
   "icons/icone.svg", "icons/icone-192.png", "vendor/TwemojiCountryFlags.woff2",
 ];
 
@@ -93,7 +93,7 @@ self.addEventListener("fetch", (e) => {
   if (url.origin === self.location.origin) {
     if (req.mode === "navigate") {
       e.respondWith(caches.match("index.html", { cacheName: COQUILLE }).then((r) => r || fetch(req)));
-    } else if (/\/(data\/pays|vendor)\//.test(url.pathname)) {
+    } else if (/\/(data\/(pays|guides)|vendor)\//.test(url.pathname)) {
       e.respondWith(perimeEnRevalidant(req, DONNEES));
     } else {
       e.respondWith(caches.match(req, { cacheName: COQUILLE, ignoreSearch: true }).then((r) => r || cacheDabord(req, COQUILLE)));
@@ -108,8 +108,13 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  if (/(^|\.)open-meteo\.com$|(^|\.)wikipedia\.org$|^open\.er-api\.com$/.test(url.hostname)) {
+  if (/(^|\.)open-meteo\.com$|(^|\.)wikipedia\.org$|^commons\.wikimedia\.org$|^open\.er-api\.com$/.test(url.hostname)) {
     e.respondWith(reseauDabord(req, API, url.hostname.startsWith("archive") ? 15000 : 8000));
+    return;
+  }
+
+  if (/^overpass(-api\.de|\.kumi\.systems)$/.test(url.hostname)) {
+    e.respondWith(reseauDabord(req, API, 26000));
     return;
   }
 

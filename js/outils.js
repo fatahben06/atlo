@@ -419,11 +419,157 @@ ${rte}
     return r ? [r[1], r[2]] : ["inconnu", "🌡️"];
   }
 
+  // ------------------------------------------------------------ hébergement
+  /** Nombre de nuits entre deux dates ISO (AAAA-MM-JJ), 0 si incomplet ou incohérent. */
+  function nuits(arrivee, depart) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(arrivee || "") || !/^\d{4}-\d{2}-\d{2}$/.test(depart || "")) return 0;
+    const n = Math.round((Date.parse(depart + "T12:00:00Z") - Date.parse(arrivee + "T12:00:00Z")) / 864e5);
+    return n > 0 && n <= 90 ? n : 0;
+  }
+
+  /** Date ISO décalée de n jours. */
+  function decalerDate(iso, n) {
+    const d = new Date(Date.parse(iso + "T12:00:00Z") + n * 864e5);
+    return d.toISOString().slice(0, 10);
+  }
+
+  /**
+   * Liens des plateformes de réservation, dates et voyageurs pré-remplis quand la plateforme le permet.
+   * cible = { requete (établissement ou ville), lieu (ville, pays), ficheBooking, expedia (regionId),
+   * tripadvisor (geo), airbnb (« Ville--Pays ») } ; sejour = { arrivee, depart, adultes, chambres }.
+   * partenaires : identifiants d'affiliation (booking, agoda) et enveloppes de suivi par plateforme
+   * (ex. Travelpayouts « https://tp.media/r?marker=…&u= ») ; vides par défaut.
+   * Sans dates valides, les liens ouvrent la recherche sans dates : la plateforme les demande.
+   */
+  function liensReservation(cible, sejour = {}, partenaires = {}, langue = "fr") {
+    const n = nuits(sejour.arrivee, sejour.depart);
+    const a = n ? sejour.arrivee : "", d = n ? sejour.depart : "";
+    const adultes = Math.max(1, Math.min(30, Number(sejour.adultes) || 2));
+    const chambres = Math.max(1, Math.min(30, Number(sejour.chambres) || 1));
+    const q = String(cible.requete || cible.lieu || "").trim();
+    const lieu = String(cible.lieu || q).trim();
+    const url = (base, params) => {
+      const p = new URLSearchParams();
+      for (const [k, v] of Object.entries(params)) if (v !== "" && v != null) p.set(k, v);
+      const s = p.toString();
+      return s ? base + (base.includes("?") ? "&" : "?") + s : base;
+    };
+    const fiche = cible.ficheBooking && /^https:\/\/www\.booking\.com\/hotel\/[a-z]{2}\/[\w.-]+\.html/.test(cible.ficheBooking)
+      ? cible.ficheBooking.split("?")[0] : "";
+    const liens = [
+      {
+        id: "booking", nom: "Booking.com", dates: true, fiche: !!fiche,
+        url: url(fiche || "https://www.booking.com/searchresults.html", {
+          ss: fiche ? "" : q, checkin: a, checkout: d, group_adults: adultes, no_rooms: chambres, group_children: 0,
+          lang: langue, aid: partenaires.booking,
+        }),
+      },
+      { id: "google", nom: "Google Hôtels", dates: false, url: url("https://www.google.com/travel/hotels", { q, hl: langue }) },
+      {
+        id: "expedia", nom: "Expedia", dates: true,
+        url: url("https://www.expedia.com/Hotel-Search", {
+          destination: q, regionId: q === lieu ? cible.expedia : "", startDate: a, endDate: d, adults: adultes, rooms: chambres,
+        }),
+      },
+      {
+        id: "agoda", nom: "Agoda", dates: true,
+        url: url("https://www.agoda.com/search", { textToSearch: q, checkIn: a, checkOut: d, adults: adultes, rooms: chambres, children: 0, cid: partenaires.agoda }),
+      },
+      {
+        id: "airbnb", nom: "Airbnb", dates: true,
+        url: url("https://www.airbnb.com/s/" + encodeURIComponent(cible.airbnb || lieu).replace(/%2D%2D|--/g, "--") + "/homes", { checkin: a, checkout: d, adults: adultes }),
+      },
+      { id: "tripadvisor", nom: "Tripadvisor", dates: false, url: url("https://www.tripadvisor.com/Search", { q, geo: cible.tripadvisor }) },
+    ];
+    const enveloppes = partenaires.enveloppes || {};
+    for (const l of liens) {
+      const e = enveloppes[l.id];
+      if (typeof e === "string" && /^https:\/\//.test(e)) l.url = e + encodeURIComponent(l.url);
+    }
+    return liens;
+  }
+
+  /** Types d'hébergement OpenStreetMap → types Atlo. */
+  const TYPES_OSM = {
+    hotel: "hotel", motel: "motel", hostel: "hostel", guest_house: "guest_house", apartment: "apartment",
+    chalet: "apartment", camp_site: "camping", caravan_site: "camping", alpine_hut: "hostel", resort: "resort",
+  };
+
+  /** Réponse Overpass (JSON) → hébergements normalisés, avec position. */
+  function depuisOverpass(donnees) {
+    const liste = [];
+    for (const e of (donnees && donnees.elements) || []) {
+      const tags = e.tags || {};
+      const type = TYPES_OSM[tags.tourism] || (tags.leisure === "resort" ? "resort" : null);
+      const lat = e.lat != null ? e.lat : e.center && e.center.lat;
+      const lon = e.lon != null ? e.lon : e.center && e.center.lon;
+      const nom = tags["name:fr"] || tags.name || tags["name:en"] || tags["name:ar"];
+      if (!type || lat == null || lon == null || !nom) continue;
+      const site = tags.website || tags["contact:website"] || tags.url || "";
+      const fb = tags["contact:facebook"] || tags.facebook || "";
+      liste.push({
+        id: "osm:" + e.type[0] + e.id, n: nom, nomLocal: [tags["name:ar"], tags.name].find((x) => x && x !== nom) || "",
+        type, etoiles: Number.parseInt(tags.stars, 10) || null, ll: [Math.round(lat * 1e5) / 1e5, Math.round(lon * 1e5) / 1e5],
+        site: /^https?:\/\//i.test(site) ? site : site ? "https://" + site : "",
+        fb: /^https?:\/\//i.test(fb) ? fb : fb ? "https://www.facebook.com/" + fb.replace(/^@/, "") : "",
+        tel: tags.phone || tags["contact:phone"] || tags.mobile || tags["contact:mobile"] || "",
+        lieu: tags["addr:city"] || tags["addr:town"] || tags["addr:village"] || "",
+        quartier: [tags["addr:street"], tags["addr:suburb"]].filter(Boolean).join(", "),
+        source: "osm",
+      });
+    }
+    return liste;
+  }
+
+  const MOTS_GENERIQUES = new Set(["hotel", "hotels", "motel", "residence", "auberge", "jeunesse", "hostel", "maison", "hote", "hotes",
+    "camping", "appartement", "appartements", "apartment", "apartments", "resort", "complexe", "touristique", "village", "gite",
+    "le", "la", "les", "l", "el", "al", "de", "du", "des", "d", "et", "and", "the", "of", "bejaia", "bgayet", "فندق", "نزل"]);
+  const motsNom = (n) => normaliser(n).split(" ").filter((m) => m && !MOTS_GENERIQUES.has(m));
+
+  /** Ressemblance (0 à 1) entre deux noms d'établissement, sans les mots génériques. */
+  function ressemblanceNoms(a, b) {
+    const ma = new Set(motsNom(a)), mb = new Set(motsNom(b));
+    if (!ma.size || !mb.size) return normaliser(a) === normaliser(b) ? 1 : 0;
+    let communs = 0;
+    for (const m of ma) if (mb.has(m)) communs++;
+    return communs / Math.min(ma.size, mb.size) * (communs / Math.max(ma.size, mb.size)) ** 0.25;
+  }
+
+  /**
+   * Fusionne la sélection vérifiée et les données OpenStreetMap : un établissement présent des deux côtés
+   * garde nos informations et reçoit la position et les contacts OSM qui lui manquent ; les autres
+   * établissements OSM sont ajoutés à la suite.
+   */
+  function fusionnerHebergements(selection, osm) {
+    const resultat = selection.map((h) => Object.assign({}, h));
+    const pris = new Set();
+    for (const h of resultat) {
+      let meilleur = null, note = 0;
+      for (const o of osm) {
+        if (pris.has(o.id)) continue;
+        const r = ressemblanceNoms(h.n, o.n);
+        if (r < 0.6) continue;
+        const km = h.ll ? distanceKm(h.ll[0], h.ll[1], o.ll[0], o.ll[1]) : null;
+        if (km != null && km > 3) continue;
+        const v = r - (km || 0) / 10;
+        if (v > note) { note = v; meilleur = o; }
+      }
+      if (meilleur) {
+        pris.add(meilleur.id);
+        h.osm = meilleur.id;
+        if (!h.ll) { h.ll = meilleur.ll; h.llSource = "osm"; }
+        for (const k of ["site", "fb", "tel"]) if (!h[k] && meilleur[k]) h[k] = meilleur[k];
+      }
+    }
+    return resultat.concat(osm.filter((o) => !pris.has(o.id)));
+  }
+
   const API = {
     normaliser, score, distanceKm, cap, decoderPolyligne, anneaux, pointDansAnneaux, aireSignee,
     multiPolygone, equalEarth, MODES, dureeTrajet, longueur, optimiser, planifier, heureMinutes,
     base64url, depuisBase64url, encoderItineraire, decoderItineraire, gpx, ics, lienGoogleItineraire,
     climatMensuel, meilleursMois, plagesMois, meteoWmo,
+    nuits, decalerDate, liensReservation, depuisOverpass, ressemblanceNoms, fusionnerHebergements,
   };
   racine.AtloOutils = API;
   if (typeof module !== "undefined" && module.exports) module.exports = API;

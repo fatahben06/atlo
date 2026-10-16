@@ -19,5 +19,11 @@ Services appelés depuis le navigateur de l'utilisateur, avec attribution affich
 | [Open-Meteo](https://open-meteo.com/) | prévisions, climat (ERA5), recherche de villes (GeoNames) | gratuit pour un usage non commercial, CC BY 4.0 |
 | [Wikipédia](https://www.wikipedia.org/) / [Wikimedia Commons](https://commons.wikimedia.org/) | résumés et photos | CC BY-SA ; images sous la licence de leur auteur |
 | [ExchangeRate-API](https://www.exchangerate-api.com/) (open.er-api.com) | taux de change quotidiens | gratuit avec la mention « Rates By Exchange Rate API » |
+| [OpenStreetMap](https://www.openstreetmap.org/copyright) via [Overpass API](https://overpass-api.de/) | hôtels, auberges, maisons d'hôtes autour d'un lieu (« Où dormir ») | données ODbL, mention « © contributeurs OpenStreetMap » ; usage raisonnable du service public Overpass (une requête par lieu, résultat gardé 6 h) |
+| [Wikimedia Commons](https://commons.wikimedia.org/) | photos des guides de ville | licence propre à chaque fichier (auteur et licence affichés sur la photo, lien vers la page du fichier) |
+
+Plateformes de réservation (Booking.com, Google Hôtels, Expedia, Agoda, Airbnb, Tripadvisor) : simples liens de recherche ouverts dans un nouvel onglet ; aucun contenu n'est repris ni copié depuis ces sites. Identifiants d'affiliation éventuels : `data/partenaires.js`.
+
+Guides de ville (`data/guides/*.js`) : textes rédigés pour Atlo à partir des sources listées dans chaque guide.
 
 Pour un usage commercial d'Open-Meteo, prendre un abonnement (ou héberger son propre serveur Open-Meteo) et remplacer l'adresse dans `js/services.js`.

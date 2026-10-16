@@ -86,7 +86,7 @@
   A.CATEGORIES = {
     H: { icone: "🏛️", cle: "catH" }, R: { icone: "🛐", cle: "catR" }, N: { icone: "🏞️", cle: "catN" },
     M: { icone: "🖼️", cle: "catM" }, V: { icone: "🏘️", cle: "catV" }, A: { icone: "🏙️", cle: "catA" },
-    P: { icone: "🏝️", cle: "catP" },
+    P: { icone: "🏝️", cle: "catP" }, B: { icone: "🌅", cle: "catB" },
   };
   A.CONTINENTS = ["af", "na", "sa", "as", "eu", "oc", "an"];
 

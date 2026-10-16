@@ -321,6 +321,7 @@
           h("li", null, A.lienExterne("https://open-meteo.com/", "Open-Meteo"), " — ", t("srcMeteo")),
           h("li", null, A.lienExterne("https://www.wikipedia.org/", "Wikipédia"), " / ", A.lienExterne("https://commons.wikimedia.org/", "Wikimedia Commons"), " — ", t("srcWiki")),
           h("li", null, A.lienExterne("https://www.exchangerate-api.com", "ExchangeRate-API"), " — ", t("srcTaux")),
+          h("li", null, A.lienExterne("https://www.openstreetmap.org/copyright", "OpenStreetMap"), " (ODbL), ", A.lienExterne("https://overpass-api.de/", "Overpass API"), " — ", t("srcHebergements")),
           h("li", null, A.lienExterne("https://maplibre.org/", "MapLibre GL JS"), " (BSD-3), ", A.lienExterne("https://github.com/twitter/twemoji", "Twemoji"), " (CC BY 4.0) — ", t("srcLogiciels"))),
         h("p", { class: "mention" }, t("mention"))),
       h("section", { class: "bloc", "aria-labelledby": "titre-donnees" },
@@ -342,7 +343,9 @@
       sortie.textContent = t("horsLigneImpossible");
       return;
     }
-    const fichiers = window.ATLO_PAYS.map((p) => `data/pays/${p.c}.js`).concat(["data/phrases.js", "vendor/maplibre-gl.js", "vendor/maplibre-gl.css", "vendor/mapbox-gl-rtl-text.js"]);
+    const fichiers = window.ATLO_PAYS.map((p) => `data/pays/${p.c}.js`)
+      .concat((window.ATLO_GUIDES || []).map((g) => `data/guides/${g.id}.js`))
+      .concat(["data/phrases.js", "vendor/maplibre-gl.js", "vendor/maplibre-gl.css", "vendor/mapbox-gl-rtl-text.js"]);
     let faits = 0, echecs = 0;
     sortie.textContent = t("telechargement", { a: 0, b: fichiers.length });
     const lot = 8;

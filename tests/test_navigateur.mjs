@@ -93,6 +93,20 @@ async function simuler(contexte) {
     return r.fulfill({ headers: CORS, json: { query: { search: [] } } });
   });
   await contexte.route("https://upload.wikimedia.org/**", (r) => r.fulfill({ headers: CORS, body: PNG, contentType: "image/png" }));
+  await contexte.route("https://commons.wikimedia.org/w/api.php**", (r) => {
+    const titres = (new URL(r.request().url()).searchParams.get("titles") || "").split("|").filter(Boolean);
+    r.fulfill({ headers: CORS, json: { query: { pages: titres.map((ti, i) => ({
+      title: ti, imageinfo: [{ thumburl: `https://upload.wikimedia.org/wikipedia/commons/thumb/a/a${i}/T${i}.jpg/960px-T${i}.jpg`, descriptionurl: "https://commons.wikimedia.org/wiki/" + encodeURIComponent(ti),
+        extmetadata: { Artist: { value: "<a href='x'>Auteur Test</a>" }, LicenseShortName: { value: "CC BY-SA 4.0" } } }],
+    })) } } });
+  });
+  // Hébergements OpenStreetMap simulés : un établissement connu (sans position dans la sélection), deux nouveaux, un sans nom.
+  await contexte.route(/https:\/\/overpass(-api\.de|\.kumi\.systems)\/api\/interpreter.*/, (r) => r.fulfill({ headers: CORS, json: { elements: [
+    { type: "node", id: 1, lat: 36.7536, lon: 5.0871, tags: { tourism: "hotel", name: "Hotel de l'Etoile", stars: "3", phone: "+213 34 00 00 00" } },
+    { type: "way", id: 2, center: { lat: 36.7489, lon: 5.07 }, tags: { tourism: "hotel", name: "Hôtel Zéphyr", website: "zephyr.example" } },
+    { type: "node", id: 3, lat: 36.66, lon: 5.16, tags: { tourism: "guest_house", name: "Maison d'hôtes Test", "addr:city": "Tichy" } },
+    { type: "node", id: 4, lat: 36.7, lon: 5.05, tags: { tourism: "hostel" } },
+  ] } }));
   // Fond de carte minimal à la place d'OpenFreeMap (pas de réseau ici).
   await contexte.route("https://tiles.openfreemap.org/styles/**", (r) => r.fulfill({ headers: CORS, json: {
     version: 8, sources: {}, glyphs: "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
@@ -260,6 +274,128 @@ async function parcours(nom, options) {
   await capture("arabe");
   await page.evaluate(() => { Atlo.prefs.langue = "fr"; Atlo.enregistrerPrefs(); });
 
+  verifier(erreurs.length === 0, "aucune erreur JavaScript" + (erreurs.length ? " :\n    " + erreurs.join("\n    ") : ""));
+  await contexte.close();
+}
+
+// ------------------------------------------------------------ guide de Béjaïa
+{
+  const { contexte, page, erreurs, capture } = await parcours("bejaia", { viewport: { width: 1366, height: 860 } });
+  const dans = (n) => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);
+  await page.goto(BASE + "#/");
+  await page.waitForSelector(".carte-guide");
+  verifier((await page.textContent(".carte-guide")).includes("Béjaïa"), "accueil : guide de Béjaïa à la une");
+  await page.fill("#recherche", "cap carbon");
+  await page.waitForSelector('.resultats a[href="#/guide/bejaia/site/cap-carbon"]');
+  verifier(true, "recherche : « cap carbon » mène à la fiche du guide");
+  await page.fill("#recherche", "");
+  await page.click(".carte-guide");
+  await page.waitForSelector(".carte-site");
+  verifier((await page.$$(".carte-site")).length === 20, "guide : 20 incontournables");
+  verifier((await page.textContent(".carte-site >> nth=0")).includes("Cap Carbon"), "guide : n° 1 en tête");
+  verifier(!!(await page.$(".bandeau-brouillon")), "guide : bandeau « en cours de vérification »");
+  await page.click('.puces button:has-text("Plage")');
+  const plages = (await page.$$(".carte-site")).length;
+  verifier(plages > 1 && plages < 20, `guide : filtre plages (${plages})`);
+  await page.click('.puces button:has-text("Tout")');
+  await page.waitForSelector(".carte-gl canvas, .schema", { timeout: 15000 });
+  await page.waitForTimeout(1200);
+  await capture("guide");
+  await page.click(".carte-site-ouvrir >> nth=0");
+  await page.waitForSelector("#fiche[open] .rang-fiche");
+  verifier((await page.textContent("#fiche .rang-fiche")).includes("1"), "fiche : rang affiché");
+  verifier((await page.$$("#fiche .faits div")).length >= 3, "fiche : durée, moment, distance");
+  await page.waitForSelector("#fiche .proche", { timeout: 5000 }).catch(() => null);
+  verifier((await page.textContent("#fiche")).includes("Dormir à proximité"), "fiche : hébergements à proximité (OpenStreetMap)");
+  await page.click("#fiche .favori");
+  verifier((await page.getAttribute("#fiche .favori", "aria-pressed")) === "true", "fiche : ajout aux favoris");
+  await capture("fiche-site");
+  await page.keyboard.press("Escape");
+  verifier((await page.textContent('.puces button:has-text("Favoris")')).includes("1"), "guide : compteur de favoris");
+
+  await page.click('.onglet-guide:has-text("Où dormir")');
+  await page.waitForSelector(".carte-heb");
+  await page.waitForFunction(() => document.querySelectorAll(".carte-heb").length >= 16, null, { timeout: 8000 }).catch(() => null);
+  const nbHeb = (await page.$$(".carte-heb")).length;
+  verifier(nbHeb === 16, `dormir : sélection + OpenStreetMap fusionnés (${nbHeb})`);
+  await page.fill("#sejour-arrivee", dans(30));
+  await page.dispatchEvent("#sejour-arrivee", "change");
+  verifier((await page.inputValue("#sejour-depart")) === dans(31), "dormir : départ proposé le lendemain");
+  const lienBooking = await page.getAttribute(".sejour-liens a >> nth=0", "href");
+  verifier(lienBooking.includes("checkin=" + dans(30)) && lienBooking.includes("group_adults=2"), "dormir : recherche Booking avec dates et voyageurs");
+  await page.click('.sejour .compteur-champ >> nth=0 >> button[aria-label^="Plus"]');
+  verifier((await page.getAttribute(".sejour-liens a >> nth=0", "href")).includes("group_adults=3"), "dormir : nombre de voyageurs repris");
+  await page.click('.carte-heb-ouvrir:has-text("Étoile")');
+  await page.waitForSelector("#fiche[open] .plateformes a");
+  const plateformes = await page.$$eval("#fiche .plateformes a", (as) => as.map((a) => a.href));
+  verifier(plateformes.length >= 5 && plateformes[0].includes("booking.com") && plateformes[0].includes("checkin="), `fiche hôtel : ${plateformes.length} plateformes, dates incluses`);
+  verifier((await page.textContent("#fiche")).includes("+213 34 00 00 00"), "fiche hôtel : téléphone complété par OpenStreetMap");
+  await page.waitForTimeout(500);
+  await capture("fiche-hotel");
+  await page.keyboard.press("Escape");
+  await page.click('.puces button:has-text("Auberges")');
+  verifier((await page.$$(".carte-heb")).length === 1, "dormir : filtre auberges");
+  await page.click('.puces button:has-text("Tout") >> nth=0');
+  await page.selectOption(".titre-ligne select", "site:cap-carbon");
+  verifier((await page.textContent(".carte-heb >> nth=0")).includes("de Cap Carbon"), "dormir : tri par proximité d'un site");
+  await page.waitForTimeout(800);
+  await capture("dormir");
+
+  await page.click('.onglet-guide:has-text("Itinéraires")');
+  await page.waitForSelector(".itineraire-pret");
+  verifier((await page.$$(".itineraire-pret")).length === 3, "itinéraires : 3 parcours prêts");
+  await capture("itineraires");
+  await page.click('.itineraire-pret >> nth=0 >> button:has-text("Utiliser")');
+  await page.waitForSelector(".page-itineraire .etape");
+  verifier((await page.$$(".etape")).length === 7, "itinéraires : parcours d'un jour chargé (7 étapes)");
+  await page.click(".etape-nom >> nth=0");
+  await page.waitForSelector("#fiche[open] .rang-fiche");
+  verifier(true, "itinéraire : étape du guide ouvre sa fiche");
+  await page.keyboard.press("Escape");
+
+  await page.goto(BASE + "#/guide/bejaia/pratique");
+  await page.waitForSelector("#pr-venir");
+  await page.locator(".meteo").scrollIntoViewIfNeeded();
+  await page.waitForSelector(".meteo-temp");
+  verifier(true, "pratique : venir, météo et climat");
+
+  await page.goto(BASE + "#/pays/DZ/r/6");
+  await page.waitForSelector(".page-region .carte-guide");
+  verifier(true, "région Béjaïa : lien vers le guide");
+  await page.locator("#titre-dormir").scrollIntoViewIfNeeded();
+  await page.waitForSelector(".page-region .carte-heb", { timeout: 8000 }).catch(() => null);
+  verifier((await page.$$(".page-region .carte-heb")).length === 3, "région : « Où dormir » (OpenStreetMap)");
+
+  await page.goto(BASE + "#/guide/bejaia/site/pic-des-singes");
+  await page.waitForSelector("#fiche[open] .fiche-titre");
+  verifier((await page.textContent("#fiche .fiche-titre")).includes("Pic des Singes"), "lien direct vers la fiche d'un site");
+  await page.keyboard.press("Escape");
+  verifier(erreurs.length === 0, "aucune erreur JavaScript" + (erreurs.length ? " :\n    " + erreurs.join("\n    ") : ""));
+  await contexte.close();
+}
+{
+  const { contexte, page, erreurs, capture } = await parcours("bejaia-mobile", {
+    viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: "dark",
+  });
+  await page.goto(BASE + "#/guide/bejaia");
+  await page.waitForSelector(".carte-site");
+  await page.waitForTimeout(1200);
+  const largeur = await page.evaluate(() => document.documentElement.scrollWidth);
+  verifier(largeur <= 390, `guide mobile : pas de défilement horizontal (${largeur}px)`);
+  await capture("guide");
+  await page.goto(BASE + "#/guide/bejaia/dormir");
+  await page.waitForSelector(".carte-heb");
+  await page.waitForTimeout(800);
+  const largeur2 = await page.evaluate(() => document.documentElement.scrollWidth);
+  verifier(largeur2 <= 390, `dormir mobile : pas de défilement horizontal (${largeur2}px)`);
+  await capture("dormir");
+  await page.evaluate(() => { Atlo.prefs.langue = "ar"; Atlo.enregistrerPrefs(); });
+  await page.goto(BASE + "#/guide/bejaia");
+  await page.reload();
+  await page.waitForSelector(".carte-site");
+  verifier((await page.textContent(".guide-hero h1")).includes("بجاية"), "guide en arabe");
+  await page.waitForTimeout(600);
+  await capture("guide-arabe");
   verifier(erreurs.length === 0, "aucune erreur JavaScript" + (erreurs.length ? " :\n    " + erreurs.join("\n    ") : ""));
   await contexte.close();
 }

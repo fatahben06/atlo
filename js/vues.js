@@ -22,6 +22,7 @@
     const c = A.CATEGORIES[cat];
     return c ? c.icone + " " + t(c.cle) : "";
   }
+  A.libelleCategorie = libelleCategorie;
 
   /** Bouton « ajouter à l'itinéraire » qui reflète l'état courant. */
   A.boutonEtape = (etape, { libelle = false } = {}) => {
@@ -317,6 +318,7 @@
     A.surNettoyage(() => clearInterval(id));
     return el;
   }
+  A.horloge = horloge;
 
   function texteEcart(tz) {
     const e = A.ecartHeures(tz);
@@ -394,7 +396,16 @@
       const sitesTrouves = A.SITES.map((s) => ({ s, sc: Math.max(O.score(q, O.normaliser(s.fr)), O.score(q, O.normaliser(s.en))) }))
         .filter((x) => x.sc).sort((a, b) => b.sc - a.sc).slice(0, 6).map((x) => x.s);
       const zoneVilles = h("div", null);
+      const guidesTrouves = A.chercherGuides ? A.chercherGuides(q) : [];
       A.vider(resultats,
+        guidesTrouves.length ? h("div", { class: "groupe-resultats" },
+          h("h3", null, t("guidesDeVille")),
+          h("ul", { class: "liste-lieux", role: "list" }, guidesTrouves.map((r) => h("li", null,
+            h("a", { class: "lieu", href: r.site ? `#/guide/${r.g.id}/site/${r.site.id}` : "#/guide/" + r.g.id },
+              h("span", { class: "drapeau", "aria-hidden": "true" }, r.site ? "📍" : "📘"),
+              h("span", { class: "lieu-texte" },
+                h("span", { class: "site-nom" }, r.site ? r.site.nom : A.tx(r.g.nom)),
+                h("span", { class: "site-meta" }, r.site ? t("dansLeGuide", { v: A.tx(r.g.nom) }) : t("guideDeVille") + " · " + A.nomPays(r.g.pays)))))))) : null,
         sitesTrouves.length ? h("div", { class: "groupe-resultats" },
           h("h3", null, t("sites")),
           h("ul", { class: "sites", role: "list" }, sitesTrouves.map((s) => elementSite(s, { region: A.nomPays(s.paysRegion) })))) : null,
@@ -436,6 +447,9 @@
           h("a", { href: "#/itineraire", class: "bouton" }, h("span", { "aria-hidden": "true" }, "🧭 "), t("monItineraire")),
           h("a", { href: "#/outils", class: "bouton" }, h("span", { "aria-hidden": "true" }, "🧰 "), t("outilsVoyage")))),
       resultats,
+      A.GUIDES && A.GUIDES.size ? h("section", { class: "a-la-une", "aria-labelledby": "titre-une" },
+        h("h2", { id: "titre-une" }, t("aLaUne")),
+        h("div", { class: "cartes-guides" }, [...A.GUIDES.values()].map(A.carteGuide))) : null,
       // Sur mobile, la carte du monde vient après la recherche plutôt qu'en haut de l'écran.
       mobile ? h("section", { class: "bloc monde-bloc" }, (() => { const el = h("div"); mondeAccueil(el, valeurs); return el; })()) : null,
       recents.length ? h("section", { class: "bloc" },
@@ -518,6 +532,9 @@
       h("div", { class: "actions" },
         h("a", { href: "#/outils?p=" + code, class: "bouton" }, h("span", { "aria-hidden": "true" }, "🧰 "), t("outilsPays")),
         h("button", { type: "button", class: "bouton", onclick: () => A.partager({ titre: A.nomListe(p.n) + " · Atlo", url: location.href }) }, h("span", { "aria-hidden": "true" }, "↗ "), t("partager"))),
+      A.guidesDuPays && A.guidesDuPays(code).length ? h("section", { class: "a-la-une", "aria-labelledby": "titre-guides" },
+        h("h2", { id: "titre-guides" }, t("guidesDeVille")),
+        h("div", { class: "cartes-guides" }, A.guidesDuPays(code).map(A.carteGuide))) : null,
       blocInfos(p, tz),
       blocRegions(p, d, sites),
       h("section", { class: "bloc", "aria-labelledby": "titre-sites" },
@@ -645,6 +662,7 @@
     const villes = d.v.filter((v) => v.region === r.i).sort((a, b) => a.cls - b.cls || b.pop - a.pop);
     const centre = villes[0] ? { lat: villes[0].lat, lon: villes[0].lon, nom: A.nomListe(villes[0].n) } : { lat: r.lat, lon: r.lon, nom };
     const tz = (villes[0] && villes[0].tz) || (p.z && p.z[0]);
+    const guide = A.guideDeRegion ? A.guideDeRegion(code, r.i) : null;
 
     const contenu = h("div", { class: "page-region" },
       h("nav", { class: "fil", "aria-label": t("filAriane") },
@@ -654,6 +672,7 @@
       h("header", { class: "entete-lieu" },
         h("span", { class: "drapeau grand", "aria-hidden": "true" }, A.drapeau(code)),
         h("div", null, h("h1", null, nom), h("p", { class: "sous-titre" }, A.nomListe(p.n), tz ? [" · ", horloge(tz), " (" + fmt.decalage(tz) + ")"] : null))),
+      guide ? h("div", { class: "cartes-guides seul" }, A.carteGuide(guide)) : null,
       h("section", { class: "bloc", "aria-labelledby": "titre-sites" },
         h("h2", { id: "titre-sites" }, t("sitesEmblematiques"), " ", h("span", { class: "compte" }, fmt.nombre(sites.length))),
         sites.length ? listeSites(sites) : h("p", { class: "note" }, t("pasDeSitesRegion"))),
@@ -662,6 +681,7 @@
         h("ul", { class: "liste-lieux", role: "list" }, villes.slice(0, 12).map((v) =>
           A.elementVille({ nom: A.nomListe(v.n), lat: v.lat, lon: v.lon, pays: code, region: nom, population: v.pop })))) : null,
       A.blocAutour(centre.lat, centre.lon, { titre: t("aDecouvrirA", { v: centre.nom }), exclure: [centre.nom, nom] }),
+      A.blocHebergements ? A.blocHebergements(centre.lat, centre.lon, centre.nom, { pays: code }) : null,
       A.blocMeteo(centre.lat, centre.lon, { titre: t("meteoA", { v: centre.nom }), fuseau: false }),
       A.blocClimat(centre.lat, centre.lon, centre.nom));
 
@@ -722,6 +742,7 @@
         h("h2", { id: "titre-proches" }, t("sitesProches")),
         listeSites(proches.map((x) => x.s), { distances, regionNom: (s) => A.nomPays(s.paysRegion) })) : null,
       A.blocAutour(lat, lon, { exclure: [titre] }),
+      A.blocHebergements ? A.blocHebergements(lat, lon, titre, { pays: code || "", rayonKm: 4 }) : null,
       A.blocMeteo(lat, lon, { fuseau: false }),
       A.blocClimat(lat, lon, titre));
 
@@ -803,6 +824,7 @@
     }
     d.querySelector(".fiche-corps").scrollTop = 0;
   }
+  A.ouvrirDialogue = ouvrirDialogue;
 
   A.ouvrirFiche = (id, { remplacer } = {}) => {
     const s = A.SITE.get(id);

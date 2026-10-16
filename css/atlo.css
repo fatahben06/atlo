@@ -317,7 +317,8 @@ body.carte-pleine .panneau-carte[data-mode="carte"] { position: fixed; inset: va
 .bloc > h2:first-child { display: flex; align-items: baseline; gap: 0.4em; }
 .sous-titre { color: var(--encre-2); margin: 0 0 0.6rem; }
 .titre-ligne { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-.titre-ligne h2 { margin: 0; }
+.titre-ligne h2 { margin: 0; min-width: 0; }
+.titre-ligne .select-petit { max-width: 100%; min-width: 0; }
 .fil { font-size: 0.85rem; color: var(--encre-3); margin-bottom: 0.75rem; }
 .fil a { color: var(--encre-2); }
 .vide-doux { text-align: center; padding: 1.5rem 0.5rem; }
@@ -611,6 +612,179 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .maplibregl-ctrl-group button .maplibregl-ctrl-icon { filter: invert(1); }
 }
+
+/* ------------------------------------------------------------------ guides de ville */
+.a-la-une { margin: 0 0 1.25rem; }
+.a-la-une > h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--encre-3); margin: 0 0 0.5rem; }
+.cartes-guides { display: grid; gap: 10px; }
+.cartes-guides.seul { margin: 0 0 1.25rem; }
+.carte-guide {
+  position: relative; display: block; overflow: hidden; min-height: 168px; border-radius: var(--rayon);
+  background: linear-gradient(135deg, var(--serie-1), var(--niv-5)); color: #fff; text-decoration: none;
+  box-shadow: var(--ombre); isolation: isolate; transition: transform 0.15s, box-shadow 0.15s;
+}
+.carte-guide:hover { color: #fff; transform: translateY(-2px); box-shadow: var(--ombre-forte); }
+.carte-guide-image { position: absolute; inset: 0; z-index: -2; }
+.carte-guide-image img { width: 100%; height: 100%; object-fit: cover; }
+.carte-guide::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 20%, rgba(0, 0, 0, 0.72)); }
+.carte-guide-texte { display: grid; gap: 2px; padding: 16px; padding-top: 56px; }
+.carte-guide-sur { font-size: 0.8rem; font-weight: 600; opacity: 0.92; }
+.carte-guide-nom { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+.carte-guide-accroche { font-size: 0.92rem; opacity: 0.95; }
+.carte-guide-chiffres { font-size: 0.8rem; font-weight: 700; margin-top: 4px; }
+.badge-apercu { display: inline-block; margin-inline-start: 6px; padding: 0 6px; border-radius: 5px; background: rgba(255, 255, 255, 0.25); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.guide-hero {
+  position: relative; overflow: hidden; border-radius: var(--rayon); margin: 0 0 0.75rem; isolation: isolate;
+  background: linear-gradient(135deg, var(--serie-1), var(--niv-5)); color: #fff; min-height: 220px; display: flex; align-items: flex-end;
+}
+.guide-hero-image { position: absolute; inset: 0; z-index: -2; }
+.guide-hero-image img { width: 100%; height: 100%; object-fit: cover; }
+.guide-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 25%, rgba(0, 0, 0, 0.75)); }
+.guide-hero .credit { z-index: 1; color: #fff; text-decoration: none; }
+.guide-hero-texte { padding: 40px 16px 14px; }
+.guide-partager { position: absolute; top: 10px; inset-inline-end: 10px; z-index: 1; background: rgba(0, 0, 0, 0.35); border-color: rgba(255, 255, 255, 0.4); color: #fff; backdrop-filter: blur(6px); }
+.guide-partager:hover { background: rgba(0, 0, 0, 0.5); }
+@media (max-width: 639px) {
+  .guide-hero { min-height: 0; }
+  .guide-hero-accroche { font-size: 0.92rem; margin-bottom: 6px; }
+  .guide-hero h1 { font-size: 2rem; }
+}
+.guide-hero h1 { color: #fff; font-size: clamp(2.1rem, 1.6rem + 2.4vw, 3rem); letter-spacing: -0.03em; margin: 0; }
+.guide-hero-sur { font-size: 0.82rem; font-weight: 600; margin: 0 0 2px; opacity: 0.92; }
+.guide-hero-local { margin: 0 0 4px; font-size: 1.05rem; opacity: 0.92; }
+.guide-hero-accroche { margin: 0 0 8px; font-size: 1rem; max-width: 46ch; }
+.guide-hero-faits { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.guide-hero-fait:not(:empty) { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.18); backdrop-filter: blur(6px); font-size: 0.85rem; font-weight: 600; }
+.bandeau-brouillon { background: var(--attention-fond); border: 1px solid color-mix(in srgb, var(--attention) 40%, transparent); color: var(--encre); border-radius: var(--rayon-petit); padding: 10px 12px; font-size: 0.88rem; font-weight: 600; }
+
+.onglets-guide {
+  position: sticky; top: var(--haut-barre); z-index: 12; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px;
+  margin: 0 -16px 1rem; padding: 6px 12px; background: color-mix(in srgb, var(--plan) 92%, transparent);
+  backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid var(--bord);
+}
+.onglet-guide {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-height: 52px; padding: 4px 2px;
+  border-radius: 12px; color: var(--encre-2); text-decoration: none; font-weight: 700; font-size: 0.8rem; text-align: center; line-height: 1.15;
+}
+.onglet-guide > span[aria-hidden] { font-size: 1.25rem; line-height: 1; }
+.onglet-guide .puce-compte { position: absolute; top: 2px; inset-inline-end: calc(50% - 30px); min-width: 1.5em; height: 1.5em; font-size: 0.68rem; background: var(--surface-3); }
+.onglet-guide:hover { background: var(--surface-2); color: var(--encre); }
+.onglet-guide[aria-current="page"] { background: var(--encre); color: var(--plan); }
+.onglet-guide[aria-current="page"] .puce-compte { background: var(--serie-1); color: #fff; }
+@media (min-width: 960px) {
+  .onglets-guide { top: -24px; margin: 0 -28px 1rem; padding: 8px 24px; }
+}
+
+.puces.defilantes { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; margin-inline: -16px; padding-inline: 16px; }
+.puces.defilantes::-webkit-scrollbar { display: none; }
+.puces.defilantes > * { scroll-snap-align: start; flex: none; }
+.puces.defilantes:empty { display: none; }
+.bouton.petit { min-height: 36px; padding: 0.3em 0.8em; font-size: 0.85rem; }
+.bouton.petit[aria-pressed="true"] { background: var(--encre); color: var(--plan); border-color: var(--encre); }
+
+/* Cartes des incontournables (classement) */
+.cartes-sites { list-style: none; margin: 0.5rem 0 0; padding: 0; display: grid; gap: 10px; }
+.carte-site { display: flex; align-items: stretch; gap: 4px; border: 1px solid var(--bord); border-radius: var(--rayon); background: var(--surface); transition: border-color 0.15s, box-shadow 0.15s; content-visibility: auto; contain-intrinsic-size: auto 120px; }
+.carte-site:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--bord)); box-shadow: var(--ombre); }
+.carte-site-ouvrir { flex: 1; min-width: 0; display: flex; gap: 12px; align-items: flex-start; padding: 10px; border: 0; background: none; text-align: start; cursor: pointer; color: var(--encre); border-radius: var(--rayon); }
+.vignette { position: relative; flex: none; display: grid; place-items: center; width: 96px; height: 96px; border-radius: 12px; overflow: hidden; background: linear-gradient(135deg, var(--accent-doux), var(--surface-2)); }
+.vignette img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.vignette-icone { font-size: 2rem; }
+.rang {
+  position: absolute; top: 6px; inset-inline-start: 6px; display: grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px;
+  border-radius: 999px; background: var(--serie-1); color: #fff; font-weight: 800; font-size: 0.82rem; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.carte-site-texte { display: grid; gap: 3px; min-width: 0; }
+.carte-site-nom { font-weight: 800; line-height: 1.25; font-size: 1.02rem; }
+.carte-site-resume { font-size: 0.88rem; color: var(--encre-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.carte-site .statut { justify-self: start; font-size: 0.75rem; }
+.carte-site-actions { display: flex; flex-direction: column; gap: 6px; padding: 10px 10px 10px 0; }
+[dir="rtl"] .carte-site-actions { padding: 10px 0 10px 10px; }
+.favori { color: var(--encre-2); font-size: 1.15rem; }
+.favori[aria-pressed="true"] { color: var(--critique); border-color: color-mix(in srgb, var(--critique) 40%, var(--bord)); background: var(--critique-fond); }
+
+/* Fiches */
+.fiche-heb { height: 120px; background: linear-gradient(135deg, var(--surface-2), var(--accent-doux)); }
+.fiche-image .credit { text-decoration: none; }
+.rang-fiche { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--serie-1); color: #fff; font-weight: 800; font-size: 0.8rem; }
+.alerte { background: var(--attention-fond); border-inline-start: 4px solid var(--attention); padding: 8px 12px; border-radius: 8px; font-size: 0.92rem; }
+.faits { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin: 10px 0; }
+.faits div { background: var(--surface-2); border-radius: 10px; padding: 8px 10px; }
+.faits dt { font-size: 0.75rem; color: var(--encre-3); font-weight: 600; }
+.faits dd { margin: 0; font-weight: 700; font-size: 0.92rem; }
+.fiche-description { line-height: 1.65; font-size: 1rem; }
+.liste-proches { list-style: none; margin: 0 0 6px; padding: 0; display: grid; gap: 4px; }
+.proche { width: 100%; display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 6px 10px; border: 1px solid var(--bord); border-radius: 10px; background: var(--surface); text-align: start; cursor: pointer; color: var(--encre); }
+.proche:hover { background: var(--surface-2); }
+.proche-nom { font-weight: 700; flex: 1; min-width: 0; }
+.rang-mini { flex: none; display: inline-grid; place-items: center; min-width: 24px; height: 24px; padding: 0 5px; border-radius: 999px; background: var(--serie-1); color: #fff; font-weight: 800; font-size: 0.75rem; }
+.etoiles { color: var(--attention); letter-spacing: 0.05em; font-size: 0.9em; white-space: nowrap; }
+.badges { display: flex; flex-wrap: wrap; gap: 4px; }
+.badge-texte, .badges .badge { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--accent-doux); color: var(--accent-fort); font-size: 0.75rem; font-weight: 700; min-width: 0; height: auto; }
+.badges .badge.discret { background: var(--surface-2); color: var(--encre-3); font-weight: 600; }
+.sejour-pastille { display: inline-block; background: var(--surface-2); border-radius: 10px; padding: 6px 10px; font-size: 0.88rem; font-weight: 600; }
+.plateformes { list-style: none; margin: 8px 0; padding: 0; display: grid; gap: 6px; }
+.plateformes a { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; min-height: 48px; padding: 10px 14px; border: 1px solid var(--bord); border-radius: 12px; background: var(--surface); text-decoration: none; color: var(--encre); }
+.plateformes a:hover { border-color: var(--accent); background: var(--accent-doux); color: var(--encre); }
+.plateformes li:first-child a { border-color: var(--accent); }
+.plateforme-nom { font-weight: 800; }
+.plateforme-detail { font-size: 0.82rem; color: var(--encre-3); }
+.lien-tel { font-weight: 700; text-decoration: none; }
+
+/* Séjour */
+.sejour-champs { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; }
+.compteur-champ { display: grid; gap: 4px; }
+.compteur-libelle { font-size: 0.85rem; color: var(--encre-2); font-weight: 600; }
+.compteur-boutons { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-height: 44px; padding: 0 2px; border: 1px solid var(--bord); border-radius: var(--rayon-petit); background: var(--surface); }
+.compteur-boutons .bouton-icone { width: 38px; height: 38px; border: 0; background: var(--surface-2); }
+.compteur-valeur { font-weight: 800; font-variant-numeric: tabular-nums; min-width: 2ch; text-align: center; }
+.sejour-resume { margin: 10px 0 0; font-weight: 700; }
+.sejour-liens { margin-bottom: 0.25rem; }
+.actions .lien-externe.principal { background: var(--accent); border-color: transparent; color: var(--sur-accent); }
+.actions .lien-externe.principal:hover { background: var(--accent-fort); color: var(--sur-accent); }
+@media (min-width: 640px) { .sejour-champs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* Cartes d'hébergement */
+.cartes-heb { list-style: none; margin: 0.5rem 0; padding: 0; display: grid; gap: 8px; }
+.carte-heb { display: flex; align-items: center; gap: 6px; padding-inline-end: 10px; border: 1px solid var(--bord); border-radius: var(--rayon); background: var(--surface); content-visibility: auto; contain-intrinsic-size: auto 84px; }
+.carte-heb:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--bord)); }
+.carte-heb-ouvrir { flex: 1; min-width: 0; display: flex; gap: 12px; align-items: center; padding: 10px; border: 0; background: none; text-align: start; cursor: pointer; color: var(--encre); border-radius: var(--rayon); }
+.heb-icone { flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 12px; background: var(--surface-2); font-size: 1.6rem; }
+.carte-heb-texte { display: grid; gap: 3px; min-width: 0; }
+.carte-heb-nom { font-weight: 800; line-height: 1.25; }
+.carte-heb-actions { display: flex; align-items: center; gap: 6px; flex: none; }
+.carte-heb-actions .lien-externe {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 0.35em 0.9em; border-radius: 999px; white-space: nowrap;
+  background: var(--accent); color: var(--sur-accent); font-weight: 700; font-size: 0.85rem; text-decoration: none;
+}
+.carte-heb-actions .lien-externe:hover { background: var(--accent-fort); color: var(--sur-accent); }
+@media (max-width: 420px) {
+  .carte-heb { flex-wrap: wrap; padding: 0 0 10px; }
+  .carte-heb-ouvrir { flex-basis: 100%; }
+  .carte-heb-actions { width: 100%; justify-content: flex-end; padding-inline: 10px; }
+}
+
+/* Itinéraires prêts */
+.itineraire-duree { display: inline-block; margin: 0 0 6px; padding: 2px 10px; border-radius: 999px; background: var(--serie-3); color: var(--sur-serie-3); font-weight: 800; font-size: 0.8rem; }
+.jour-pret { border-top: 1px solid var(--trait); padding-top: 10px; margin-top: 10px; }
+.jour-pret h3 { margin-bottom: 6px; }
+.etapes-pretes { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.trajet-pret { display: block; padding-inline-start: 34px; font-size: 0.78rem; color: var(--encre-3); margin: 2px 0; }
+.etape-pret { width: 100%; display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 8px; border: 0; border-radius: 10px; background: none; text-align: start; cursor: pointer; color: var(--encre); }
+.etape-pret:hover { background: var(--surface-2); }
+.etape-pret-nom { flex: 1; min-width: 0; font-weight: 700; }
+.choix-itineraire { background: var(--accent-doux); border-radius: var(--rayon-petit); padding: 10px 12px; margin-top: 8px; }
+
+/* Pratique */
+.liste-pratique { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.liste-pratique li { display: flex; gap: 12px; align-items: flex-start; }
+.liste-pratique-icone { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--surface-2); font-size: 1.25rem; }
+.liste-pratique p { margin: 2px 0 0; }
+.sources-guide summary { cursor: pointer; font-weight: 700; }
+.schema-point.guide circle { fill: var(--serie-1); }
+.schema-point.guide text { fill: #fff; }
+.schema-point.hebergement circle { fill: var(--encre-2); }
 
 /* ------------------------------------------------------------------ notifications */
 .toasts {

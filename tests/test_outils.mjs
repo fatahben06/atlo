@@ -171,3 +171,100 @@ test("météo : codes WMO reconnus", () => {
   assert.equal(O.meteoWmo(95)[0], "orage");
   assert.equal(O.meteoWmo(1234)[0], "inconnu");
 });
+
+test("séjour : nuits et décalage de dates", () => {
+  assert.equal(O.nuits("2026-11-02", "2026-11-05"), 3);
+  assert.equal(O.nuits("2026-11-05", "2026-11-02"), 0, "départ avant l'arrivée");
+  assert.equal(O.nuits("2026-11-02", ""), 0);
+  assert.equal(O.nuits("2026-03-28", "2026-03-30"), 2, "changement d'heure sans effet");
+  assert.equal(O.decalerDate("2026-12-31", 1), "2027-01-01");
+  assert.equal(O.decalerDate("2026-03-01", -1), "2026-02-28");
+});
+
+test("réservation : liens pré-remplis (dates, voyageurs, fiche, affiliation)", () => {
+  const sejour = { arrivee: "2026-11-02", depart: "2026-11-05", adultes: 3, chambres: 2 };
+  const ville = { requete: "Béjaïa, Algérie", lieu: "Béjaïa, Algérie", expedia: "590", tripadvisor: "1903178", airbnb: "Béjaïa--Algeria" };
+  const par = (l) => Object.fromEntries(l.map((x) => [x.id, new URL(x.url)]));
+  const v = par(O.liensReservation(ville, sejour, {}, "fr"));
+  assert.equal(v.booking.searchParams.get("ss"), "Béjaïa, Algérie");
+  assert.equal(v.booking.searchParams.get("checkin"), "2026-11-02");
+  assert.equal(v.booking.searchParams.get("checkout"), "2026-11-05");
+  assert.equal(v.booking.searchParams.get("group_adults"), "3");
+  assert.equal(v.booking.searchParams.get("no_rooms"), "2");
+  assert.equal(v.booking.searchParams.get("aid"), null, "aucun identifiant d'affiliation par défaut");
+  assert.equal(v.expedia.searchParams.get("regionId"), "590");
+  assert.equal(v.expedia.searchParams.get("startDate"), "2026-11-02");
+  assert.equal(v.agoda.searchParams.get("checkOut"), "2026-11-05");
+  assert.equal(v.airbnb.pathname, "/s/B%C3%A9ja%C3%AFa--Algeria/homes");
+  assert.equal(v.airbnb.searchParams.get("adults"), "3");
+  assert.equal(v.google.searchParams.get("q"), "Béjaïa, Algérie");
+  assert.equal(v.tripadvisor.searchParams.get("geo"), "1903178");
+
+  // Établissement : page Booking connue, pas de région Expedia (recherche par nom).
+  const hotel = par(O.liensReservation({ requete: "Hôtel X, Béjaïa", lieu: "Béjaïa, Algérie", expedia: "590",
+    ficheBooking: "https://www.booking.com/hotel/dz/hotel-x.fr.html?aid=999" }, sejour, { booking: "123" }, "en"));
+  assert.equal(hotel.booking.pathname, "/hotel/dz/hotel-x.fr.html");
+  assert.equal(hotel.booking.searchParams.get("ss"), null);
+  assert.equal(hotel.booking.searchParams.get("aid"), "123", "identifiant d'affiliation repris, l'ancien est retiré");
+  assert.equal(hotel.expedia.searchParams.get("regionId"), null);
+
+  // Dates invalides : liens sans dates. Fiche Booking douteuse : ignorée.
+  const sans = par(O.liensReservation({ requete: "X", ficheBooking: "https://evil.example/hotel/" }, { arrivee: "2026-11-05", depart: "2026-11-02" }));
+  assert.equal(sans.booking.searchParams.get("checkin"), null);
+  assert.equal(sans.booking.hostname, "www.booking.com");
+  assert.equal(sans.booking.pathname, "/searchresults.html");
+
+  // Enveloppe de suivi (ex. Travelpayouts) : adresse d'origine encodée en fin de lien.
+  const env = O.liensReservation(ville, sejour, { enveloppes: { agoda: "https://tp.media/r?marker=1&u=" } }).find((l) => l.id === "agoda");
+  assert.ok(env.url.startsWith("https://tp.media/r?marker=1&u=https%3A%2F%2Fwww.agoda.com%2Fsearch"));
+});
+
+test("OpenStreetMap : hébergements lus depuis Overpass", () => {
+  const l = O.depuisOverpass({ elements: [
+    { type: "node", id: 1, lat: 36.75, lon: 5.08, tags: { tourism: "hotel", name: "Hôtel A", stars: "4", website: "a.example", "contact:facebook": "hotela" } },
+    { type: "way", id: 2, center: { lat: 36.7, lon: 5.1 }, tags: { tourism: "guest_house", "name:fr": "Maison B", name: "دار ب", "addr:city": "Tichy" } },
+    { type: "node", id: 3, lat: 36.7, lon: 5.1, tags: { tourism: "hotel" } },
+    { type: "node", id: 4, lat: 36.7, lon: 5.1, tags: { tourism: "museum", name: "Musée" } },
+    { type: "relation", id: 5, tags: { tourism: "camp_site", name: "Camping C" } },
+  ] });
+  assert.equal(l.length, 2, "sans nom, hors hébergement ou sans position : ignorés");
+  assert.deepEqual([l[0].id, l[0].type, l[0].etoiles, l[0].site, l[0].fb], ["osm:n1", "hotel", 4, "https://a.example", "https://www.facebook.com/hotela"]);
+  assert.deepEqual([l[1].id, l[1].n, l[1].nomLocal, l[1].lieu, l[1].ll], ["osm:w2", "Maison B", "دار ب", "Tichy", [36.7, 5.1]]);
+});
+
+test("hébergements : fusion de la sélection et d'OpenStreetMap sans doublon", () => {
+  assert.ok(O.ressemblanceNoms("Hôtel de l'Étoile", "Hotel de l Etoile") > 0.9);
+  assert.ok(O.ressemblanceNoms("Hôtel Royal", "Hôtel Zéphyr") === 0);
+  assert.ok(O.ressemblanceNoms("Atlantis Béjaïa Aéroport", "Hotel Atlantis") >= 0.6);
+  const selection = [
+    { id: "etoile", n: "Hôtel de l'Étoile", type: "hotel", lieu: "Béjaïa" },
+    { id: "lac", n: "Hôtel du Lac", type: "hotel", ll: [36.75, 5.07] },
+  ];
+  const osm = [
+    { id: "osm:n1", n: "Hotel de l'Etoile", type: "hotel", ll: [36.7536, 5.0871], tel: "+213 1", source: "osm" },
+    { id: "osm:n2", n: "Hôtel du Lac", type: "hotel", ll: [36.1, 4.5], source: "osm" },
+    { id: "osm:n3", n: "Hôtel Zéphyr", type: "hotel", ll: [36.74, 5.06], source: "osm" },
+  ];
+  const f = O.fusionnerHebergements(selection, osm);
+  assert.deepEqual(f.map((x) => x.id), ["etoile", "lac", "osm:n2", "osm:n3"], "homonyme à 70 km : établissement distinct");
+  assert.deepEqual(f[0].ll, [36.7536, 5.0871]);
+  assert.equal(f[0].llSource, "osm");
+  assert.equal(f[0].tel, "+213 1");
+  assert.equal(selection[0].ll, undefined, "la sélection d'origine n'est pas modifiée");
+});
+
+test("guides : données valides et index à jour", async () => {
+  const G = await import("../outils/construire_guides.mjs");
+  const guides = G.lireGuides();
+  assert.ok(guides.length >= 1);
+  for (const g of guides) {
+    const { erreurs } = G.verifierGuide(g);
+    assert.deepEqual(erreurs, [], "guide " + g.id);
+  }
+  const fs = await import("node:fs");
+  const actuel = fs.readFileSync(new URL("../data/guides.js", import.meta.url), "utf8");
+  assert.equal(actuel, G.genererIndex(guides), "data/guides.js à régénérer : node outils/construire_guides.mjs");
+  const bejaia = guides.find((g) => g.id === "bejaia");
+  assert.equal(bejaia.sites.length, 20, "top 20");
+  assert.ok(bejaia.itineraires.every((it) => it.jours.every((j) => j.e.length)));
+});
