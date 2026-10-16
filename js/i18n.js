@@ -197,6 +197,7 @@
     itineraireCharge: { one: "{n} étape chargée dans votre itinéraire", other: "{n} étapes chargées dans votre itinéraire" },
     itineraireExistant: { one: "Votre itinéraire contient déjà {n} étape.", other: "Votre itinéraire contient déjà {n} étapes." },
     annuler: "Annuler",
+    positionApprox: "Position approximative sur la carte : « Y aller » laisse Google Maps trouver le lieu exact par son nom.",
     venirA: "Venir à {v}", seDeplacer: "Se déplacer", aGouter: "À goûter", evenements: "Événements", adressesUtiles: "Adresses utiles",
     infosPays: "Infos pratiques : {p}", unPeuDHistoire: "Un peu d'histoire", sourcesDuGuide: "Sources du guide", source: "Source",
   };
@@ -386,6 +387,7 @@
     itineraireCharge: { one: "{n} stop loaded into your trip", other: "{n} stops loaded into your trip" },
     itineraireExistant: { one: "Your trip already has {n} stop.", other: "Your trip already has {n} stops." },
     annuler: "Cancel",
+    positionApprox: "Approximate position on the map: \"Directions\" lets Google Maps find the exact place by name.",
     venirA: "Getting to {v}", seDeplacer: "Getting around", aGouter: "What to eat", evenements: "Events", adressesUtiles: "Useful places",
     infosPays: "Practical info: {p}", unPeuDHistoire: "A bit of history", sourcesDuGuide: "Guide sources", source: "Source",
   };
@@ -575,6 +577,7 @@
     itineraireCharge: { one: "{n} etapa cargada en su itinerario", other: "{n} etapas cargadas en su itinerario" },
     itineraireExistant: { one: "Su itinerario ya tiene {n} etapa.", other: "Su itinerario ya tiene {n} etapas." },
     annuler: "Cancelar",
+    positionApprox: "Ubicación aproximada en el mapa: «Cómo llegar» deja que Google Maps encuentre el lugar exacto por su nombre.",
     venirA: "Cómo llegar a {v}", seDeplacer: "Desplazarse", aGouter: "Qué probar", evenements: "Eventos", adressesUtiles: "Direcciones útiles",
     infosPays: "Información práctica: {p}", unPeuDHistoire: "Un poco de historia", sourcesDuGuide: "Fuentes de la guía", source: "Fuente",
   };
@@ -768,6 +771,7 @@
     itineraireCharge: { zero: "لم تُحمّل أي محطة", one: "حُمّلت محطة واحدة في رحلتك", two: "حُمّلت محطتان في رحلتك", few: "حُمّلت {n} محطات في رحلتك", many: "حُمّلت {n} محطة في رحلتك", other: "حُمّلت {n} محطة في رحلتك" },
     itineraireExistant: { zero: "رحلتك فارغة.", one: "تحتوي رحلتك على محطة واحدة.", two: "تحتوي رحلتك على محطتين.", few: "تحتوي رحلتك على {n} محطات.", many: "تحتوي رحلتك على {n} محطة.", other: "تحتوي رحلتك على {n} محطة." },
     annuler: "إلغاء",
+    positionApprox: "موقع تقريبي على الخريطة: يترك زر «الاتجاهات» لخرائط Google العثور على المكان الدقيق باسمه.",
     venirA: "الوصول إلى {v}", seDeplacer: "التنقل", aGouter: "ما يُتذوق", evenements: "التظاهرات", adressesUtiles: "عناوين مفيدة",
     infosPays: "معلومات عملية: {p}", unPeuDHistoire: "لمحة تاريخية", sourcesDuGuide: "مصادر الدليل", source: "المصدر",
   };

@@ -339,7 +339,8 @@
           fait("📍", t("depuisCentre"), fmt.distance(O.distanceKm(g.centre[0], g.centre[1], s.lat, s.lon)))),
         h("div", { class: "actions" },
           A.boutonEtape(etapeGuide(g, s), { libelle: true }),
-          A.lienExterne(A.liens.itineraire(s.lat, s.lon), h("span", { "aria-hidden": "true" }, "🚗 "), t("yAller")),
+          A.lienExterne(s.llApprox ? A.liens.itineraireNom(s.q || (s.n.fr || s.n.en) + ", " + tx(g.nom))
+            : A.liens.itineraire(s.lat, s.lon), h("span", { "aria-hidden": "true" }, "🚗 "), t("yAller")),
           boutonFavori(`g:${g.id}:s:${s.id}`, nom),
           h("button", { type: "button", class: "bouton-icone", "aria-label": t("partager") + " : " + nom, title: t("partager"),
             onclick: () => A.partager({ titre: nom + " · " + tx(g.nom), url: lienPartage }) }, h("span", { "aria-hidden": "true" }, "↗"))),
@@ -363,7 +364,8 @@
           h("li", null, A.lienExterne(A.liens.photos((s.n.fr || s.n.en) + " " + tx(g.nom)), h("span", { "aria-hidden": "true" }, "📷 "), t("photos"))),
           h("li", null, A.lienExterne(A.liens.videos((s.n.fr || s.n.en) + " " + tx(g.nom)), h("span", { "aria-hidden": "true" }, "▶️ "), t("videos"))),
           h("li", null, A.lienExterne(A.liens.osm(s.lat, s.lon), h("span", { "aria-hidden": "true" }, "🗺️ "), "OpenStreetMap"))),
-        h("p", { class: "coordonnees" }, h("button", { type: "button", class: "lien", onclick: () => A.copier(`${s.lat.toFixed(5)}, ${s.lon.toFixed(5)}`) }, "📌 " + s.lat.toFixed(4) + ", " + s.lon.toFixed(4))),
+        s.llApprox ? h("p", { class: "note" }, h("span", { "aria-hidden": "true" }, "📍 "), t("positionApprox"))
+          : h("p", { class: "coordonnees" }, h("button", { type: "button", class: "lien", onclick: () => A.copier(`${s.lat.toFixed(5)}, ${s.lon.toFixed(5)}`) }, "📌 " + s.lat.toFixed(4) + ", " + s.lon.toFixed(4))),
         h("p", { class: "source" }, t("selectionAtlo", { d: moisAnnee(g.maj) })),
         h("p", { class: "mention" }, t("mentionExterne"))),
     ], nom);

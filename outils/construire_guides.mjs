@@ -79,6 +79,8 @@ export function verifierGuide(g) {
       else if (!dedans) avertissements.push(`${ou} : en limite de la région (littoral ?)`);
     }
     if (s.aVerifier) avertissements.push(`${ou} : à vérifier`);
+    if (s.llApprox) avertissements.push(`${ou} : position approximative (itinéraire par le nom)`);
+    if (s.llApprox && !s.q) erreurs.push(`${ou} : position approximative sans recherche « q » pour Google Maps`);
   });
   const idsH = new Set();
   g.hebergements.forEach((x, i) => {

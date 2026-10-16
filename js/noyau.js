@@ -294,6 +294,8 @@
   // ---------------------------------------------------------------- liens externes
   A.liens = {
     itineraire: (lat, lon) => `https://www.google.com/maps/dir/?api=1&destination=${(+lat).toFixed(6)},${(+lon).toFixed(6)}`,
+    /** Itinéraire vers un lieu désigné par son nom (position exacte trouvée par Google Maps). */
+    itineraireNom: (nom) => "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(nom),
     osm: (lat, lon, z = 16) => `https://www.openstreetmap.org/?mlat=${(+lat).toFixed(6)}&mlon=${(+lon).toFixed(6)}#map=${z}/${(+lat).toFixed(5)}/${(+lon).toFixed(5)}`,
     geo: (lat, lon, nom) => `geo:${(+lat).toFixed(6)},${(+lon).toFixed(6)}?q=${(+lat).toFixed(6)},${(+lon).toFixed(6)}(${encodeURIComponent(nom || "")})`,
     photos: (q) => `https://commons.wikimedia.org/w/index.php?search=${encodeURIComponent(q)}&title=Special:MediaSearch&type=image`,

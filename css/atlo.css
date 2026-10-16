@@ -641,7 +641,7 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 .guide-hero-image { position: absolute; inset: 0; z-index: -2; }
 .guide-hero-image img { width: 100%; height: 100%; object-fit: cover; }
 .guide-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 25%, rgba(0, 0, 0, 0.75)); }
-.guide-hero .credit { z-index: 1; color: #fff; text-decoration: none; }
+.guide-hero .credit { z-index: 1; color: #fff; text-decoration: none; top: 10px; bottom: auto; inset-inline-end: auto; inset-inline-start: 10px; max-width: calc(100% - 80px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .guide-hero-texte { padding: 40px 16px 14px; }
 .guide-partager { position: absolute; top: 10px; inset-inline-end: 10px; z-index: 1; background: rgba(0, 0, 0, 0.35); border-color: rgba(255, 255, 255, 0.4); color: #fff; backdrop-filter: blur(6px); }
 .guide-partager:hover { background: rgba(0, 0, 0, 0.5); }

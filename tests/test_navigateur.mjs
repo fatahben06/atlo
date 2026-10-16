@@ -293,7 +293,9 @@ async function parcours(nom, options) {
   await page.waitForSelector(".carte-site");
   verifier((await page.$$(".carte-site")).length === 20, "guide : 20 incontournables");
   verifier((await page.textContent(".carte-site >> nth=0")).includes("Cap Carbon"), "guide : n° 1 en tête");
-  verifier(!!(await page.$(".bandeau-brouillon")), "guide : bandeau « en cours de vérification »");
+  verifier(!(await page.$(".bandeau-brouillon")), "guide : données vérifiées (pas de bandeau brouillon)");
+  await page.waitForSelector(".carte-site .vignette img", { timeout: 5000 }).catch(() => null);
+  verifier((await page.$$(".carte-site .vignette img")).length >= 5, "guide : photos Wikimedia Commons");
   await page.click('.puces button:has-text("Plage")');
   const plages = (await page.$$(".carte-site")).length;
   verifier(plages > 1 && plages < 20, `guide : filtre plages (${plages})`);
@@ -315,9 +317,9 @@ async function parcours(nom, options) {
 
   await page.click('.onglet-guide:has-text("Où dormir")');
   await page.waitForSelector(".carte-heb");
-  await page.waitForFunction(() => document.querySelectorAll(".carte-heb").length >= 16, null, { timeout: 8000 }).catch(() => null);
+  await page.waitForFunction(() => document.querySelectorAll(".carte-heb").length >= 26, null, { timeout: 8000 }).catch(() => null);
   const nbHeb = (await page.$$(".carte-heb")).length;
-  verifier(nbHeb === 16, `dormir : sélection + OpenStreetMap fusionnés (${nbHeb})`);
+  verifier(nbHeb === 26, `dormir : 24 vérifiés + 2 OpenStreetMap, sans doublon (${nbHeb})`);
   await page.fill("#sejour-arrivee", dans(30));
   await page.dispatchEvent("#sejour-arrivee", "change");
   verifier((await page.inputValue("#sejour-depart")) === dans(31), "dormir : départ proposé le lendemain");
@@ -366,6 +368,12 @@ async function parcours(nom, options) {
   await page.waitForSelector(".page-region .carte-heb", { timeout: 8000 }).catch(() => null);
   verifier((await page.$$(".page-region .carte-heb")).length === 3, "région : « Où dormir » (OpenStreetMap)");
 
+  await page.goto(BASE + "#/guide/bejaia/site/bordj-moussa");
+  await page.waitForSelector("#fiche[open] .fiche-titre");
+  const yAller = await page.getAttribute('#fiche a:has-text("Y aller")', "href");
+  verifier(yAller.includes("destination=Bordj%20Moussa") && (await page.textContent("#fiche")).includes("Position approximative"), "position approximative : itinéraire par le nom");
+  verifier((await page.textContent("#fiche")).includes("15 mois"), "Bordj Moussa : avertissement travaux");
+  await page.keyboard.press("Escape");
   await page.goto(BASE + "#/guide/bejaia/site/pic-des-singes");
   await page.waitForSelector("#fiche[open] .fiche-titre");
   verifier((await page.textContent("#fiche .fiche-titre")).includes("Pic des Singes"), "lien direct vers la fiche d'un site");
