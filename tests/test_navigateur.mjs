@@ -303,9 +303,14 @@ async function parcours(nom, options) {
   await page.waitForSelector(".carte-gl canvas, .schema", { timeout: 15000 });
   await page.waitForTimeout(1200);
   await capture("guide");
+  await page.waitForFunction(() => Atlo.carteInteractive && Atlo.carteInteractive.styleOk, null, { timeout: 15000 }).catch(() => null);
   await page.click(".carte-site-ouvrir >> nth=0");
   await page.waitForSelector("#fiche[open] .rang-fiche");
   verifier((await page.textContent("#fiche .rang-fiche")).includes("1"), "fiche : rang affiché");
+  await page.waitForTimeout(1200);
+  const centre = await page.evaluate(() => { const c = Atlo.carteInteractive && Atlo.carteInteractive.carte; return c ? { ...c.getCenter(), z: c.getZoom() } : null; });
+  verifier(centre && Math.abs(centre.lat - 36.776) < 0.02 && Math.abs(centre.lng - 5.104) < 0.02 && centre.z >= 13,
+    "fiche : carte centrée sur le site" + (centre ? ` (${centre.lat.toFixed(3)}, ${centre.lng.toFixed(3)}, z${centre.z.toFixed(1)})` : ""));
   verifier((await page.$$("#fiche .faits div")).length >= 3, "fiche : durée, moment, distance");
   await page.waitForSelector("#fiche .proche", { timeout: 5000 }).catch(() => null);
   verifier((await page.textContent("#fiche")).includes("Dormir à proximité"), "fiche : hébergements à proximité (OpenStreetMap)");
@@ -423,7 +428,7 @@ async function parcours(nom, options) {
   await page.goto(BASE + "#/guide/bejaia/site/cap-carbon");
   await page.reload();
   await page.waitForSelector("#fiche[open] .fiche-titre");
-  await page.waitForFunction(() => Atlo.carteInteractive && Atlo.carteInteractive.carte && Atlo.carteInteractive.carte.isStyleLoaded(), null, { timeout: 15000 }).catch(() => null);
+  await page.waitForFunction(() => Atlo.carteInteractive && Atlo.carteInteractive.styleOk, null, { timeout: 15000 }).catch(() => null);
   await page.waitForTimeout(1500);
   const vue = await page.evaluate(() => { const c = Atlo.carteInteractive && Atlo.carteInteractive.carte; return c ? { ...c.getCenter(), z: c.getZoom() } : null; });
   verifier(vue && Math.abs(vue.lat - 36.776) < 0.05 && Math.abs(vue.lng - 5.104) < 0.05 && vue.z >= 12, "lien direct : carte centrée sur le site" + (vue ? ` (${vue.lat.toFixed(3)}, ${vue.lng.toFixed(3)}, z${vue.z.toFixed(1)})` : ""));
@@ -446,6 +451,8 @@ async function parcours(nom, options) {
   await page.waitForTimeout(800);
   const largeur2 = await page.evaluate(() => document.documentElement.scrollWidth);
   verifier(largeur2 <= 390, `dormir mobile : pas de défilement horizontal (${largeur2}px)`);
+  const colonnes = await page.$$eval(".sejour-champs > *", (els) => new Set(els.map((el) => Math.round(el.getBoundingClientRect().left))).size);
+  verifier(colonnes === 2, `dormir mobile : dates et voyageurs sur 2 colonnes (${colonnes})`);
   await capture("dormir");
   await page.evaluate(() => { Atlo.prefs.langue = "ar"; Atlo.enregistrerPrefs(); });
   await page.goto(BASE + "#/guide/bejaia");

@@ -108,6 +108,7 @@
       this.carte.on("error", (ev) => {
         const msg = String((ev && ev.error && ev.error.message) || "");
         if (!this.carte.isStyleLoaded() && this.styleCourant === STYLES.sombre && /style|fetch|404/i.test(msg)) {
+          this.styleOk = false;
           this.styleCourant = STYLES.secours;
           this.carte.setStyle(STYLES.secours);
         }
@@ -116,6 +117,7 @@
         clearTimeout(chien);
         this.localiserLibelles();
         this.ajouterCouches();
+        this.styleOk = true; // couches et sources en place (isStyleLoaded() redevient faux à chaque setData)
         if (this.scene) this.appliquer(this.scene, false);
         // Fiche ouverte pendant le chargement (lien direct, recherche) : on centre sur elle.
         const f = this.focusEnAttente;
@@ -283,7 +285,7 @@
       if (scene !== this.scene) this.focusEnAttente = null;
       this.scene = scene;
       if (this.mode === "attente") this.demarrer();
-      if (this.mode === "gl" && this.carte && this.carte.isStyleLoaded()) this.appliquer(scene, true);
+      if (this.mode === "gl" && this.carte && this.styleOk) this.appliquer(scene, true);
       if (this.mode === "schema") this.dessinerSchema(scene);
     }
 
@@ -356,7 +358,7 @@
     }
 
     focaliser(lat, lon, zoom = 14) {
-      if (this.mode === "gl" && this.carte && this.carte.isStyleLoaded()) {
+      if (this.mode === "gl" && this.carte && this.styleOk) {
         this.focusEnAttente = null;
         this.carte.easeTo({ center: [lon, lat], zoom, duration: matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 700 });
       } else if (this.mode === "attente" || this.mode === "chargement" || this.mode === "gl") {
@@ -367,6 +369,8 @@
     changerTheme(sombre) {
       this.options.sombre = sombre;
       if (this.mode === "gl" && this.carte) {
+        this.styleOk = false;
+        this.focusEnAttente = null; // un nouveau style ne doit pas rejouer un ancien centrage
         this.styleCourant = sombre ? STYLES.sombre : STYLES.clair;
         this.carte.setStyle(this.styleCourant);
       } else if (this.mode === "schema" && this.scene) {
@@ -376,7 +380,7 @@
 
     changerLangue(langue) {
       this.options.langue = langue;
-      if (this.mode === "gl" && this.carte && this.carte.isStyleLoaded()) this.localiserLibelles();
+      if (this.mode === "gl" && this.carte && this.styleOk) this.localiserLibelles();
     }
 
     redimensionner() {

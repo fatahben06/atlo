@@ -740,7 +740,10 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 .lien-tel { font-weight: 700; text-decoration: none; }
 
 /* Séjour */
-.sejour-champs { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); align-items: end; }
+.sejour { container-type: inline-size; }
+.sejour-champs { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; }
+@container (min-width: 600px) { .sejour-champs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@container (max-width: 260px) { .sejour-champs { grid-template-columns: 1fr; } }
 .sejour-champs .champ, .sejour-champs .champ-groupe, .sejour-champs .compteur-champ { min-width: 0; }
 .sejour-champs input[type="date"] { width: 100%; }
 .compteur-champ { display: grid; gap: 4px; }

@@ -78,10 +78,17 @@ async function reseauDabord(requete, nomCache, delai = 8000) {
 
 async function perimeEnRevalidant(requete, nomCache) {
   const deja = await caches.match(requete);
-  const frais = fetch(requete).then((r) => {
-    if (r.ok) ranger(nomCache, requete, r.clone());
+  const versionne = !!new URL(requete.url).search; // guides : data/guides/<id>.js?v=<empreinte>
+  const frais = fetch(requete).then(async (r) => {
+    if (r.ok) {
+      const copie = r.clone();
+      // Une seule version gardée par fichier versionné.
+      if (versionne) await caches.open(nomCache).then((c) => c.delete(requete, { ignoreSearch: true }));
+      ranger(nomCache, requete, copie);
+    }
     return r;
-  }).catch(() => deja);
+  // Hors ligne après une mise à jour : l'ancienne version du guide vaut mieux que rien.
+  }).catch(() => deja || (versionne ? caches.match(requete, { cacheName: nomCache, ignoreSearch: true }) : undefined));
   return deja || frais;
 }
 

@@ -233,7 +233,7 @@
       h("div", { class: "fiche-texte" },
         h("h2", { class: "fiche-titre" }, t("votreSejour")),
         blocSejour(ctx, { titre: false }),
-        retour ? h("p", null, h("button", { type: "button", class: "bouton", onclick: retour }, h("span", { "aria-hidden": "true" }, "← "), t("retour"))) : null),
+        retour ? h("p", null, h("button", { type: "button", class: "bouton", onclick: retour }, h("span", { "aria-hidden": "true" }, I.direction() === "rtl" ? "→ " : "← "), t("retour"))) : null),
     ], t("votreSejour"));
   }
 
@@ -356,8 +356,10 @@
   /** Nom local (souvent en arabe) : chaque partie isolée (bidi) et marquée lang="ar" si besoin (lecteurs d'écran). */
   const ARABE = /[\u0600-\u06FF]/;
   const texteLocal = (v) => String(v).split(" · ").map((p, i) => [i ? " · " : null, h("bdi", { lang: ARABE.test(p) && I.langue !== "ar" ? "ar" : null }, p)]);
-  /** Ligne « a · b · c » dont chaque segment est isolé : un nom latin suivi d'une durée reste lisible en arabe. */
-  const meta = (parties) => parties.filter(Boolean).map((p, i) => [i ? " · " : null, h("bdi", null, p)]);
+  /** Ligne « a · b · c » dont chaque segment est isolé : un nom latin suivi d'une durée reste lisible en arabe.
+      Texte simple = donnée (nom, adresse : sens automatique) ; { ui } = texte traduit (sens de l'interface). */
+  const meta = (parties) => parties.filter(Boolean).map((p, i) => [i ? " · " : null,
+    typeof p === "string" ? h("bdi", null, p) : h("bdi", { dir: I.direction() }, p.ui)]);
   /** Numéros et coordonnées toujours de gauche à droite, même dans une interface en arabe. */
   const ltr = (v) => h("bdi", { dir: "ltr" }, v);
 
@@ -492,7 +494,7 @@
         h("span", { class: "heb-icone", "aria-hidden": "true" }, ICONES_HEB[x.type] || "🛏️"),
         h("span", { class: "carte-heb-texte" },
           h("span", { class: "carte-heb-nom" }, x.n, etoiles(x.etoiles)),
-          h("span", { class: "site-meta" }, meta([t("type_" + x.type), adresse, km != null ? t("aDistanceDe", { d: fmt.distance(km), lieu: refNom }) : null])),
+          h("span", { class: "site-meta" }, meta([{ ui: t("type_" + x.type) }, adresse, km != null ? { ui: t("aDistanceDe", { d: fmt.distance(km), lieu: refNom }) } : null])),
           x.mer || x.source === "osm" ? h("span", { class: "badges" },
             x.mer ? h("span", { class: "badge" }, "🌊 " + t("bordDeMer")) : null,
             x.source === "osm" ? h("span", { class: "badge discret" }, "OpenStreetMap") : null) : null)),
@@ -738,8 +740,8 @@
         vignette,
         h("span", { class: "carte-site-texte" },
           h("span", { class: "carte-site-nom" }, h("span", { class: "visuellement-cache" }, t("rangN", { n: s.rang }) + " · "), nom),
-          h("span", { class: "site-meta" }, meta([t((A.CATEGORIES[s.cat] || {}).cle || "catA"), s.lieu, s.duree ? "⏱ " + fmt.duree(s.duree) : null,
-            distance != null ? "📍 " + fmt.distance(distance) : null])),
+          h("span", { class: "site-meta" }, meta([{ ui: t((A.CATEGORIES[s.cat] || {}).cle || "catA") }, s.lieu, s.duree ? { ui: "⏱ " + fmt.duree(s.duree) } : null,
+            distance != null ? { ui: "📍 " + fmt.distance(distance) } : null])),
           h("span", { class: "carte-site-resume" }, premierePhrase(tx(s.d))),
           s.alerte ? h("span", { class: "statut attention" }, "⚠ " + t("aSavoirAvant")) : null)),
       h("div", { class: "carte-site-actions" }, boutonFavori(`g:${g.id}:s:${s.id}`, nom), A.boutonEtape(etapeGuide(g, s))));
@@ -916,9 +918,12 @@
           A.itineraire.remplacer({ titre, debut: sejour.arrivee || etat.debut || "", mode: "voiture", heuresParJour: heuresPrevues("voiture"), etapes: nouvelles });
         } else {
           if (nouvelles[0]) nouvelles[0].nouveauJour = true;
-          A.itineraire.maj({ etapes: etat.etapes.concat(nouvelles), heuresParJour: Math.max(etat.heuresParJour, heuresPrevues(etat.mode)) });
+          // Le budget quotidien vaut pour tout l'itinéraire : on ne le change pas sans le dire.
+          A.itineraire.maj({ etapes: etat.etapes.concat(nouvelles) });
         }
-        A.toast(t("itineraireCharge", { n: nouvelles.length }));
+        const besoin = heuresPrevues(mode === "remplacer" ? "voiture" : etat.mode);
+        A.toast(t("itineraireCharge", { n: nouvelles.length }) +
+          (mode !== "remplacer" && besoin > etat.heuresParJour ? " " + t("journeesLongues", { n: besoin }) : ""));
         A.aller("/itineraire");
       };
       if (!etat.etapes.length) { appliquer("remplacer"); return; }
