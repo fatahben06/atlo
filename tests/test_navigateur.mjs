@@ -327,6 +327,25 @@ async function parcours(nom, options) {
   verifier(lienBooking.includes("checkin=" + dans(30)) && lienBooking.includes("group_adults=2"), "dormir : recherche Booking avec dates et voyageurs");
   await page.click('.sejour .compteur-champ >> nth=0 >> button[aria-label^="Plus"]');
   verifier((await page.getAttribute(".sejour-liens a >> nth=0", "href")).includes("group_adults=3"), "dormir : nombre de voyageurs repris");
+  // Chambres : jamais plus que de voyageurs, compteur à jour quand les voyageurs diminuent, focus conservé.
+  const plusC = '.sejour .compteur-champ >> nth=1 >> button[aria-label^="Plus"]';
+  const moinsV = '.sejour .compteur-champ >> nth=0 >> button[aria-label^="Moins"]';
+  await page.click(plusC); await page.click(plusC);
+  verifier((await page.textContent(".sejour .compteur-champ >> nth=1 >> output")) === "3"
+    && (await page.getAttribute(plusC, "aria-disabled")) === "true", "dormir : pas plus de chambres que de voyageurs");
+  await page.focus(moinsV);
+  await page.keyboard.press("Enter"); await page.keyboard.press("Enter");
+  verifier((await page.textContent(".sejour .compteur-champ >> nth=1 >> output")) === "1"
+    && (await page.textContent(".sejour-resume")).includes("1 chambre"), "dormir : compteur de chambres suit les voyageurs");
+  verifier((await page.evaluate(() => document.activeElement.getAttribute("aria-label") || "")).startsWith("Moins"), "dormir : focus resté sur « Moins »");
+  await page.click('.sejour .compteur-champ >> nth=0 >> button[aria-label^="Plus"]');
+  await page.click('.sejour .compteur-champ >> nth=0 >> button[aria-label^="Plus"]');
+  // Champs de dates : aucun ne déborde sur le suivant (colonne étroite sur ordinateur).
+  const debord = await page.$$eval(".sejour-champs > *", (els) => els.some((el) => [...el.querySelectorAll("input, .compteur-boutons")]
+    .some((c) => c.getBoundingClientRect().right > el.getBoundingClientRect().right + 1)));
+  verifier(!debord, "dormir : champs du séjour sans chevauchement");
+  verifier(await page.$$eval(".puces.defilantes", (els) => els.every((el) => el.scrollWidth <= el.clientWidth + 1)), "dormir : filtres visibles à la souris (retour à la ligne)");
+  verifier((await page.textContent('[data-nb-heb="bejaia"]')) === "26", "onglet « Où dormir » : nombre à jour après OpenStreetMap");
   await page.click('.carte-heb-ouvrir:has-text("Étoile")');
   await page.waitForSelector("#fiche[open] .plateformes a");
   const plateformes = await page.$$eval("#fiche .plateformes a", (as) => as.map((a) => a.href));
@@ -334,7 +353,16 @@ async function parcours(nom, options) {
   verifier((await page.textContent("#fiche")).includes("+213 34 00 00 00"), "fiche hôtel : téléphone complété par OpenStreetMap");
   await page.waitForTimeout(500);
   await capture("fiche-hotel");
-  await page.keyboard.press("Escape");
+  // « Modifier » (dates) deux fois de suite : la fiche se ferme et le focus va aux dates à chaque fois.
+  for (const fois of [1, 2]) {
+    if (fois === 2) {
+      await page.click('.carte-heb-ouvrir:has-text("Étoile")');
+      await page.waitForSelector("#fiche[open] .plateformes a");
+    }
+    await page.click('#fiche .sejour-pastille a:has-text("Modifier")');
+    await page.waitForTimeout(300);
+    verifier(!(await page.$("#fiche[open]")) && (await page.evaluate(() => document.activeElement.id)) === "sejour-arrivee", `fiche hôtel : « Modifier » mène aux dates (${fois})`);
+  }
   await page.click('.puces button:has-text("Auberges")');
   verifier((await page.$$(".carte-heb")).length === 1, "dormir : filtre auberges");
   await page.click('.puces button:has-text("Tout") >> nth=0');
@@ -343,13 +371,22 @@ async function parcours(nom, options) {
   await page.waitForTimeout(800);
   await capture("dormir");
 
-  await page.click('.onglet-guide:has-text("Itinéraires")');
+  await page.focus('.onglet-guide:has-text("Itinéraires")');
+  await page.keyboard.press("Enter");
   await page.waitForSelector(".itineraire-pret");
+  await page.waitForTimeout(400);
+  verifier(await page.evaluate(() => document.activeElement.matches(".onglet-guide[aria-current]") && document.activeElement.textContent.includes("Itinéraires")),
+    "onglets : le focus reste sur l'onglet choisi");
+  await page.evaluate(() => Atlo.surPointCarte("etape", "cap-carbon"));
+  await page.waitForSelector("#fiche[open] .rang-fiche");
+  verifier((await page.textContent("#fiche .fiche-titre")).includes("Cap Carbon"), "itinéraires : clic sur une étape de la carte ouvre sa fiche");
+  await page.keyboard.press("Escape");
   verifier((await page.$$(".itineraire-pret")).length === 3, "itinéraires : 3 parcours prêts");
   await capture("itineraires");
   await page.click('.itineraire-pret >> nth=0 >> button:has-text("Utiliser")');
   await page.waitForSelector(".page-itineraire .etape");
   verifier((await page.$$(".etape")).length === 7, "itinéraires : parcours d'un jour chargé (7 étapes)");
+  verifier((await page.$$('.page-itineraire h2[id^="jour-"]')).length === 1, "itinéraires : le parcours d'un jour tient en un jour");
   await page.click(".etape-nom >> nth=0");
   await page.waitForSelector("#fiche[open] .rang-fiche");
   verifier(true, "itinéraire : étape du guide ouvre sa fiche");
@@ -367,6 +404,10 @@ async function parcours(nom, options) {
   await page.locator("#titre-dormir").scrollIntoViewIfNeeded();
   await page.waitForSelector(".page-region .carte-heb", { timeout: 8000 }).catch(() => null);
   verifier((await page.$$(".page-region .carte-heb")).length === 3, "région : « Où dormir » (OpenStreetMap)");
+  await page.click('#titre-dormir ~ p button:has-text("Modifier")');
+  await page.waitForSelector("#fiche[open] #sejour-arrivee");
+  verifier(true, "région : dates et voyageurs modifiables");
+  await page.keyboard.press("Escape");
 
   await page.goto(BASE + "#/guide/bejaia/site/bordj-moussa");
   await page.waitForSelector("#fiche[open] .fiche-titre");
@@ -377,6 +418,15 @@ async function parcours(nom, options) {
   await page.goto(BASE + "#/guide/bejaia/site/pic-des-singes");
   await page.waitForSelector("#fiche[open] .fiche-titre");
   verifier((await page.textContent("#fiche .fiche-titre")).includes("Pic des Singes"), "lien direct vers la fiche d'un site");
+  await page.keyboard.press("Escape");
+  // Lien direct ouvert à froid : la carte se centre sur le site une fois chargée.
+  await page.goto(BASE + "#/guide/bejaia/site/cap-carbon");
+  await page.reload();
+  await page.waitForSelector("#fiche[open] .fiche-titre");
+  await page.waitForFunction(() => Atlo.carteInteractive && Atlo.carteInteractive.carte && Atlo.carteInteractive.carte.isStyleLoaded(), null, { timeout: 15000 }).catch(() => null);
+  await page.waitForTimeout(1500);
+  const vue = await page.evaluate(() => { const c = Atlo.carteInteractive && Atlo.carteInteractive.carte; return c ? { ...c.getCenter(), z: c.getZoom() } : null; });
+  verifier(vue && Math.abs(vue.lat - 36.776) < 0.05 && Math.abs(vue.lng - 5.104) < 0.05 && vue.z >= 12, "lien direct : carte centrée sur le site" + (vue ? ` (${vue.lat.toFixed(3)}, ${vue.lng.toFixed(3)}, z${vue.z.toFixed(1)})` : ""));
   await page.keyboard.press("Escape");
   verifier(erreurs.length === 0, "aucune erreur JavaScript" + (erreurs.length ? " :\n    " + erreurs.join("\n    ") : ""));
   await contexte.close();
@@ -402,6 +452,14 @@ async function parcours(nom, options) {
   await page.reload();
   await page.waitForSelector(".carte-site");
   verifier((await page.textContent(".guide-hero h1")).includes("بجاية"), "guide en arabe");
+  verifier((await page.$$(".carte-site >> nth=0 >> .site-meta bdi")).length >= 3, "arabe : segments de la ligne d'infos isolés");
+  await page.goto(BASE + "#/guide/bejaia/dormir");
+  await page.waitForSelector(".carte-heb");
+  await page.waitForFunction(() => document.querySelectorAll(".carte-heb").length >= 26, null, { timeout: 8000 }).catch(() => null);
+  await page.click('.carte-heb-ouvrir:has-text("Étoile")');
+  await page.waitForSelector("#fiche[open] .lien-tel");
+  verifier(!!(await page.$('#fiche .lien-tel bdi[dir="ltr"]')), "arabe : numéro de téléphone de gauche à droite");
+  await page.keyboard.press("Escape");
   await page.waitForTimeout(600);
   await capture("guide-arabe");
   verifier(erreurs.length === 0, "aucune erreur JavaScript" + (erreurs.length ? " :\n    " + erreurs.join("\n    ") : ""));

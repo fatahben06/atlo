@@ -344,7 +344,7 @@
       return;
     }
     const fichiers = window.ATLO_PAYS.map((p) => `data/pays/${p.c}.js`)
-      .concat((window.ATLO_GUIDES || []).map((g) => `data/guides/${g.id}.js`))
+      .concat((window.ATLO_GUIDES || []).map((g) => A.fichierGuide(g.id)))
       .concat(["data/phrases.js", "vendor/maplibre-gl.js", "vendor/maplibre-gl.css", "vendor/mapbox-gl-rtl-text.js"]);
     let faits = 0, echecs = 0;
     sortie.textContent = t("telechargement", { a: 0, b: fichiers.length });

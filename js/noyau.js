@@ -355,8 +355,12 @@
         conteneur.scrollTop = 0;
         window.scrollTo(0, 0);
       }
-      const titre = conteneur.querySelector("h1");
-      if (titre && A.etat.vue !== null) { titre.setAttribute("tabindex", "-1"); titre.focus({ preventScroll: true }); }
+      // Focus sur le titre de la nouvelle page (annoncé par les lecteurs d'écran), ou sur l'élément choisi par la vue.
+      const titre = resultat.focus || conteneur.querySelector("h1");
+      if (titre && A.etat.vue !== null) {
+        if (titre.tagName === "H1") titre.setAttribute("tabindex", "-1");
+        titre.focus({ preventScroll: true });
+      }
       A.etat.vue = chemin;
       if (resultat.apres) resultat.apres();
     };

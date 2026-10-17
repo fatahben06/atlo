@@ -817,12 +817,21 @@
 
   function ouvrirDialogue(contenu, etiquette) {
     const d = dialogue();
+    const dejaOuvert = d.open;
     A.vider(d.querySelector(".fiche-corps"), contenu);
     d.setAttribute("aria-label", etiquette);
-    if (!d.open) {
+    if (!dejaOuvert) {
       if (d.showModal) d.showModal(); else d.setAttribute("open", "");
     }
     d.querySelector(".fiche-corps").scrollTop = 0;
+    if (dejaOuvert) {
+      // Nouvelle fiche ouverte depuis la fiche : le bouton activé a disparu, le focus va au nouveau titre.
+      const titre = d.querySelector(".fiche-titre") || d.querySelector("[data-fermer]");
+      if (titre) {
+        if (titre.classList.contains("fiche-titre")) titre.setAttribute("tabindex", "-1");
+        titre.focus({ preventScroll: true });
+      }
+    }
   }
   A.ouvrirDialogue = ouvrirDialogue;
 

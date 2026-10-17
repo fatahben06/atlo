@@ -117,6 +117,10 @@
         this.localiserLibelles();
         this.ajouterCouches();
         if (this.scene) this.appliquer(this.scene, false);
+        // Fiche ouverte pendant le chargement (lien direct, recherche) : on centre sur elle.
+        const f = this.focusEnAttente;
+        this.focusEnAttente = null;
+        if (f && f.scene === this.scene) this.carte.jumpTo({ center: [f.lon, f.lat], zoom: f.zoom });
       });
       this.brancherEvenements();
     }
@@ -158,6 +162,7 @@
       const c = this.carte;
       const vide = { type: "FeatureCollection", features: [] };
       const bleu = couleur("--serie-1"), orange = couleur("--serie-2"), aqua = couleur("--serie-3");
+      const rang = couleur("--fond-rang"); // fond des numéros blancs (contraste AA)
       const surface = couleur("--surface");
       const police = this.police();
       c.addSource("atlo-zone", { type: "geojson", data: vide });
@@ -181,7 +186,7 @@
       c.addLayer({
         id: "atlo-groupes", type: "circle", source: "atlo-sites", filter: ["has", "point_count"],
         paint: {
-          "circle-color": bleu, "circle-opacity": 0.92,
+          "circle-color": rang,
           "circle-radius": ["step", ["get", "point_count"], 14, 10, 18, 40, 23],
           "circle-stroke-color": surface, "circle-stroke-width": 2,
         },
@@ -209,7 +214,7 @@
       });
       c.addLayer({
         id: "atlo-guide-groupes", type: "circle", source: "atlo-guide", filter: ["has", "point_count"],
-        paint: { "circle-color": bleu, "circle-opacity": 0.92, "circle-radius": ["step", ["get", "point_count"], 15, 6, 19], "circle-stroke-color": surface, "circle-stroke-width": 3 },
+        paint: { "circle-color": rang, "circle-radius": ["step", ["get", "point_count"], 15, 6, 19], "circle-stroke-color": surface, "circle-stroke-width": 3 },
       });
       c.addLayer({
         id: "atlo-guide-groupes-nb", type: "symbol", source: "atlo-guide", filter: ["has", "point_count"],
@@ -219,7 +224,7 @@
       c.addLayer({
         id: "atlo-guide", type: "circle", source: "atlo-guide", filter: ["!", ["has", "point_count"]],
         paint: {
-          "circle-color": bleu,
+          "circle-color": rang,
           "circle-radius": ["case", ["boolean", ["get", "choisi"], false], 14, 11],
           "circle-stroke-color": surface, "circle-stroke-width": 2,
         },
@@ -275,6 +280,7 @@
     }
 
     afficher(scene) {
+      if (scene !== this.scene) this.focusEnAttente = null;
       this.scene = scene;
       if (this.mode === "attente") this.demarrer();
       if (this.mode === "gl" && this.carte && this.carte.isStyleLoaded()) this.appliquer(scene, true);
@@ -305,7 +311,12 @@
           : [])
       );
       this.placerUtilisateur(scene.utilisateur);
-      if (scene.cadrer !== false) this.cadrer(scene, anime);
+      // Une scène est toujours cadrée la première fois, même si une mise à jour (cadrer: false)
+      // est arrivée avant la fin du chargement de la carte.
+      if (scene.cadrer !== false || this.sceneCadree !== scene) {
+        this.sceneCadree = scene;
+        this.cadrer(scene, anime);
+      }
     }
 
     cadrer(scene, anime) {
@@ -345,8 +356,11 @@
     }
 
     focaliser(lat, lon, zoom = 14) {
-      if (this.mode === "gl" && this.carte) {
+      if (this.mode === "gl" && this.carte && this.carte.isStyleLoaded()) {
+        this.focusEnAttente = null;
         this.carte.easeTo({ center: [lon, lat], zoom, duration: matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 700 });
+      } else if (this.mode === "attente" || this.mode === "chargement" || this.mode === "gl") {
+        this.focusEnAttente = { lat, lon, zoom, scene: this.scene };
       }
     }
 

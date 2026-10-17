@@ -249,7 +249,10 @@
     for (const base of OVERPASS) {
       try {
         const d = await json(base + "?data=" + encodeURIComponent(requete), { delai: 25000, duree: 6 * 3600e3 });
-        return window.AtloOutils.depuisOverpass(d);
+        const liste = window.AtloOutils.depuisOverpass(d);
+        // Limite atteinte : Overpass a tronqué la réponse (dans l'ordre des identifiants, pas des distances).
+        liste.partiel = ((d && d.elements) || []).length >= 400;
+        return liste;
       } catch (err) {
         derniere = err;
         if (err.status && err.status < 500 && err.status !== 429) break;

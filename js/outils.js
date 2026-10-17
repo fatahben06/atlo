@@ -506,13 +506,16 @@ ${rte}
       const nom = tags["name:fr"] || tags.name || tags["name:en"] || tags["name:ar"];
       if (!type || lat == null || lon == null || !nom) continue;
       const site = tags.website || tags["contact:website"] || tags.url || "";
-      const fb = tags["contact:facebook"] || tags.facebook || "";
+      const fb = (tags["contact:facebook"] || tags.facebook || "").trim();
+      // Plusieurs numéros sont séparés par « ; » dans OSM : on garde le premier.
+      const tel = String(tags.phone || tags["contact:phone"] || tags.mobile || tags["contact:mobile"] || "").split(";")[0].trim();
       liste.push({
         id: "osm:" + e.type[0] + e.id, n: nom, nomLocal: [tags["name:ar"], tags.name].find((x) => x && x !== nom) || "",
         type, etoiles: Number.parseInt(tags.stars, 10) || null, ll: [Math.round(lat * 1e5) / 1e5, Math.round(lon * 1e5) / 1e5],
         site: /^https?:\/\//i.test(site) ? site : site ? "https://" + site : "",
-        fb: /^https?:\/\//i.test(fb) ? fb : fb ? "https://www.facebook.com/" + fb.replace(/^@/, "") : "",
-        tel: tags.phone || tags["contact:phone"] || tags.mobile || tags["contact:mobile"] || "",
+        fb: /^https?:\/\//i.test(fb) ? fb : /facebook\.com\//i.test(fb) ? "https://" + fb.replace(/^\/+/, "")
+          : fb ? "https://www.facebook.com/" + fb.replace(/^@/, "") : "",
+        tel,
         lieu: tags["addr:city"] || tags["addr:town"] || tags["addr:village"] || "",
         quartier: [tags["addr:street"], tags["addr:suburb"]].filter(Boolean).join(", "),
         source: "osm",
@@ -526,13 +529,33 @@ ${rte}
     "le", "la", "les", "l", "el", "al", "de", "du", "des", "d", "et", "and", "the", "of", "bejaia", "bgayet", "فندق", "نزل"]);
   const motsNom = (n) => normaliser(n).split(" ").filter((m) => m && !MOTS_GENERIQUES.has(m));
 
-  /** Ressemblance (0 à 1) entre deux noms d'établissement, sans les mots génériques. */
-  function ressemblanceNoms(a, b) {
-    const ma = new Set(motsNom(a)), mb = new Set(motsNom(b));
-    if (!ma.size || !mb.size) return normaliser(a) === normaliser(b) ? 1 : 0;
+  /** Mots distinctifs de deux noms, sans les mots génériques ni ceux du lieu (« Raya Tichy » à Tichy → « raya »). */
+  function motsCompares(a, b, lieu) {
+    const sauf = new Set(lieu ? motsNom(lieu) : []);
+    const ma = new Set(motsNom(a).filter((m) => !sauf.has(m))), mb = new Set(motsNom(b).filter((m) => !sauf.has(m)));
     let communs = 0;
     for (const m of ma) if (mb.has(m)) communs++;
+    return { ma, mb, communs };
+  }
+
+  /** Ressemblance (0 à 1) entre deux noms d'établissement, sans les mots génériques (ni ceux du lieu). */
+  function ressemblanceNoms(a, b, lieu) {
+    const { ma, mb, communs } = motsCompares(a, b, lieu);
+    if (!ma.size || !mb.size) return normaliser(a) === normaliser(b) ? 1 : 0;
     return communs / Math.min(ma.size, mb.size) * (communs / Math.max(ma.size, mb.size)) ** 0.25;
+  }
+
+  /** Un même établissement cartographié deux fois (point et bâtiment) : un seul exemplaire, le plus renseigné. */
+  function dedoublonnerOsm(osm) {
+    const infos = (o) => ["site", "fb", "tel", "lieu", "quartier", "etoiles", "nomLocal"].filter((k) => o[k]).length;
+    const garde = [];
+    for (const o of osm) {
+      const n = normaliser(o.n);
+      const j = garde.findIndex((u) => u.cle === n && distanceKm(u.o.ll[0], u.o.ll[1], o.ll[0], o.ll[1]) < 0.15);
+      if (j < 0) garde.push({ cle: n, o });
+      else if (infos(o) > infos(garde[j].o)) garde[j].o = o;
+    }
+    return garde.map((u) => u.o);
   }
 
   /**
@@ -542,15 +565,28 @@ ${rte}
    */
   function fusionnerHebergements(selection, osm) {
     const resultat = selection.map((h) => Object.assign({}, h));
+    osm = dedoublonnerOsm(osm);
     const pris = new Set();
     for (const h of resultat) {
       let meilleur = null, note = 0;
       for (const o of osm) {
         if (pris.has(o.id)) continue;
-        const r = ressemblanceNoms(h.n, o.n);
+        const lieux = [h.lieu, o.lieu].filter(Boolean).join(" ");
+        const egal = normaliser(h.n) === normaliser(o.n);
+        const r = egal ? 1 : ressemblanceNoms(h.n, o.n, lieux);
         if (r < 0.6) continue;
         const km = h.ll ? distanceKm(h.ll[0], h.ll[1], o.ll[0], o.ll[1]) : null;
         if (km != null && km > 3) continue;
+        if (!h.ll) {
+          // Sans position pour vérifier, il faut le même lieu (s'il est connu des deux côtés) et un nom
+          // vraiment identique : mêmes mots distinctifs, ou au moins deux mots en commun.
+          if (h.lieu && o.lieu && normaliser(h.lieu) !== normaliser(o.lieu)) continue;
+          if (!egal) {
+            const { ma, mb, communs } = motsCompares(h.n, o.n, lieux);
+            const memesMots = ma.size > 0 && communs === ma.size && communs === mb.size;
+            if (!memesMots && (r < 0.9 || communs < 2)) continue;
+          }
+        }
         const v = r - (km || 0) / 10;
         if (v > note) { note = v; meilleur = o; }
       }

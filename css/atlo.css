@@ -49,6 +49,8 @@
   --police: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Arabic", "Helvetica Neue", Arial, sans-serif;
   --police-drapeau: "Twemoji Country Flags", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
   --haut-barre: 56px;
+  --fond-rang: #1c5cab; /* fond des numéros et pastilles en blanc : 6,6:1, même en thème sombre */
+  --fond-guide: linear-gradient(135deg, #1c5cab, #123d73);
   --haut-onglets: 64px;
   --largeur-contenu: 520px;
 }
@@ -121,6 +123,7 @@
 /* ------------------------------------------------------------------ base */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: calc(var(--haut-barre) + 12px); }
+html:has(body[data-vue="guide"]) { scroll-padding-top: calc(var(--haut-barre) + 80px); }
 body {
   margin: 0;
   background: var(--plan);
@@ -178,7 +181,7 @@ h1[tabindex="-1"]:focus { outline: none; }
   font-size: 1.05rem; font-weight: 700; cursor: pointer; text-decoration: none; padding: 0;
 }
 .bouton-icone:hover { background: var(--surface-2); }
-.bouton-icone[disabled] { opacity: 0.35; cursor: default; }
+.bouton-icone[disabled], .bouton-icone[aria-disabled="true"] { opacity: 0.35; cursor: default; }
 .bouton-icone.bouton-etape[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--sur-accent); }
 .lien { background: none; border: 0; padding: 0.25em 0; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; font-weight: 500; text-align: start; }
 .lien-externe::after { content: " ↗"; font-size: 0.8em; }
@@ -310,6 +313,7 @@ body.carte-pleine .panneau-carte[data-mode="carte"] { position: fixed; inset: va
   .panneau-carte, .panneau-carte[data-mode="carte"] { order: 2; flex: 1 1 auto; height: 100%; border-bottom: 0; }
   .bouton-carte { display: none; }
   body[data-vue="accueil"] .vue { flex-basis: min(560px, 48vw); }
+  body[data-vue="guide"] .vue { scroll-padding-top: 76px; }
 }
 
 /* ------------------------------------------------------------------ blocs communs */
@@ -620,7 +624,7 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 .cartes-guides.seul { margin: 0 0 1.25rem; }
 .carte-guide {
   position: relative; display: block; overflow: hidden; min-height: 168px; border-radius: var(--rayon);
-  background: linear-gradient(135deg, var(--serie-1), var(--niv-5)); color: #fff; text-decoration: none;
+  background: var(--fond-guide); color: #fff; text-decoration: none;
   box-shadow: var(--ombre); isolation: isolate; transition: transform 0.15s, box-shadow 0.15s;
 }
 .carte-guide:hover { color: #fff; transform: translateY(-2px); box-shadow: var(--ombre-forte); }
@@ -632,11 +636,11 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 .carte-guide-nom { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
 .carte-guide-accroche { font-size: 0.92rem; opacity: 0.95; }
 .carte-guide-chiffres { font-size: 0.8rem; font-weight: 700; margin-top: 4px; }
-.badge-apercu { display: inline-block; margin-inline-start: 6px; padding: 0 6px; border-radius: 5px; background: rgba(255, 255, 255, 0.25); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.badge-apercu { display: inline-block; margin-inline-start: 6px; padding: 0 6px; border-radius: 5px; background: rgba(0, 0, 0, 0.55); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
 
 .guide-hero {
   position: relative; overflow: hidden; border-radius: var(--rayon); margin: 0 0 0.75rem; isolation: isolate;
-  background: linear-gradient(135deg, var(--serie-1), var(--niv-5)); color: #fff; min-height: 220px; display: flex; align-items: flex-end;
+  background: var(--fond-guide); color: #fff; min-height: 220px; display: flex; align-items: flex-end;
 }
 .guide-hero-image { position: absolute; inset: 0; z-index: -2; }
 .guide-hero-image img { width: 100%; height: 100%; object-fit: cover; }
@@ -671,7 +675,7 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 .onglet-guide .puce-compte { position: absolute; top: 2px; inset-inline-end: calc(50% - 30px); min-width: 1.5em; height: 1.5em; font-size: 0.68rem; background: var(--surface-3); }
 .onglet-guide:hover { background: var(--surface-2); color: var(--encre); }
 .onglet-guide[aria-current="page"] { background: var(--encre); color: var(--plan); }
-.onglet-guide[aria-current="page"] .puce-compte { background: var(--serie-1); color: #fff; }
+.onglet-guide[aria-current="page"] .puce-compte { background: var(--fond-rang); color: #fff; }
 @media (min-width: 960px) {
   .onglets-guide { top: -24px; margin: 0 -28px 1rem; padding: 8px 24px; }
 }
@@ -680,6 +684,9 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 .puces.defilantes::-webkit-scrollbar { display: none; }
 .puces.defilantes > * { scroll-snap-align: start; flex: none; }
 .puces.defilantes:empty { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .puces.defilantes { flex-wrap: wrap; overflow-x: visible; margin-inline: 0; padding-inline: 0; }
+}
 .bouton.petit { min-height: 36px; padding: 0.3em 0.8em; font-size: 0.85rem; }
 .bouton.petit[aria-pressed="true"] { background: var(--encre); color: var(--plan); border-color: var(--encre); }
 
@@ -693,7 +700,7 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 .vignette-icone { font-size: 2rem; }
 .rang {
   position: absolute; top: 6px; inset-inline-start: 6px; display: grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px;
-  border-radius: 999px; background: var(--serie-1); color: #fff; font-weight: 800; font-size: 0.82rem; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 999px; background: var(--fond-rang); color: #fff; font-weight: 800; font-size: 0.82rem; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 .carte-site-texte { display: grid; gap: 3px; min-width: 0; }
 .carte-site-nom { font-weight: 800; line-height: 1.25; font-size: 1.02rem; }
@@ -707,7 +714,7 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 /* Fiches */
 .fiche-heb { height: 120px; background: linear-gradient(135deg, var(--surface-2), var(--accent-doux)); }
 .fiche-image .credit { text-decoration: none; }
-.rang-fiche { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--serie-1); color: #fff; font-weight: 800; font-size: 0.8rem; }
+.rang-fiche { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--fond-rang); color: #fff; font-weight: 800; font-size: 0.8rem; }
 .alerte { background: var(--attention-fond); border-inline-start: 4px solid var(--attention); padding: 8px 12px; border-radius: 8px; font-size: 0.92rem; }
 .faits { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin: 10px 0; }
 .faits div { background: var(--surface-2); border-radius: 10px; padding: 8px 10px; }
@@ -718,7 +725,7 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 .proche { width: 100%; display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 6px 10px; border: 1px solid var(--bord); border-radius: 10px; background: var(--surface); text-align: start; cursor: pointer; color: var(--encre); }
 .proche:hover { background: var(--surface-2); }
 .proche-nom { font-weight: 700; flex: 1; min-width: 0; }
-.rang-mini { flex: none; display: inline-grid; place-items: center; min-width: 24px; height: 24px; padding: 0 5px; border-radius: 999px; background: var(--serie-1); color: #fff; font-weight: 800; font-size: 0.75rem; }
+.rang-mini { flex: none; display: inline-grid; place-items: center; min-width: 24px; height: 24px; padding: 0 5px; border-radius: 999px; background: var(--fond-rang); color: #fff; font-weight: 800; font-size: 0.75rem; }
 .etoiles { color: var(--attention); letter-spacing: 0.05em; font-size: 0.9em; white-space: nowrap; }
 .badges { display: flex; flex-wrap: wrap; gap: 4px; }
 .badge-texte, .badges .badge { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--accent-doux); color: var(--accent-fort); font-size: 0.75rem; font-weight: 700; min-width: 0; height: auto; }
@@ -733,7 +740,9 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 .lien-tel { font-weight: 700; text-decoration: none; }
 
 /* Séjour */
-.sejour-champs { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; }
+.sejour-champs { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); align-items: end; }
+.sejour-champs .champ, .sejour-champs .champ-groupe, .sejour-champs .compteur-champ { min-width: 0; }
+.sejour-champs input[type="date"] { width: 100%; }
 .compteur-champ { display: grid; gap: 4px; }
 .compteur-libelle { font-size: 0.85rem; color: var(--encre-2); font-weight: 600; }
 .compteur-boutons { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-height: 44px; padding: 0 2px; border: 1px solid var(--bord); border-radius: var(--rayon-petit); background: var(--surface); }
@@ -743,7 +752,6 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 .sejour-liens { margin-bottom: 0.25rem; }
 .actions .lien-externe.principal { background: var(--accent); border-color: transparent; color: var(--sur-accent); }
 .actions .lien-externe.principal:hover { background: var(--accent-fort); color: var(--sur-accent); }
-@media (min-width: 640px) { .sejour-champs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
 /* Cartes d'hébergement */
 .cartes-heb { list-style: none; margin: 0.5rem 0; padding: 0; display: grid; gap: 8px; }
@@ -782,7 +790,7 @@ button.etape-nom { text-decoration: underline; text-decoration-color: var(--trai
 .liste-pratique-icone { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--surface-2); font-size: 1.25rem; }
 .liste-pratique p { margin: 2px 0 0; }
 .sources-guide summary { cursor: pointer; font-weight: 700; }
-.schema-point.guide circle { fill: var(--serie-1); }
+.schema-point.guide circle { fill: var(--fond-rang); }
 .schema-point.guide text { fill: #fff; }
 .schema-point.hebergement circle { fill: var(--encre-2); }
 

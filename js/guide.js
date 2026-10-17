@@ -33,11 +33,16 @@
     g.hebergements.forEach((x) => { x.source = "selection"; });
     contenus.set(g.id, g);
   };
+  /** Fichier d'un guide, avec l'empreinte de son contenu : une mise à jour n'est jamais servie avec un ancien guide. */
+  A.fichierGuide = (id) => {
+    const g = A.GUIDES.get(id);
+    return `data/guides/${id}.js` + (g && g.v ? "?v=" + g.v : "");
+  };
   A.chargerGuide = (id) => {
     if (contenus.has(id)) return Promise.resolve(contenus.get(id));
     if (!A.GUIDES.has(id)) return Promise.reject(new Error("guide inconnu : " + id));
     if (!chargements.has(id)) {
-      const p = A.chargerScript(`data/guides/${id}.js`).then(() => {
+      const p = A.chargerScript(A.fichierGuide(id)).then(() => {
         if (!contenus.has(id)) throw new Error("guide illisible : " + id);
         return contenus.get(id);
       });
@@ -55,7 +60,7 @@
       if (sc) res.push({ sc: sc + 5, g });
       for (const [id, ...noms] of g.sites || []) {
         const s = Math.max(...noms.filter(Boolean).map((n) => O.score(q, O.normaliser(n))));
-        if (s) res.push({ sc: s, g, site: { id, nom: noms[{ fr: 0, en: 1, es: 1, ar: 2 }[I.langue]] || noms[1] || noms[0] } });
+        if (s) res.push({ sc: s, g, site: { id, nom: noms[{ fr: 0, en: 1, es: 2, ar: 3 }[I.langue]] || noms[1] || noms[0] } });
       }
     }
     return res.sort((a, b) => b.sc - a.sc).slice(0, 8);
@@ -77,16 +82,21 @@
       }
       return i < 0;
     },
-    ecouter: (f, el) => abonnesFavoris.add({ f, el }),
+    ecouter: (f, el) => {
+      const a = { f, el };
+      abonnesFavoris.add(a);
+      A.surNettoyage(() => abonnesFavoris.delete(a));
+    },
   };
 
   function boutonFavori(cle, nom) {
     const b = h("button", { type: "button", class: "bouton-icone favori" });
     const maj = () => {
       const oui = A.favoris.a(cle);
+      // Libellé constant, état porté par aria-pressed (bouton bascule).
       b.setAttribute("aria-pressed", oui ? "true" : "false");
-      b.setAttribute("aria-label", t(oui ? "retirerFavori" : "ajouterFavori") + " : " + nom);
-      b.title = t(oui ? "retirerFavori" : "ajouterFavori");
+      b.setAttribute("aria-label", t("favori") + " : " + nom);
+      b.title = t("favori");
       A.vider(b, h("span", { "aria-hidden": "true" }, oui ? "♥" : "♡"));
     };
     b.addEventListener("click", (e) => {
@@ -109,7 +119,7 @@
     if (!/^\d{4}-\d{2}-\d{2}$/.test(s.arrivee) || s.arrivee < aujourdhui()) { s.arrivee = ""; s.depart = ""; }
     if (s.arrivee && !O.nuits(s.arrivee, s.depart)) s.depart = O.decalerDate(s.arrivee, 1);
     s.adultes = Math.min(16, Math.max(1, Math.round(Number(s.adultes)) || 2));
-    s.chambres = Math.min(8, Math.max(1, Math.round(Number(s.chambres)) || 1));
+    s.chambres = Math.min(8, s.adultes, Math.max(1, Math.round(Number(s.chambres)) || 1));
     return s;
   }
   const sejour = lireSejour();
@@ -122,7 +132,11 @@
       try { a.f(); } catch (e) { console.error(e); }
     }
   }
-  const ecouterSejour = (f, el) => abonnesSejour.add({ f, el });
+  const ecouterSejour = (f, el) => {
+    const a = { f, el };
+    abonnesSejour.add(a);
+    A.surNettoyage(() => abonnesSejour.delete(a));
+  };
 
   function resumeSejour() {
     const n = O.nuits(sejour.arrivee, sejour.depart);
@@ -138,28 +152,36 @@
     return parts.join(" · ");
   }
 
-  function compteur(libelle, valeur, min, max, changer) {
-    let v = valeur;
-    const sortie = h("output", { class: "compteur-valeur" }, String(v));
+  /** Compteur −/+ relu dans le séjour à chaque changement. aria-disabled plutôt que disabled :
+      un bouton désactivé sous le focus renverrait le focus clavier en haut de la page. */
+  function compteur(libelle, lire, min, max, changer) {
+    const borne = () => (typeof max === "function" ? max() : max);
+    const sortie = h("output", { class: "compteur-valeur" });
     const moins = h("button", { type: "button", class: "bouton-icone", "aria-label": t("moins") + " : " + libelle }, "−");
     const plus = h("button", { type: "button", class: "bouton-icone", "aria-label": t("plus") + " : " + libelle }, "+");
-    const maj = () => { sortie.textContent = fmt.nombre(v); moins.disabled = v <= min; plus.disabled = v >= max; };
-    moins.addEventListener("click", () => { if (v > min) { v--; maj(); changer(v); } });
-    plus.addEventListener("click", () => { if (v < max) { v++; maj(); changer(v); } });
+    const maj = () => {
+      const v = lire();
+      sortie.textContent = fmt.nombre(v);
+      moins.setAttribute("aria-disabled", v <= min ? "true" : "false");
+      plus.setAttribute("aria-disabled", v >= borne() ? "true" : "false");
+    };
+    moins.addEventListener("click", () => { const v = lire(); if (v > min) changer(v - 1); });
+    plus.addEventListener("click", () => { const v = lire(); if (v < borne()) changer(v + 1); });
     maj();
+    ecouterSejour(maj, sortie);
     return h("div", { class: "compteur-champ", role: "group", "aria-label": libelle },
       h("span", { class: "compteur-libelle" }, libelle), h("span", { class: "compteur-boutons" }, moins, sortie, plus));
   }
 
   /** Formulaire « Votre séjour » (dates, voyageurs, chambres), mémorisé sur l'appareil. */
-  function blocSejour(ctx) {
+  function blocSejour(ctx, { titre = true } = {}) {
     const min = aujourdhui();
     const arrivee = h("input", { type: "date", class: "champ", id: "sejour-arrivee", min, value: sejour.arrivee });
     const depart = h("input", { type: "date", class: "champ", id: "sejour-depart", min: O.decalerDate(sejour.arrivee || min, 1), value: sejour.depart });
     arrivee.addEventListener("change", () => {
       const a = arrivee.value && arrivee.value >= min ? arrivee.value : "";
       let d = depart.value;
-      if (a && (!d || d <= a)) d = O.decalerDate(a, 1);
+      if (a && !O.nuits(a, d)) d = O.decalerDate(a, 1);
       depart.min = O.decalerDate(a || min, 1);
       arrivee.value = a;
       depart.value = a ? d : "";
@@ -181,15 +203,38 @@
     };
     majTout();
     ecouterSejour(majTout, resume);
-    return h("section", { class: "bloc sejour", id: "sejour", "aria-labelledby": "titre-sejour" },
-      h("h2", { id: "titre-sejour" }, h("span", { "aria-hidden": "true" }, "📅 "), t("votreSejour")),
+    return h("section", { class: titre ? "bloc sejour" : "sejour", id: "sejour", "aria-label": titre ? null : t("votreSejour"), "aria-labelledby": titre ? "titre-sejour" : null },
+      titre ? h("h2", { id: "titre-sejour" }, h("span", { "aria-hidden": "true" }, "📅 "), t("votreSejour")) : null,
       h("div", { class: "sejour-champs" },
         h("label", { class: "champ-groupe" }, h("span", null, t("arrivee")), arrivee),
         h("label", { class: "champ-groupe" }, h("span", null, t("depart")), depart),
-        compteur(t("voyageurs"), sejour.adultes, 1, 16, (v) => majSejour({ adultes: v, chambres: Math.min(sejour.chambres, v) })),
-        compteur(t("chambres"), sejour.chambres, 1, 8, (v) => majSejour({ chambres: v }))),
+        compteur(t("voyageurs"), () => sejour.adultes, 1, 16, (v) => majSejour({ adultes: v, chambres: Math.min(sejour.chambres, v) })),
+        compteur(t("chambres"), () => sejour.chambres, 1, () => Math.min(8, sejour.adultes), (v) => majSejour({ chambres: v }))),
       resume, liens,
       h("p", { class: "petit" }, t("sejourAide")));
+  }
+
+  /** « Modifier » depuis une fiche d'un guide : ferme la fiche et place le focus sur les dates. */
+  function modifierSejour(gid) {
+    const d = document.getElementById("fiche");
+    if (d.open) d.close();
+    const champ = document.getElementById("sejour-arrivee");
+    if (champ && !champ.closest("dialog") && (A.etat.vue || "").startsWith(`guide/${gid}/`)) {
+      champ.scrollIntoView({ block: "center" });
+      champ.focus({ preventScroll: true });
+    } else {
+      A.aller(`/guide/${gid}/dormir#sejour`);
+    }
+  }
+
+  /** Formulaire du séjour dans la fiche (pages sans guide), avec retour à la fiche d'origine. */
+  function ouvrirSejour(ctx, retour) {
+    A.ouvrirDialogue([
+      h("div", { class: "fiche-texte" },
+        h("h2", { class: "fiche-titre" }, t("votreSejour")),
+        blocSejour(ctx, { titre: false }),
+        retour ? h("p", null, h("button", { type: "button", class: "bouton", onclick: retour }, h("span", { "aria-hidden": "true" }, "← "), t("retour"))) : null),
+    ], t("votreSejour"));
   }
 
   // ================================================================== liens de réservation
@@ -308,6 +353,14 @@
     return h("div", null, h("dt", null, h("span", { "aria-hidden": "true" }, icone + " "), titre), h("dd", null, valeur));
   }
 
+  /** Nom local (souvent en arabe) : chaque partie isolée (bidi) et marquée lang="ar" si besoin (lecteurs d'écran). */
+  const ARABE = /[\u0600-\u06FF]/;
+  const texteLocal = (v) => String(v).split(" · ").map((p, i) => [i ? " · " : null, h("bdi", { lang: ARABE.test(p) && I.langue !== "ar" ? "ar" : null }, p)]);
+  /** Ligne « a · b · c » dont chaque segment est isolé : un nom latin suivi d'une durée reste lisible en arabe. */
+  const meta = (parties) => parties.filter(Boolean).map((p, i) => [i ? " · " : null, h("bdi", null, p)]);
+  /** Numéros et coordonnées toujours de gauche à droite, même dans une interface en arabe. */
+  const ltr = (v) => h("bdi", { dir: "ltr" }, v);
+
   const etoiles = (n) => (n ? h("span", { class: "etoiles", role: "img", "aria-label": t("nEtoiles", { n }) }, " " + "★".repeat(Math.min(5, n))) : null);
 
   // ================================================================== fiche d'un incontournable
@@ -327,9 +380,9 @@
     A.ouvrirDialogue([
       image,
       h("div", { class: "fiche-texte" },
-        h("p", { class: "fiche-cat" }, h("span", { class: "rang-fiche" }, t("rangN", { n: s.rang })), " ", A.libelleCategorie(s.cat), " · ", s.lieu),
+        h("p", { class: "fiche-cat" }, h("span", { class: "rang-fiche" }, t("rangN", { n: s.rang })), " ", A.libelleCategorie(s.cat), " · ", h("bdi", null, s.lieu)),
         h("h2", { class: "fiche-titre" }, nom),
-        s.local ? h("p", { class: "sous-titre" }, h("bdi", null, s.local)) : null,
+        s.local ? h("p", { class: "sous-titre" }, texteLocal(s.local)) : null,
         meteo,
         s.alerte ? h("p", { class: "alerte", role: "note" }, h("span", { "aria-hidden": "true" }, "⚠ "), tx(s.alerte)) : null,
         h("dl", { class: "faits" },
@@ -365,7 +418,7 @@
           h("li", null, A.lienExterne(A.liens.videos((s.n.fr || s.n.en) + " " + tx(g.nom)), h("span", { "aria-hidden": "true" }, "▶️ "), t("videos"))),
           h("li", null, A.lienExterne(A.liens.osm(s.lat, s.lon), h("span", { "aria-hidden": "true" }, "🗺️ "), "OpenStreetMap"))),
         s.llApprox ? h("p", { class: "note" }, h("span", { "aria-hidden": "true" }, "📍 "), t("positionApprox"))
-          : h("p", { class: "coordonnees" }, h("button", { type: "button", class: "lien", onclick: () => A.copier(`${s.lat.toFixed(5)}, ${s.lon.toFixed(5)}`) }, "📌 " + s.lat.toFixed(4) + ", " + s.lon.toFixed(4))),
+          : h("p", { class: "coordonnees" }, h("button", { type: "button", class: "lien", onclick: () => A.copier(`${s.lat.toFixed(5)}, ${s.lon.toFixed(5)}`) }, "📌 ", ltr(s.lat.toFixed(4) + ", " + s.lon.toFixed(4)))),
         h("p", { class: "source" }, t("selectionAtlo", { d: moisAnnee(g.maj) })),
         h("p", { class: "mention" }, t("mentionExterne"))),
     ], nom);
@@ -391,7 +444,7 @@
     const contacts = [
       x.site ? A.lienExterne(x.site, h("span", { "aria-hidden": "true" }, "🌐 "), t("siteOfficiel")) : null,
       x.fb ? A.lienExterne(x.fb, h("span", { "aria-hidden": "true" }, "📘 "), "Facebook") : null,
-      x.tel ? h("a", { href: "tel:" + x.tel.replace(/[^\d+]/g, ""), class: "lien-tel" }, h("span", { "aria-hidden": "true" }, "📞 "), x.tel) : null,
+      x.tel ? h("a", { href: "tel:" + x.tel.split(";")[0].replace(/[^\d+]/g, ""), class: "lien-tel" }, h("span", { "aria-hidden": "true" }, "📞 "), ltr(x.tel.split(";")[0].trim())) : null,
       A.lienExterne("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent([x.n, adresse || ctx.nom].join(", ")),
         h("span", { "aria-hidden": "true" }, "📍 "), t("avisPhotosGoogle")),
       x.ll ? A.lienExterne(A.liens.itineraire(x.ll[0], x.ll[1]), h("span", { "aria-hidden": "true" }, "🚗 "), t("yAller")) : null,
@@ -406,12 +459,13 @@
       h("div", { class: "fiche-texte" },
         h("p", { class: "fiche-cat" }, t("type_" + x.type), etoiles(x.etoiles)),
         h("h2", { class: "fiche-titre" }, x.n),
-        x.nomLocal ? h("p", { class: "sous-titre" }, h("bdi", null, x.nomLocal)) : null,
+        x.nomLocal ? h("p", { class: "sous-titre" }, texteLocal(x.nomLocal)) : null,
         h("p", { class: "sous-titre" }, adresse || ctx.nom, kmCentre != null ? " · " + t("aDistanceDe", { d: fmt.distance(kmCentre), lieu: t("centreVille") }) : ""),
         x.mer || x.note ? h("p", { class: "badges" }, x.mer ? h("span", { class: "badge" }, "🌊 " + t("bordDeMer")) : null, x.note ? h("span", { class: "badge discret" }, tx(x.note)) : null) : null,
         h("h3", null, t("reserverComparer")),
-        h("p", { class: "sejour-pastille" }, h("span", { "aria-hidden": "true" }, "📅 "), resumeSejour(),
-          ctx.guide ? [" · ", h("a", { href: `#/guide/${ctx.guide.id}/dormir#sejour` }, t("modifier"))] : null),
+        h("p", { class: "sejour-pastille" }, h("span", { "aria-hidden": "true" }, "📅 "), resumeSejour(), " · ",
+          ctx.guide ? h("a", { href: `#/guide/${ctx.guide.id}/dormir#sejour`, onclick: (e) => { e.preventDefault(); modifierSejour(ctx.guide.id); } }, t("modifier"))
+            : h("button", { type: "button", class: "lien", onclick: () => ouvrirSejour(ctx, () => ouvrirHebergement(ctx, x)) }, t("modifier"))),
         h("ul", { class: "plateformes", role: "list" }, liens.map((l) => h("li", null,
           A.lienExterne(l.url, h("span", { class: "plateforme-nom" }, l.nom), h("span", { class: "plateforme-detail" }, detailLien(l, ctx)))))),
         h("p", { class: "note" }, t("prixPlateformes"), " ", t(affilie ? "mentionAffiliation" : "sansCommission")),
@@ -438,7 +492,7 @@
         h("span", { class: "heb-icone", "aria-hidden": "true" }, ICONES_HEB[x.type] || "🛏️"),
         h("span", { class: "carte-heb-texte" },
           h("span", { class: "carte-heb-nom" }, x.n, etoiles(x.etoiles)),
-          h("span", { class: "site-meta" }, [t("type_" + x.type), adresse, km != null ? t("aDistanceDe", { d: fmt.distance(km), lieu: refNom }) : null].filter(Boolean).join(" · ")),
+          h("span", { class: "site-meta" }, meta([t("type_" + x.type), adresse, km != null ? t("aDistanceDe", { d: fmt.distance(km), lieu: refNom }) : null])),
           x.mer || x.source === "osm" ? h("span", { class: "badges" },
             x.mer ? h("span", { class: "badge" }, "🌊 " + t("bordDeMer")) : null,
             x.source === "osm" ? h("span", { class: "badge discret" }, "OpenStreetMap") : null) : null)),
@@ -454,23 +508,34 @@
     const ctx = { cle: "l:" + (+lat).toFixed(2) + "," + (+lon).toFixed(2), nom, centre: [lat, lon], pays, reservation: { lieu }, sites: [] };
     const corps = h("div", null, A.squelette(3));
     const actions = h("div", { class: "actions sejour-liens" });
-    const resume = h("p", { class: "petit" });
+    const resume = h("span");
     const majActions = () => { A.vider(actions, liensVille(ctx)); resume.textContent = resumeSejour(); };
     majActions();
     ecouterSejour(majActions, actions);
+    const ligneSejour = h("p", { class: "petit" }, h("span", { "aria-hidden": "true" }, "📅 "), resume, " · ",
+      h("button", { type: "button", class: "lien", onclick: () => ouvrirSejour(ctx) }, t("modifier")));
     const bloc = h("section", { class: "bloc", "aria-labelledby": "titre-dormir" },
       h("h2", { id: "titre-dormir" }, h("span", { "aria-hidden": "true" }, "🛏️ "), t("ouDormirA", { v: nom })),
-      resume, actions, corps);
+      ligneSejour, actions, corps);
     const charger = async () => {
       A.vider(corps, A.squelette(3));
+      const maScene = A.etat.scene;
       try {
-        const dLat = rayonKm / 111, dLon = rayonKm / (111 * Math.max(0.2, Math.cos(lat * Math.PI / 180)));
-        const liste = await S.hebergementsOsm([lon - dLon, lat - dLat, lon + dLon, lat + dLat]);
+        // Overpass rend au plus 400 établissements, dans l'ordre des identifiants : en ville très dense,
+        // on resserre la zone pour garder les plus proches.
+        let liste, r = rayonKm;
+        for (let essai = 0; essai < 3; essai++) {
+          const dLat = r / 111, dLon = r / (111 * Math.max(0.2, Math.cos(lat * Math.PI / 180)));
+          liste = await S.hebergementsOsm([lon - dLon, lat - dLat, lon + dLon, lat + dLat]);
+          if (!liste.partiel) break;
+          r /= 2.5;
+        }
+        // L'utilisateur a changé de page pendant la requête : rien à dessiner.
+        if (!bloc.isConnected || A.etat.scene !== maScene) return;
         const tri = liste.map((x) => ({ x, k: O.distanceKm(lat, lon, x.ll[0], x.ll[1]) })).sort((a, b) => a.k - b.k);
         if (!tri.length) { A.vider(corps, h("p", { class: "note" }, t("aucunHebergementOsm"))); return; }
-        const maScene = A.etat.scene;
         tri.forEach(({ x }) => pointsHeb.set(x.id, { ctx, x }));
-        if (maScene && A.etat.scene === maScene) A.majScene({ hebergements: tri.slice(0, 80).map(({ x }) => pointHeb(x)) });
+        if (maScene) A.majScene({ hebergements: tri.slice(0, 80).map(({ x }) => pointHeb(x)) });
         let n = 6;
         const ul = h("ul", { class: "cartes-heb", role: "list" });
         const plus = h("button", { type: "button", class: "bouton", onclick: () => { n += 12; dessiner(); } }, t("afficherPlus"));
@@ -479,9 +544,10 @@
           plus.hidden = n >= tri.length;
         };
         dessiner();
-        A.vider(corps, h("p", { class: "petit" }, t("nHebergementsOsm", { n: tri.length })), ul, plus, h("p", { class: "source" }, t("sourceOsm")));
+        A.vider(corps, h("p", { class: "petit" }, t("nHebergementsOsm", { n: tri.length }), liste.partiel ? " — " + t("listePartielle") : ""),
+          ul, plus, h("p", { class: "source" }, t("sourceOsm")));
       } catch (e) {
-        A.vider(corps, A.erreurReseau(e, charger));
+        if (bloc.isConnected) A.vider(corps, A.erreurReseau(e, charger));
       }
     };
     A.quandVisible(bloc, charger);
@@ -515,7 +581,15 @@
 
   A.route(/^guide\/([a-z0-9-]+)(?:\/(dormir|itineraires|pratique|site|heb)(?:\/([^/]+))?)?$/, async ([id, section, cle], params) => {
     if (!A.GUIDES.has(id)) return A.introuvable();
-    const g = await A.chargerGuide(id);
+    let g;
+    try {
+      g = await A.chargerGuide(id);
+    } catch (e) {
+      return {
+        nom: "guide", titre: tx(A.GUIDES.get(id).nom), carte: null,
+        contenu: h("section", { class: "bloc vide-doux" }, h("h1", null, tx(A.GUIDES.get(id).nom)), A.erreurReseau(e, () => A.rendre())),
+      };
+    }
     guideCourant = g;
     const onglet = section === "site" ? "voir" : section === "heb" ? "dormir" : section || "voir";
     const memeGuide = (A.etat.vue || "").split("?")[0].startsWith("guide/" + id);
@@ -534,16 +608,18 @@
       g.brouillon ? h("p", { class: "bandeau-brouillon", role: "note" }, h("span", { "aria-hidden": "true" }, "🚧 "), t("guideBrouillon")) : null,
       h("nav", { class: "onglets-guide", "aria-label": t("sectionsGuide") },
         ONGLETS.map(([k, icone, libelle]) => {
-          const n = k === "voir" ? g.sites.length : k === "dormir" ? g.hebergements.length : k === "itineraires" ? g.itineraires.length : 0;
+          const n = k === "voir" ? g.sites.length : k === "dormir" ? (g.fusion || g.hebergements).length : k === "itineraires" ? g.itineraires.length : 0;
           return h("a", { href: "#/guide/" + g.id + (k === "voir" ? "" : "/" + k), class: "onglet-guide", "aria-current": k === onglet ? "page" : null },
             h("span", { "aria-hidden": "true" }, icone), h("span", { class: "onglet-libelle" }, t(libelle)),
-            n ? h("span", { class: "puce-compte" }, h("span", { class: "visuellement-cache" }, " · "), fmt.nombre(n)) : null);
+            n ? h("span", { class: "puce-compte" }, h("span", { class: "visuellement-cache" }, " · "),
+              h("span", { dataset: k === "dormir" ? { nbHeb: g.id } : null }, fmt.nombre(n))) : null);
         })),
       corps,
       h("p", { class: "mention" }, t("mention")));
     return {
       nom: "guide", titre: tx(g.nom) + " · " + t(ONGLETS.find((o) => o[0] === onglet)[2]), contenu, onglet: "explorer",
       garderDefilement: memeGuide, carte: scene,
+      focus: memeGuide ? contenu.querySelector(".onglet-guide[aria-current]") : null,
       apres: () => {
         if (memeGuide) {
           // Changement d'onglet : on garde les onglets en vue plutôt que de remonter en haut du guide.
@@ -562,7 +638,7 @@
       h("div", { class: "guide-hero-texte" },
         h("p", { class: "guide-hero-sur" }, h("span", { class: "drapeau", "aria-hidden": "true" }, A.drapeau(g.pays)), " ", A.nomPays(g.pays), " · ", t("guideDeVille")),
         h("h1", null, tx(g.nom)),
-        g.local ? h("p", { class: "guide-hero-local" }, h("bdi", null, g.local)) : null,
+        g.local ? h("p", { class: "guide-hero-local" }, texteLocal(g.local)) : null,
         h("p", { class: "guide-hero-accroche" }, tx(g.accroche)),
         h("p", { class: "guide-hero-faits" },
           h("span", { class: "guide-hero-fait" }, h("span", { "aria-hidden": "true" }, "🕒 "), A.horloge(g.fuseau)), meteo)),
@@ -608,11 +684,16 @@
     majPuces();
     A.favoris.ecouter(() => { majPuces(); if (filtre === "fav") dessiner(); }, puces);
     const proches = h("button", { type: "button", class: "bouton petit", "aria-pressed": "false" }, h("span", { "aria-hidden": "true" }, "📍 "), t("lesPlusProches"));
+    let enCours = false;
     proches.addEventListener("click", async () => {
+      if (enCours) return;
       if (distances) { distances = null; proches.setAttribute("aria-pressed", "false"); dessiner(); return; }
-      proches.disabled = true;
+      enCours = true;
+      proches.setAttribute("aria-busy", "true");
+      const maScene = A.etat.scene;
       try {
         const pos = await A.position();
+        if (!liste.isConnected || A.etat.scene !== maScene) return;
         const loin = O.distanceKm(pos.lat, pos.lon, g.centre[0], g.centre[1]);
         if (loin > 80) {
           A.toast(t("loinDuGuide", { d: fmt.distance(loin), v: tx(g.nom) }));
@@ -624,7 +705,8 @@
       } catch (e) {
         A.toast(e.message);
       } finally {
-        proches.disabled = false;
+        enCours = false;
+        proches.removeAttribute("aria-busy");
       }
     });
     dessiner(true);
@@ -656,8 +738,8 @@
         vignette,
         h("span", { class: "carte-site-texte" },
           h("span", { class: "carte-site-nom" }, h("span", { class: "visuellement-cache" }, t("rangN", { n: s.rang }) + " · "), nom),
-          h("span", { class: "site-meta" }, [t((A.CATEGORIES[s.cat] || {}).cle || "catA"), s.lieu, s.duree ? "⏱ " + fmt.duree(s.duree) : null,
-            distance != null ? "📍 " + fmt.distance(distance) : null].filter(Boolean).join(" · ")),
+          h("span", { class: "site-meta" }, meta([t((A.CATEGORIES[s.cat] || {}).cle || "catA"), s.lieu, s.duree ? "⏱ " + fmt.duree(s.duree) : null,
+            distance != null ? "📍 " + fmt.distance(distance) : null])),
           h("span", { class: "carte-site-resume" }, premierePhrase(tx(s.d))),
           s.alerte ? h("span", { class: "statut attention" }, "⚠ " + t("aSavoirAvant")) : null)),
       h("div", { class: "carte-site-actions" }, boutonFavori(`g:${g.id}:s:${s.id}`, nom), A.boutonEtape(etapeGuide(g, s))));
@@ -669,6 +751,8 @@
     if (!osmParGuide.has(g.id)) {
       const p = S.hebergementsOsm(g.boiteHebergements || g.boite).then((osm) => {
         g.fusion = O.fusionnerHebergements(g.hebergements, osm);
+        g.osmPartiel = !!osm.partiel;
+        document.querySelectorAll(`[data-nb-heb="${g.id}"]`).forEach((el) => { el.textContent = fmt.nombre(g.fusion.length); });
         return g.fusion;
       });
       p.catch(() => osmParGuide.delete(g.id));
@@ -744,7 +828,7 @@
         if (!ul.isConnected) return; // l'utilisateur a quitté l'onglet : la fusion reste en mémoire
         const ajoutes = fusion.length - g.hebergements.length;
         liste = fusion;
-        etatOsm.textContent = ajoutes > 0 ? t("ajoutesOsm", { n: ajoutes }) : t("rienDePlusOsm");
+        etatOsm.textContent = (ajoutes > 0 ? t("ajoutesOsm", { n: ajoutes }) : t("rienDePlusOsm")) + (g.osmPartiel ? " " + t("listePartielle") : "");
         majPuces();
         dessiner();
         ouvrirDemande();
@@ -798,6 +882,10 @@
       if (!A.etat.scene) return;
       Object.assign(A.etat.scene, { etapes, guide: [], boite: null, cadrer: true });
       A.afficherCarte(A.etat.scene);
+      const panneau = document.getElementById("panneau-carte");
+      if (panneau && panneau.getBoundingClientRect().bottom < 60) {
+        panneau.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+      }
     };
     montrer(g.itineraires[0], "initial");
     A.vider(corps,
@@ -813,17 +901,22 @@
     }
     const choix = h("div", { class: "choix-itineraire", hidden: true });
     const titre = tx(it.t);
+    const boutonUtiliser = h("button", { type: "button", class: "bouton principal", onclick: () => utiliser() }, h("span", { "aria-hidden": "true" }, "🧭 "), t("utiliserItineraire"));
     const utiliser = () => {
       const nouvelles = etapes.map((e, i) => Object.assign(etapeGuide(g, e.s), {
         id: "g" + i + "-" + Math.random().toString(36).slice(2, 7), nouveauJour: e.premier && e.jour > 0,
       }));
       const etat = A.itineraire.etat();
+      const heuresPrevues = (mode) => {
+        const plan = O.planifier(nouvelles, { mode, minutesParJour: Infinity });
+        return Math.min(12, Math.max(8, Math.ceil(Math.max(...plan.jours.map((j) => j.minutes)) / 60)));
+      };
       const appliquer = (mode) => {
         if (mode === "remplacer") {
-          A.itineraire.remplacer({ titre, debut: sejour.arrivee || etat.debut || "", mode: "voiture", heuresParJour: 9, etapes: nouvelles });
+          A.itineraire.remplacer({ titre, debut: sejour.arrivee || etat.debut || "", mode: "voiture", heuresParJour: heuresPrevues("voiture"), etapes: nouvelles });
         } else {
           if (nouvelles[0]) nouvelles[0].nouveauJour = true;
-          A.itineraire.maj({ etapes: etat.etapes.concat(nouvelles) });
+          A.itineraire.maj({ etapes: etat.etapes.concat(nouvelles), heuresParJour: Math.max(etat.heuresParJour, heuresPrevues(etat.mode)) });
         }
         A.toast(t("itineraireCharge", { n: nouvelles.length }));
         A.aller("/itineraire");
@@ -835,7 +928,7 @@
         h("div", { class: "actions" },
           h("button", { type: "button", class: "bouton principal", onclick: () => appliquer("remplacer") }, t("remplacerLeMien")),
           h("button", { type: "button", class: "bouton", onclick: () => appliquer("ajouter") }, t("ajouterALaSuite")),
-          h("button", { type: "button", class: "bouton", onclick: () => { choix.hidden = true; } }, t("annuler"))));
+          h("button", { type: "button", class: "bouton", onclick: () => { choix.hidden = true; boutonUtiliser.focus(); } }, t("annuler"))));
       choix.querySelector("button").focus();
     };
     return h("section", { class: "bloc itineraire-pret", "aria-labelledby": "it-" + it.id },
@@ -861,7 +954,7 @@
         })),
         j.conseil ? h("p", { class: "petit" }, "💡 ", tx(j.conseil)) : null)),
       h("div", { class: "actions" },
-        h("button", { type: "button", class: "bouton principal", onclick: utiliser }, h("span", { "aria-hidden": "true" }, "🧭 "), t("utiliserItineraire")),
+        boutonUtiliser,
         h("button", { type: "button", class: "bouton", onclick: montrer }, h("span", { "aria-hidden": "true" }, "🗺️ "), t("voirSurCarte"))),
       choix);
   }
@@ -905,6 +998,9 @@
   const surPointPrecedent = A.surPointCarte;
   A.surPointCarte = (type, id, props) => {
     if (type === "guide" && guideCourant && guideCourant.site.has(id)) return ouvrirSite(guideCourant, guideCourant.site.get(id));
+    if (type === "etape" && guideCourant && (A.etat.vue || "").startsWith("guide/" + guideCourant.id) && guideCourant.site.has(id)) {
+      return ouvrirSite(guideCourant, guideCourant.site.get(id));
+    }
     if (type === "hebergement" && pointsHeb.has(id)) {
       const { ctx, x } = pointsHeb.get(id);
       return ouvrirHebergement(ctx, x);

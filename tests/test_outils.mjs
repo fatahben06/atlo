@@ -253,6 +253,34 @@ test("hébergements : fusion de la sélection et d'OpenStreetMap sans doublon", 
   assert.equal(selection[0].ll, undefined, "la sélection d'origine n'est pas modifiée");
 });
 
+test("hébergements : sans position, pas de rapprochement sur un seul mot ni sur le nom du lieu", () => {
+  const selection = [
+    { id: "nord", n: "Hôtel du Nord", type: "hotel", lieu: "Béjaïa" },
+    { id: "raya", n: "Raya Tichy", type: "hotel", lieu: "Tichy" },
+    { id: "ham", n: "Les Hammadites", type: "hotel", lieu: "Tichy" },
+  ];
+  const osm = [
+    { id: "osm:n1", n: "Résidence Nord Plage", type: "hotel", ll: [36.63, 5.25], lieu: "Aokas", source: "osm" },
+    { id: "osm:n2", n: "Hôtel Tichy", type: "hotel", ll: [36.667, 5.16], source: "osm" },
+    { id: "osm:n5", n: "Hôtel Les Hammadites", type: "hotel", ll: [36.66, 5.15], source: "osm" },
+    { id: "osm:n3", n: "Hôtel X", type: "hotel", ll: [36.7, 5.1], source: "osm" },
+    { id: "osm:w4", n: "Hôtel X", type: "hotel", ll: [36.7001, 5.1001], tel: "+213 2", source: "osm" },
+  ];
+  const f = O.fusionnerHebergements(selection, osm);
+  assert.equal(f.find((x) => x.id === "nord").osm, undefined, "« Nord Plage » à Aokas n'est pas l'Hôtel du Nord");
+  assert.equal(f.find((x) => x.id === "raya").osm, undefined, "« Tichy » est le lieu, pas le nom");
+  assert.equal(f.find((x) => x.id === "ham").osm, "osm:n5", "mêmes mots distinctifs");
+  const x = f.filter((y) => y.n === "Hôtel X");
+  assert.deepEqual(x.map((y) => y.id), ["osm:w4"], "point et bâtiment du même hôtel : un seul, le plus renseigné");
+});
+
+test("OpenStreetMap : Facebook et téléphones multiples", () => {
+  const [a] = O.depuisOverpass({ elements: [{ type: "node", id: 1, lat: 1, lon: 2, tags: {
+    tourism: "hotel", name: "A", "contact:facebook": "www.facebook.com/HotelA", phone: "+213 34 11 22 33;+213 555 12 34 56" } }] });
+  assert.equal(a.fb, "https://www.facebook.com/HotelA");
+  assert.equal(a.tel, "+213 34 11 22 33");
+});
+
 test("guides : données valides et index à jour", async () => {
   const G = await import("../outils/construire_guides.mjs");
   const guides = G.lireGuides();
@@ -267,4 +295,11 @@ test("guides : données valides et index à jour", async () => {
   const bejaia = guides.find((g) => g.id === "bejaia");
   assert.equal(bejaia.sites.length, 20, "top 20");
   assert.ok(bejaia.itineraires.every((it) => it.jours.every((j) => j.e.length)));
+  const index = G.entreeIndex(bejaia);
+  assert.match(index.v, /^[0-9a-f]{10}$/, "empreinte du fichier dans l'index");
+  assert.equal(index.sites[0].length, 5, "noms fr, en, es, ar pour la recherche");
+  assert.equal(index.sites[0][3], bejaia.sites[0].n.es);
+  const long = { ...bejaia, itineraires: [{ id: "x", t: bejaia.itineraires[0].t, r: bejaia.itineraires[0].r,
+    jours: [{ e: bejaia.sites.map((s) => s.id) }] }] };
+  assert.ok(G.verifierGuide(long).erreurs.some((e) => /12 h au plus/.test(e)), "journée trop longue refusée");
 });

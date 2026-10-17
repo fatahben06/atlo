@@ -5,6 +5,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
+import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 
@@ -106,6 +107,11 @@ export function verifierGuide(g) {
       if (j.t) texte(j.t, `${ou} jour ${k + 1}`);
       if (!j.e || !j.e.length) erreurs.push(`${ou} jour ${k + 1} : aucune étape`);
       for (const id of j.e || []) if (!ids.has(id)) erreurs.push(`${ou} jour ${k + 1} : site « ${id} » inconnu`);
+      // Visites + trajets en voiture : au-delà de 12 h (maximum réglable dans l'itinéraire), la journée serait coupée en deux.
+      const etapes = (j.e || []).map((id) => g.sites.find((s) => s.id === id)).filter((s) => s && Array.isArray(s.ll))
+        .map((s) => ({ lat: s.ll[0], lon: s.ll[1], duree: s.duree || 90 }));
+      const minutes = etapes.length ? O.planifier(etapes, { mode: "voiture", minutesParJour: Infinity }).jours[0].minutes : 0;
+      if (minutes > 720) erreurs.push(`${ou} jour ${k + 1} : ${Math.round(minutes / 6) / 10} h de visites et de trajets (12 h au plus)`);
     });
   });
   const p = g.pratique || {};
@@ -122,13 +128,14 @@ export function verifierGuide(g) {
   return { erreurs, avertissements };
 }
 
-/** Entrée d'index (chargée au démarrage : nom, chiffres, noms des sites pour la recherche). */
+/** Entrée d'index (chargée au démarrage : nom, chiffres, noms des sites pour la recherche).
+    v : empreinte du fichier du guide, ajoutée à son adresse (le cache ne sert jamais un ancien guide avec un nouvel index). */
 export function entreeIndex(g) {
   const e = {
-    id: g.id, pays: g.pays, region: g.region ?? null, nom: g.nom, alt: g.alt || [], accroche: g.accroche,
+    id: g.id, v: g.empreinte || null, pays: g.pays, region: g.region ?? null, nom: g.nom, alt: g.alt || [], accroche: g.accroche,
     ll: g.centre, image: g.image || null,
     nb: { sites: g.sites.length, hebergements: g.hebergements.length, itineraires: g.itineraires.length },
-    sites: g.sites.map((s) => [s.id, s.n.fr, s.n.en, s.n.ar]),
+    sites: g.sites.map((s) => [s.id, s.n.fr, s.n.en, s.n.es, s.n.ar]),
   };
   if (g.brouillon) e.brouillon = true;
   return e;
@@ -137,8 +144,10 @@ export function entreeIndex(g) {
 export function lireGuides() {
   const dossier = path.join(RACINE, "data/guides");
   return fs.readdirSync(dossier).filter((f) => f.endsWith(".js")).sort().map((f) => {
-    const r = charger(path.join(dossier, f), "atloGuide");
+    const fichier = path.join(dossier, f);
+    const r = charger(fichier, "atloGuide");
     if (!r) return { id: f.replace(/\.js$/, ""), erreurs: ["fichier sans appel atloGuide(...)"] };
+    Object.defineProperty(r[0], "empreinte", { value: crypto.createHash("sha256").update(fs.readFileSync(fichier)).digest("hex").slice(0, 10) });
     return r[0];
   });
 }

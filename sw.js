@@ -6,7 +6,7 @@
      conservé d'une version à l'autre ;
    - tuiles, polices et icônes de carte : cache d'abord (limité) ;
    - météo, Wikipédia et Commons, taux, hébergements OpenStreetMap : réseau d'abord, copie de secours en cache. */
-const VERSION = "atlo-2026-10-16-1";
+const VERSION = "atlo-2026-10-17-1";
 const COQUILLE = VERSION + "-coquille";
 const DONNEES = "atlo-donnees";
 const TUILES = "atlo-tuiles";
