@@ -79,12 +79,15 @@ async function reseauDabord(requete, nomCache, delai = 8000) {
 async function perimeEnRevalidant(requete, nomCache) {
   const deja = await caches.match(requete);
   const versionne = !!new URL(requete.url).search; // guides : data/guides/<id>.js?v=<empreinte>
-  const frais = fetch(requete).then(async (r) => {
+  const frais = fetch(requete).then((r) => {
     if (r.ok) {
       const copie = r.clone();
-      // Une seule version gardée par fichier versionné.
-      if (versionne) await caches.open(nomCache).then((c) => c.delete(requete, { ignoreSearch: true }));
-      ranger(nomCache, requete, copie);
+      ranger(nomCache, requete, copie).then(async () => {
+        if (!versionne) return;
+        // Nouvelle version bien enregistrée : les anciennes sont supprimées (jamais avant).
+        const c = await caches.open(nomCache);
+        for (const k of await c.keys(requete, { ignoreSearch: true })) if (k.url !== requete.url) await c.delete(k);
+      }).catch(() => { /* cache plein ou indisponible : on garde ce qui existe */ });
     }
     return r;
   // Hors ligne après une mise à jour : l'ancienne version du guide vaut mieux que rien.

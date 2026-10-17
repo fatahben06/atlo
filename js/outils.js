@@ -581,13 +581,20 @@ ${rte}
           // Sans position pour vérifier, il faut le même lieu (s'il est connu des deux côtés) et un nom
           // vraiment identique : mêmes mots distinctifs, ou au moins deux mots en commun.
           if (h.lieu && o.lieu && normaliser(h.lieu) !== normaliser(o.lieu)) continue;
+          // « Atlantis Akbou » n'est pas l'« Hôtel Atlantis » de l'aéroport : le lieu cité dans notre nom doit
+          // se retrouver dans le nom OSM, ou OSM doit situer l'établissement à ce même lieu.
+          if (!egal && h.lieu && !(o.lieu && normaliser(o.lieu) === normaliser(h.lieu))) {
+            const nomH = new Set(motsNom(h.n)), nomO = new Set(motsNom(o.n));
+            if (motsNom(h.lieu).some((m) => nomH.has(m) && !nomO.has(m))) continue;
+          }
           if (!egal) {
             const { ma, mb, communs } = motsCompares(h.n, o.n, lieux);
             const memesMots = ma.size > 0 && communs === ma.size && communs === mb.size;
             if (!memesMots && (r < 0.9 || communs < 2)) continue;
           }
         }
-        const v = r - (km || 0) / 10;
+        // À égalité, le nom identique puis le plus ressemblant (mots du lieu compris) l'emporte.
+        const v = r + (egal ? 0.01 : 0) + 0.001 * ressemblanceNoms(h.n, o.n) - (km || 0) / 10;
         if (v > note) { note = v; meilleur = o; }
       }
       if (meilleur) {

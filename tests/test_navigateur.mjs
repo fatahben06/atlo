@@ -139,6 +139,8 @@ async function parcours(nom, options) {
     const texte = m.text();
     // Glyphes absents du fond simulé : attendu dans ce test.
     if (/fonts|glyph|Failed to load resource: the server responded with a status of 404/i.test(texte)) return;
+    // Coupure réseau simulée volontairement (style de carte indisponible).
+    if (/ERR_INTERNET_DISCONNECTED/.test(texte)) return;
     erreurs.push("console: " + texte);
   });
   const capture = async (fichier) => CAPTURES && page.screenshot({ path: path.join(CAPTURES, `${nom}-${fichier}.png`) });
@@ -303,7 +305,7 @@ async function parcours(nom, options) {
   await page.waitForSelector(".carte-gl canvas, .schema", { timeout: 15000 });
   await page.waitForTimeout(1200);
   await capture("guide");
-  await page.waitForFunction(() => Atlo.carteInteractive && Atlo.carteInteractive.styleOk, null, { timeout: 15000 }).catch(() => null);
+  await page.waitForFunction(() => Atlo.carteInteractive && Atlo.carteInteractive.pret(), null, { timeout: 15000 }).catch(() => null);
   await page.click(".carte-site-ouvrir >> nth=0");
   await page.waitForSelector("#fiche[open] .rang-fiche");
   verifier((await page.textContent("#fiche .rang-fiche")).includes("1"), "fiche : rang affiché");
@@ -428,11 +430,24 @@ async function parcours(nom, options) {
   await page.goto(BASE + "#/guide/bejaia/site/cap-carbon");
   await page.reload();
   await page.waitForSelector("#fiche[open] .fiche-titre");
-  await page.waitForFunction(() => Atlo.carteInteractive && Atlo.carteInteractive.styleOk, null, { timeout: 15000 }).catch(() => null);
+  await page.waitForFunction(() => Atlo.carteInteractive && Atlo.carteInteractive.pret(), null, { timeout: 15000 }).catch(() => null);
   await page.waitForTimeout(1500);
   const vue = await page.evaluate(() => { const c = Atlo.carteInteractive && Atlo.carteInteractive.carte; return c ? { ...c.getCenter(), z: c.getZoom() } : null; });
   verifier(vue && Math.abs(vue.lat - 36.776) < 0.05 && Math.abs(vue.lng - 5.104) < 0.05 && vue.z >= 12, "lien direct : carte centrée sur le site" + (vue ? ` (${vue.lat.toFixed(3)}, ${vue.lng.toFixed(3)}, z${vue.z.toFixed(1)})` : ""));
   await page.keyboard.press("Escape");
+  // Changement de thème dont le style ne se charge pas (hors connexion) : la carte doit continuer à suivre.
+  const bloquer = (r) => r.abort("internetdisconnected");
+  await contexte.route("https://tiles.openfreemap.org/styles/**", bloquer);
+  await page.click("#bouton-theme");
+  await page.waitForTimeout(1500);
+  await page.evaluate(() => { location.hash = "#/guide/bejaia/site/tichy"; });
+  await page.waitForSelector("#fiche[open] .fiche-titre");
+  await page.waitForTimeout(1500);
+  const apres = await page.evaluate(() => { const c = Atlo.carteInteractive.carte; return { ...c.getCenter(), z: c.getZoom() }; });
+  verifier(Math.abs(apres.lat - 36.6675) < 0.02 && Math.abs(apres.lng - 5.16) < 0.02, `style indisponible : la carte suit toujours (${apres.lat.toFixed(3)}, ${apres.lng.toFixed(3)})`);
+  await page.keyboard.press("Escape");
+  await contexte.unroute("https://tiles.openfreemap.org/styles/**", bloquer);
+  await page.click("#bouton-theme");
   verifier(erreurs.length === 0, "aucune erreur JavaScript" + (erreurs.length ? " :\n    " + erreurs.join("\n    ") : ""));
   await contexte.close();
 }

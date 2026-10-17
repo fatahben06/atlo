@@ -270,6 +270,17 @@ test("hébergements : sans position, pas de rapprochement sur un seul mot ni sur
   assert.equal(f.find((x) => x.id === "nord").osm, undefined, "« Nord Plage » à Aokas n'est pas l'Hôtel du Nord");
   assert.equal(f.find((x) => x.id === "raya").osm, undefined, "« Tichy » est le lieu, pas le nom");
   assert.equal(f.find((x) => x.id === "ham").osm, "osm:n5", "mêmes mots distinctifs");
+  const atl = O.fusionnerHebergements([
+    { id: "aeroport", n: "Atlantis Béjaïa Aéroport", type: "hotel", lieu: "Tala Hamza" },
+    { id: "akbou", n: "Atlantis Akbou", type: "hotel", lieu: "Akbou" },
+  ], [
+    { id: "osm:a", n: "Hôtel Atlantis", type: "hotel", ll: [36.71, 5.07], source: "osm" },
+    { id: "osm:b", n: "Atlantis Akbou", type: "hotel", ll: [36.46, 4.54], source: "osm" },
+  ]);
+  assert.equal(atl.find((y) => y.id === "akbou").osm, "osm:b", "nom identique préféré, pas l'Atlantis de l'aéroport");
+  const seul = O.fusionnerHebergements([{ id: "akbou", n: "Atlantis Akbou", type: "hotel", lieu: "Akbou" }],
+    [{ id: "osm:a", n: "Hôtel Atlantis", type: "hotel", ll: [36.71, 5.07], source: "osm" }]);
+  assert.equal(seul[0].osm, undefined, "« Akbou » absent du nom OSM : pas de rapprochement");
   const x = f.filter((y) => y.n === "Hôtel X");
   assert.deepEqual(x.map((y) => y.id), ["osm:w4"], "point et bâtiment du même hôtel : un seul, le plus renseigné");
 });
